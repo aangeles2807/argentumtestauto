@@ -17,7 +17,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
-WS.callTestCase(findTestCase('Comun/ProcesoAutorizacionNegativo'), [
+WS.callTestCase(findTestCase('Comun/NegativoCobertura'), [
 	'tipoAfiliado' : Keyword.AFILIADO.value,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MAYOR_EDAD.value,
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_MAYOR_EDAD.value,

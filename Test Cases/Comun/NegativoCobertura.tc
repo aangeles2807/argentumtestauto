@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>ProcesoAutorizacionNegativo</name>
+   <name>NegativoCobertura</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>7391ac6d-e7b2-41ae-8e97-d9e39bc8ea97</testCaseGuid>

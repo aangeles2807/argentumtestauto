@@ -69,108 +69,6 @@ public class DBConnection {
 		return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
 	}
 
-	public void close(ResultSet resultSet) {
-
-		try {
-
-			if (resultSet != null) {
-
-				resultSet.close();
-
-				resultSet = null;
-			}
-
-		} catch (SQLException sqlException) {
-
-			sqlException.printStackTrace(System.out);
-		}
-	}
-
-	public void close(OracleResultSet oracleResultSet) {
-
-		try {
-
-			if (oracleResultSet != null) {
-
-				oracleResultSet.close();
-
-				oracleResultSet = null;
-			}
-
-		} catch (SQLException sqlException) {
-
-			sqlException.printStackTrace(System.out);
-		}
-	}
-
-	public void close(Statement statement) {
-
-		try {
-
-			if (statement != null) {
-
-				statement.close();
-
-				statement = null;
-			}
-
-		} catch (SQLException sqlException) {
-
-			sqlException.printStackTrace(System.out);
-		}
-	}
-
-	public void close(PreparedStatement preparedStatement) {
-
-		try {
-
-			if (preparedStatement != null) {
-
-				preparedStatement.close();
-
-				preparedStatement = null;
-			}
-
-		} catch (SQLException sqlException) {
-
-			sqlException.printStackTrace(System.out);
-		}
-	}
-
-	public void close(CallableStatement callableStatement) {
-
-		try {
-
-			if (callableStatement != null) {
-
-				callableStatement.close();
-
-				callableStatement = null;
-			}
-
-		} catch (SQLException sqlException) {
-
-			sqlException.printStackTrace(System.out);
-		}
-	}
-
-	public void close(Connection connection) {
-
-		try {
-
-			if (connection != null) {
-
-				connection.close();
-
-				connection = null;
-			}
-
-		} catch (SQLException sqlException) {
-
-			sqlException.printStackTrace(System.out);
-		}
-	}
-
 	/**
 	 * Execute the specific query and return its results in a Map.
 	 * 
@@ -179,84 +77,80 @@ public class DBConnection {
 	 */
 	public Map<String, String> executeQueryAndGetResult(String queryName, String queryToExecute){
 
-		try {
+		//println "\n\n" + queryToExecute + "\n\n";
 
-			if(queryResult == null){
+		if(queryResult == null){
 
-				queryResult = new HashMap<String, String>();
-			}
-			else{
-
-				queryResult.clear();
-			}
-
-			// Nos conectamos a la Base de Datos
-			if(connection == null){
-				
-				connection = getConnectionDB();
-			}
-
-			// Creamos la sentencia
-			if(statement == null){
-				
-				statement = connection.createStatement();
-			}			
-
-			// Inicio de tiempo
-			//****************************
-			start = Instant.now();
-			//****************************
-
-			// Ejecutamos la consulta y obtenemos los resultados
-			resultSet = statement.executeQuery(queryToExecute);
-
-			//***************************************************************************************************************
-			// Fin de tiempo
-			end = Instant.now();
-
-			// Calculo de tiempo
-			interval = Duration.between(start, end);
-
-			// Impresion de duracion del query en ejecutarse
-			System.out.println(String.valueOf("\n\nEl query ${queryName} ejecutandose se demoro: " + interval.getSeconds() + " segundo(s) \n\n"));
-			//***************************************************************************************************************
-
-			resultSetMetaData = resultSet.getMetaData();
-
-			while (resultSet.next()) {
-				
-				for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
-					
-					queryResult.put(resultSetMetaData.getColumnName(i).trim(), resultSet.getObject(i).toString().trim());
-				}	
-			}
-
+			queryResult = new HashMap<String, String>();
 		}
-		catch (Exception e) {
+		else{
 
-			e.printStackTrace(System.out);
+			queryResult.clear();
 		}
+
+		// Nos conectamos a la Base de Datos
+		if(connection == null){
+
+			connection = getConnectionDB();
+		}
+
+		// Creamos la sentencia
+		if(statement == null){
+
+			statement = connection.createStatement();
+		}
+
+		// Inicio de tiempo
+		//****************************
+		start = Instant.now();
+		//****************************
+
+		// Ejecutamos la consulta y obtenemos los resultados
+		resultSet = statement.executeQuery(queryToExecute);
+
+		//***************************************************************************************************************
+		// Fin de tiempo
+		end = Instant.now();
+
+		// Calculo de tiempo
+		interval = Duration.between(start, end);
+
+		// Impresion de duracion del query en ejecutarse
+		System.out.println(String.valueOf("\n\nEl query ${queryName} ejecutandose se demoro: " + interval.getSeconds() + " segundo(s) \n\n"));
+		//***************************************************************************************************************
+
+		resultSetMetaData = resultSet.getMetaData();
+
+		while (resultSet.next()) {
+
+			for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+
+				queryResult.put(resultSetMetaData.getColumnName(i).trim(), resultSet.getObject(i).toString().trim());
+			}
+		}
+
+		resultSetMetaData = null;
 
 		return queryResult;
 	}
-	
+
 	public Statement getStatement(){
-		
+
 		return statement;
 	}
-	
+
 	public ResultSet getResultSet(){
-		
+
 		return resultSet;
 	}
-	
+
 	public ResultSetMetaData getResultSetMetaData(){
-		
+
 		return ResultSetMetaData;
 	}
-	
+
 	public Connection getConnection(){
-		
+
 		return connection;
 	}
 }

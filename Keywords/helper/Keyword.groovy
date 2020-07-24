@@ -70,10 +70,6 @@ public enum Keyword {
 	AFILIADO_PBS("PBS"),
 	AFILIADO("MPP o PBS"),
 
-	// Mensajes Casos Negativos
-	VACUNAS("w","d"),
-	;
-
 	// Attribute
 	public String value;
 
