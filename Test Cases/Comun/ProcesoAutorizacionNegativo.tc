@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>ProcesoAutorizacionNegativo</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>7391ac6d-e7b2-41ae-8e97-d9e39bc8ea97</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>8f40228e-38ef-4344-be2c-07666779693c</id>
+      <masked>false</masked>
+      <name>tipoAfiliado</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>6df8ef7d-d716-4f0f-81f8-d12340f1bf56</id>
+      <masked>false</masked>
+      <name>condicionAfiliadoMPP</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ca2b82fd-1e81-417e-90e8-8d53d726059e</id>
+      <masked>false</masked>
+      <name>condicionAfiliadoPBS</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>7721416a-871a-4d35-9540-9f02b817157f</id>
+      <masked>false</masked>
+      <name>servicioConsulta</name>
+   </variable>
+</TestCaseEntity>
