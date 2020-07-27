@@ -6,6 +6,8 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 
+import java.util.Date
+import java.text.SimpleDateFormat
 import javax.json.Json
 import javax.json.stream.JsonParser
 import javax.json.stream.JsonParser.Event
@@ -41,6 +43,9 @@ public class CommonAction {
 	private JsonParser jsonParser;
 	private Event jasonParserEvent;
 	private int responseCode;
+	private static final String projectPath = new File("").getAbsolutePath();
+	private Date date;
+	private SimpleDateFormat simpleDateFormat;
 
 	public CommonAction(){
 
@@ -240,5 +245,69 @@ public class CommonAction {
 	public String getRequestObjectURL(RequestObject requestObject){
 
 		return requestObject.getRestUrl();
+	}
+	
+	/**
+	 * Get the path of the project in a String type.
+	 * 
+	 * @return String
+	 */
+	public static String getProjectpath() {
+		
+		return projectPath;
+	}
+	
+	/**
+	 * Get the actual time in the specific format.
+	 * 
+	 * @param timeFormat - time format
+	 * @return String
+	 */
+	public String getActualTimeInSpecificFormat(String timeFormat){
+		
+		if (date == null) {
+			
+			date = new Date();
+		}
+		
+		if (simpleDateFormat == null) {
+			
+			simpleDateFormat = new SimpleDateFormat();
+			
+			simpleDateFormat.applyPattern(timeFormat);
+		}
+		else{
+			
+			simpleDateFormat.applyPattern(timeFormat);
+		}
+		
+		simpleDateFormat.format(date);
+	}
+	
+	/**
+	 * Get the actual date in the specific format.
+	 *
+	 * @param dateFormat - date format
+	 * @return String
+	 */
+	public String getActualDateInSpecificFormat(String dateFormat){
+		
+		if (date == null) {
+			
+			date = new Date();
+		}
+		
+		if (simpleDateFormat == null) {
+			
+			simpleDateFormat = new SimpleDateFormat();
+			
+			simpleDateFormat.applyPattern(dateFormat);
+		}
+		else{
+			
+			simpleDateFormat.applyPattern(dateFormat);
+		}
+		
+		simpleDateFormat.format(date);
 	}
 }
