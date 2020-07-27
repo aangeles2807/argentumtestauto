@@ -28,50 +28,49 @@ import com.relevantcodes.extentreports.LogStatus
 import internal.GlobalVariable
 
 public class ReportGenerator {
-	
+
 	private ExtentReports extentReports;
 	private ExtentTest extentTest;
 	private CommonAction commonAction;
 	private String actualTime;
 	private String actualDate;
-	
+
 	public ReportGenerator(){
-		
 	}
-	
+
 	// Singleton Pattern
 	//******************************************************************************
 	private static ReportGenerator commonReportGenerator = null;
-	
+
 	public static ReportGenerator getUniqueIntance() {
-		
+
 		if (commonReportGenerator == null) {
-			
+
 			commonReportGenerator = new ReportGenerator();
 		}
-		
+
 		return commonReportGenerator;
 	}
 	//******************************************************************************
-	
+
 	public void generateReport(){
-		
+
 		commonAction = CommonAction.getUniqueIntance();
-		
+
 		actualTime = commonAction.getActualTimeInSpecificFormat("HH:mm:ss:SSS").replace(":", "");
 		actualDate = commonAction.getActualDateInSpecificFormat("dd-MM-yyyy");
-		
+
 		if (extentReports == null) {
-			
+
 			extentReports = new ExtentReports(String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html"));
 		}
 		else{
-			
+
 			extentReports.setFilePath(String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html"))
 		}
-		
+
 		// Caso Prueba 1
-		
+
 		extentTest = extentReports.startTest("Prueba 1");
 
 		extentTest.log(LogStatus.INFO, "El Querys: <br >" + QueryTemplate.afiliadoMPP.render().toString());
@@ -96,11 +95,11 @@ public class ReportGenerator {
 
 		extentReports.flush();
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		ReportGenerator reportGenerator = ReportGenerator.getUniqueIntance();
-		
+
 		reportGenerator.generateReport();
 	}
 }

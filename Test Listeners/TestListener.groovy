@@ -25,7 +25,7 @@ import com.kms.katalon.core.annotation.AfterTestSuite
 import com.kms.katalon.core.context.TestCaseContext
 import com.kms.katalon.core.context.TestSuiteContext
 
-class NewTestListener {
+class TestListener {
 	
 	private DBConnection dbConnection = DBConnection.getDBConnectionUniqueIntance();
 	
