@@ -155,11 +155,14 @@ public class QueryTemplate {
 	"		, ser.SERIPSCOD \n" +
 	"		, ips.IPSNOM \n" +
 	"		, tips.SERIPSNOM \n" +
+	"  		, SUC.IPSSUCCOD \n"+
 	"	FROM tabconser ser \n" +
 	"	JOIN TABCONIPS ips \n" +
 	"	ON ips.IPSCODSUP = ser.IPSCODSUP \n" +
 	"	JOIN TABSERIPS tips \n" +
 	"	ON tips.SERIPSCOD = ser.SERIPSCOD \n" +
+	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
+	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP \n"+
 	"	WHERE 1 = 1 \n" +
 	"	AND trim(mplcod) = '<codigoCobertura>' \n" + // Parametro
 	"	AND trim(ser.sercon) = 'S' \n" +
