@@ -65,54 +65,69 @@ public class ReportGenerator {
 	public void setTestName(String testName){
 
 		messageType.add(helper.Keyword.TEST_NAME.value);
-
 		messageContent.add(testName);
 	}
 
 	public void setLogStatusINFO(String infoMessage){
-
+		
+		infoMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.INFO);
 		messageContent.add(infoMessage);
 	}
 
 	public void setLogStatusPASS(String passMessage){
 
+		passMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.PASS);
 		messageContent.add(passMessage);
 	}
 
 	public void setLogStatusWARNING(String warningMessage){
 
+		warningMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.WARNING);
 		messageContent.add(warningMessage);
 	}
 
 	public void setLogStatusSKIP(String skipMessage){
 
+		skipMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.SKIP);
 		messageContent.add(skipMessage);
 	}
 
 	public void setLogStatusERROR(String errorMessage){
 
+		errorMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.ERROR);
 		messageContent.add(errorMessage);
 	}
 
 	public void setLogStatusFAIL(String failMessage){
 
+		failMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.FAIL);
 		messageContent.add(failMessage);
 	}
 
 	public void setLogStatusFATAL(String fatalMessage){
 
+		fatalMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.FATAL);
 		messageContent.add(fatalMessage);
 	}
 
 	public void setLogStatusUNKNOWN(String unknownMessage){
 
+		unknownMessage.replace("\n", "<br>");
+		
 		messageType.add(LogStatus.UNKNOWN);
 		messageContent.add(unknownMessage);
 	}

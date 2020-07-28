@@ -65,7 +65,7 @@ class TestListener {
 		
 		//if(dbConnection.getConnectionvariable() == null){dbConnection.close(dbConnection.getConnectionvariable());}
 		
-		//if (testSuiteName == null) {reportGenerator.generateReport();}
+		if (testSuiteName == null) {reportGenerator.generateReport();}
 	}
 
 	/**

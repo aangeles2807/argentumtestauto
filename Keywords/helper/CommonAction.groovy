@@ -33,9 +33,6 @@ import internal.GlobalVariable
 
 public class CommonAction {
 
-	// Attribute
-
-	// To get response API content in a Mao
 	private String llave = null;
 	private String valor = null;
 	private Map<String, String> mapResponseBodyKeyAndValue = null;
@@ -48,7 +45,7 @@ public class CommonAction {
 	private ReportGenerator reportGenerator;
 	private ResponseObject responseObject;
 	private String apiPath;
-	private String errorMessage;
+	private String message;
 
 	public CommonAction(){
 
@@ -71,37 +68,114 @@ public class CommonAction {
 
 	/**
 	 * 
-	 * Get an ArrayList of Map<String, String>, where each Map is the set of Keys and Value of response body of the URL consulted from API.
+	 * Can get one of two objects types:
+	 *  
+	 * 1-) Get an ArrayList of Map<String, String>, where each Map is the set of Keys and Value of response body of the URL consulted from API.
+	 * 2-) When the response content is not a JSon structure then return the text.
 	 * 
-	 * @param responseObject - Object with all response data from API.
-	 * @return ArrayList<Map<String, String>>
+	 * @param RequestObject - Object with all request data to consult the API.
+	 * @return Object - can be an ArrayList<Map<String, String>> or String.
 	 */
-	public ArrayList<Map<String, String>> getResponseContentIntoMap(RequestObject requestObject){
+	public Object getResponseContentIntoMapOrString(RequestObject requestObject){
+		
+		return getResponseContentIntoMapOrString(requestObject, false);
+	}
+	
+	/**
+	 * 
+	 * Can get one of two objects types:
+	 *  
+	 * 1-) Get an ArrayList of Map<String, String>, where each Map is the set of Keys and Value of response body of the URL consulted from API.
+	 * 2-) When the response content is not a JSon structure then return the text.
+	 * 
+	 * @param requestObject - Object with all request data to consult the API.
+	 * @param ifInverseCase - true is case is inverse, otherwise false. 
+	 * @return Object - can be an ArrayList<Map<String, String>> or String.
+	 */
+	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean ifInverseCase){
 		
 		reportGenerator = ReportGenerator.getUniqueIntance();
-		
+
 		// ****************
 		// Get the API Path
 		// ****************
 		apiPath = "";
-		
+
 		for(int i=0; i < requestObject.getRestUrl().split("/").length; i++){
-			
+
 			if (i >= 3 && !requestObject.getRestUrl().split("/")[i].contains("?")) {
-				
+
 				apiPath += "/" + requestObject.getRestUrl().split("/")[i];
 			}
 			else if (requestObject.getRestUrl().split("/")[i].contains("?")) {
-				
+
 				apiPath += "/" + requestObject.getRestUrl().split("/")[i].substring(0, requestObject.getRestUrl().split("/")[i].indexOf("?"));
 			}
 		}
 		
+		// *************************
+		// Generate template message
+		// *************************
+		
+		message = String.valueOf("El servicio web: <b>${apiPath}</b> que fue consultado con el/los parametro(s): <br><br>");
+		
+		for (String key in requestObject.getVariables().keySet()) {
+			
+			if (!key.equals("GlobalVariable")) {
+				
+				message += String.valueOf("${key} : ${requestObject.getVariables().get(key)}<br>");
+			}
+		}
+		
+		// ***************************************
+		// Consult API and get the response object
+		// ***************************************
+		
 		responseObject = WS.sendRequestAndVerify(requestObject, FailureHandling.STOP_ON_FAILURE);
 		
+		// ********************
 		// Verify response code
+		// ********************
+		
 		if (responseObject.getStatusCode() == 200) {
-
+			
+			// *******************************************************
+			// Verify if response body is in JSon format or plain text
+			// *******************************************************
+			
+			try {
+				
+				Json.createParser(responseObject.getBodyContent().getInputStream()).next();
+			}
+			catch (Exception e) {
+				
+				if (e.getMessage().contains("Expected Tokens [CURLYOPEN, SQUAREOPEN]")) {
+					
+					message += String.valueOf("<br>Obtuvo la siguiente respuesta: ${responseObject.getResponseText().trim()}.<br>");
+					
+					message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
+					
+					message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
+					
+					if (ifInverseCase) {
+						
+						reportGenerator.setLogStatusFAIL(message);
+						
+						throw new RuntimeException(message);
+					}
+					else{
+						
+						reportGenerator.setLogStatusINFO(message);
+						
+						return String.valueOf(responseObject.getResponseText().trim());
+					}
+				}
+			}			
+			
+			// **********************************************************
+			// Convert/Parse response content body into JSonParser Object
+			// **********************************************************
+			
 			jsonParser = Json.createParser(responseObject.getBodyContent().getInputStream());
 
 			if (mapResponseBodyKeyAndValue == null) {
@@ -121,9 +195,7 @@ public class CommonAction {
 
 				mapResponseBody.clear();
 			}
-			
-			println responseObject.getResponseText();
-			
+
 			while(jsonParser.hasNext()){
 
 				jasonParserEvent = jsonParser.next();
@@ -226,12 +298,37 @@ public class CommonAction {
 					//System.out.println("\nFinal de Arreglo\n");
 				}
 			}
+			
+			message += String.valueOf("<br>Obtuvo la siguiente respuesta:<br><br>");
+			
+			for(Map<String, String> contentBodyMap : mapResponseBody){
+				
+				for(String key : contentBodyMap.keySet()){
+					
+					message += key + " : " + contentBodyMap.get(key) + "<br>";
+				}
+			}
+			
+			message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
+			
+			message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
+			
+			reportGenerator.setLogStatusINFO(message);
 		}
 		else{
+
+			message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
 			
-			errorMessage = String.valueOf("El API: ${apiPath} lanzo el codigo de respuesta HTTP: " + responseObject.getStatusCode());
+			message += String.valueOf("<br>Mostrando el mensaje: <b>${responseObject.getResponseText()}</b>.");
 			
-			throw new RuntimeException(errorMessage);
+			if (ifInverseCase) {
+				
+				reportGenerator.setLogStatusPASS(message);
+			}
+			else{
+				
+				throw new RuntimeException(message);
+			}
 		}
 
 		return mapResponseBody;
@@ -247,17 +344,17 @@ public class CommonAction {
 
 		return requestObject.getRestUrl();
 	}
-	
+
 	/**
 	 * Get the path of the project in a String type.
 	 * 
 	 * @return String
 	 */
 	public static String getProjectpath() {
-		
+
 		return projectPath;
 	}
-	
+
 	/**
 	 * Get the actual time in the specific format.
 	 * 
@@ -265,26 +362,26 @@ public class CommonAction {
 	 * @return String
 	 */
 	public String getActualTimeInSpecificFormat(String timeFormat){
-		
+
 		if (date == null) {
-			
+
 			date = new Date();
 		}
-		
+
 		if (simpleDateFormat == null) {
-			
+
 			simpleDateFormat = new SimpleDateFormat();
-			
+
 			simpleDateFormat.applyPattern(timeFormat);
 		}
 		else{
-			
+
 			simpleDateFormat.applyPattern(timeFormat);
 		}
-		
+
 		simpleDateFormat.format(date);
 	}
-	
+
 	/**
 	 * Get the actual date in the specific format.
 	 *
@@ -292,23 +389,28 @@ public class CommonAction {
 	 * @return String
 	 */
 	public String getActualDateInSpecificFormat(String dateFormat){
-		
+
 		if (date == null) {
-			
+
 			date = new Date();
 		}
-		
+
 		if (simpleDateFormat == null) {
-			
+
 			simpleDateFormat = new SimpleDateFormat();
-			
+
 			simpleDateFormat.applyPattern(dateFormat);
 		}
 		else{
-			
+
 			simpleDateFormat.applyPattern(dateFormat);
 		}
-		
+
 		simpleDateFormat.format(date);
+	}
+	
+	public String getApiPath() {
+		
+		return apiPath;
 	}
 }

@@ -48,7 +48,8 @@ CommonAction commonAction = CommonAction.getUniqueIntance();
 //***************
 // APIs Variables
 //***************
-ArrayList<Map<String, String>> responseContent = null;
+ArrayList<Map<String, String>> responseContentMap = null;
+String responseContentString = null;
 ResponseObject responseObject = null;
 Map<String, String> queryResult = null;
 
@@ -215,11 +216,11 @@ try {
 	//*********************************
 	
 	// Consultamos el API
-	responseContent = commonAction.getResponseContentIntoMap(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]));
+	responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]));
 	
 	println "\n" + "Informacion del Afiliado Obtenida de API" + "\n";
 	
-	for(Map<String, String> APIsconsultContent : responseContent){
+	for(Map<String, String> APIsconsultContent : responseContentMap){
 		
 		for(String key : APIsconsultContent.keySet()){
 			
@@ -230,16 +231,16 @@ try {
 	println "\n";
 	
 	verifyCodeAndService:
-	for(int i = 0; responseContent.size(); i++){
+	for(int i = 0; responseContentMap.size(); i++){
 		
-		if (responseContent.get(i).get(Keyword.KEY_IDENTIFICACION.value).equals(numeroDocumentoAfiliado)) {
+		if (responseContentMap.get(i).get(Keyword.KEY_IDENTIFICACION.value).equals(numeroDocumentoAfiliado)) {
 			
 			KeywordUtil.markPassed(String.valueOf("El API /api/Afiliado presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
 			
 			break verifyCodeAndService;
 		}
 			
-		if ( i == (responseContent.size() - 1) ) {
+		if ( i == (responseContentMap.size() - 1) ) {
 			
 			KeywordUtil.markFailed(String.valueOf("El API /api/Afiliado no presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
 		}
@@ -251,9 +252,9 @@ try {
 	
 	String nombrePrestadorAPI = null;
 	
-	responseContent = commonAction.getResponseContentIntoMap(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]));
+	responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]));
 	
-	for (Map<String, String> mapKeyAndValue : responseContent) {
+	for (Map<String, String> mapKeyAndValue : responseContentMap) {
 		
 		nombrePrestadorAPI = mapKeyAndValue.get(Keyword.KEY_NOMBRE.value);
 	}
@@ -272,20 +273,20 @@ try {
 	// API de consulta de # Prestador Servicios
 	//******************************************
 	
-	responseContent = commonAction.getResponseContentIntoMap(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud]));
+	responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud]));
 	
 	verifyCodeAndService:
-	for(int i = 0; responseContent.size(); i++){
+	for(int i = 0; responseContentMap.size(); i++){
 		
-		if (responseContent.get(i).get(Keyword.KEY_CODIGO.value).equals(codigoServicioPrestadorSalud)
-			&& responseContent.get(i).get(Keyword.KEY_DESCRIPCION.value).equals(nombreServicioBD)) {
+		if (responseContentMap.get(i).get(Keyword.KEY_CODIGO.value).equals(codigoServicioPrestadorSalud)
+			&& responseContentMap.get(i).get(Keyword.KEY_DESCRIPCION.value).equals(nombreServicioBD)) {
 			
 			KeywordUtil.markPassed(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
 			
 			break verifyCodeAndService;
 		}
 			
-		if ( i == (responseContent.size() - 1) ) {
+		if ( i == (responseContentMap.size() - 1) ) {
 			
 			KeywordUtil.markFailed(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} no contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
 		}
@@ -296,35 +297,25 @@ try {
 	// API de consulta de Autorizacion Portal Validar Cobertura
 	//**********************************************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('Authorization/AutorizacionPortalValidarCobertura', [
+	responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalValidarCobertura', [
 		'codigoUsuario' : numeroAfiliado,
 		'idInteraccion' : '0',
 		'codigoPrestadorSalud' : codigoPrestadorSalud,
 		'codigoSucursalPrestadorSalud' : codigoSucursal,
 		'numeroAfiliado' : numeroAfiliado,
-		'codigoServicio' : codigoServicioPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
+		'codigoServicio' : codigoServicioPrestadorSalud]));
 	
-	String idInteraccion = responseObject.getResponseText().trim();
+	String idInteraccion = responseContentString;
 	
 	println "\n\n" + "idInteraccion: " + idInteraccion + "\n\n";
 	
 	//**********************************************************
 	// API de consulta de Autorizacion Portal Campos Requeridos
 	//**********************************************************
-	 
-	responseObject = WS.sendRequestAndVerify( findTestObject('Authorization/AutorizacionPortalCamposRequeridos', [
+	
+	responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalCamposRequeridos', [
 		'codigoUsuario' : numeroAfiliado,
-		'idInteraccion' : idInteraccion]) , FailureHandling.STOP_ON_FAILURE);
-	
-	// Validamos el codigo de respuesta (debe ser 200)
-	if (responseObject.getStatusCode().equals(200)) {
-		
-		KeywordUtil.markPassed(String.valueOf("El API dio codigo de estado 200"));
-		 
-	}else{
-	
-		KeywordUtil.markFailed(String.valueOf("El API dio codigo de estado ${responseObject.getStatusCode()}"));
-	}
+		'idInteraccion' : idInteraccion]));
 	
 	// Consulta Diagnostico
 	
@@ -355,9 +346,9 @@ try {
 	
 	String nombreDiagnosticoAPI = null;
 	
-	responseContent = commonAction.getResponseContentIntoMap(findTestObject('Consult/ConsultarDiagnosticos', ['descripcion' : codigoDiagnosticoBD]));
+	responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('Consult/ConsultarDiagnosticos', ['descripcion' : codigoDiagnosticoBD]));
 	
-	for (Map<String, String> mapKeyAndValue : responseContent) {
+	for (Map<String, String> mapKeyAndValue : responseContentMap) {
 		
 		nombreDiagnosticoAPI = mapKeyAndValue.get(Keyword.KEY_DESCRIPCION.value);
 	}
@@ -380,7 +371,7 @@ try {
 	SimpleDateFormat formatoFecha = new SimpleDateFormat("MM-dd-yyyy");	
 	Date fecha = new Date();
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('Authorization/AutorizacionPortalIngresar', [
+	responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalIngresar', [
 		'codigoUsuario' : numeroAfiliado,
 		'idInteraccion' : idInteraccion,
 		'fecha' : formatoFecha.format(fecha),
@@ -388,19 +379,9 @@ try {
 		'telefono' : '8091112222',
 		'email' : 'prueba@prueba.com',
 		'codigoDiagnostico' : codigoDiagnosticoBD,
-		'observacion' : nombreDiagnosticoBD]), FailureHandling.STOP_ON_FAILURE);
-	 
-	println "\n\n" + "API de Autorizacion Portal Ingresar: " + responseObject.getResponseText().trim() + "\n\n";
-	 
-	 // Validamos el codigo de respuesta (debe ser 200)
-	 if (responseObject.getStatusCode().equals(200)) {
-		 
-		 KeywordUtil.markPassed(String.valueOf("API de Autorizacion Portal Ingresar dio codigo de estado 200"));
-		  
-	 }else{
-	 
-		 KeywordUtil.markFailed(String.valueOf("API de Autorizacion Portal Ingresar dio codigo de estado ${responseObject.getStatusCode()}"));
-	 }
+		'observacion' : nombreDiagnosticoBD]));
+	
+	println "\n\n" + "API de Autorizacion Portal Ingresar: " + responseContentString + "\n\n";
 	 
 	 /*
 	  * Consulta Procedimiento Por Prestador
@@ -440,12 +421,12 @@ try {
 	  
 	 String descripcionPrestacionAPI = null;
 	  
-	  responseContent = commonAction.getResponseContentIntoMap(findTestObject('Authorization/AutorizacionPortalPrestadorSaludProcedimientos', [
+	  responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalPrestadorSaludProcedimientos', [
 		  'codigoUsuario' : numeroAfiliado,
 		  'idInteraccion' : idInteraccion,
 		  'descripcion' : codigoPrestacion]));
 	  
-	  for (Map<String, String> mapKeyAndValue : responseContent) {
+	  for (Map<String, String> mapKeyAndValue : responseContentMap) {
 		  
 		  descripcionPrestacionAPI = mapKeyAndValue.get(Keyword.KEY_DESCRIPCION.value);
 	  }
@@ -466,9 +447,9 @@ try {
 	  
 	  descripcionPrestacionAPI = null;
 	  
-	  responseContent = commonAction.getResponseContentIntoMap(findTestObject('Consult/ConsultarProcedimientos', ['descripcion' : codigoPrestacion]));
+	  responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('Consult/ConsultarProcedimientos', ['descripcion' : codigoPrestacion]));
 	  
-	  for (Map<String, String> mapKeyAndValue : responseContent) {
+	  for (Map<String, String> mapKeyAndValue : responseContentMap) {
 		  
 		  descripcionPrestacionAPI = mapKeyAndValue.get(Keyword.KEY_DESCRIPCION.value);
 	  }
@@ -489,26 +470,26 @@ try {
 	  
 	  String montoProcedimiento = null;
 	  
-	  responseObject = WS.sendRequestAndVerify(findTestObject('Authorization/AutorizacionPortalTarifaProcedimiento', [
+	  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalTarifaProcedimiento', [
 		  'codigoUsuario' : numeroAfiliado,
 		  'idInteraccion' : idInteraccion,
-		  'codigoProcedimiento' : codigoPrestacion]), FailureHandling.STOP_ON_FAILURE);
+		  'codigoProcedimiento' : codigoPrestacion]));
 	  
-	  montoProcedimiento = responseObject.getResponseText().trim();
+	  montoProcedimiento = responseContentString;
 	  
 	  println "\n\n" + "Monto Procedimiento: " + montoProcedimiento + "\n\n";	  
 	  
 	  //**********************************************************
 	  // API de Autorizacion Portal Autorizar: Investigar cuando APIs no responde con cuerpo JSON
 	  //**********************************************************
-	   
-	  responseObject = WS.sendRequestAndVerify(findTestObject('Authorization/AutorizacionPortalAutorizar', [
+	  
+	  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAutorizar', [
 		  'codigoUsuario' : numeroAfiliado,
 		  'idInteraccion' : idInteraccion,
 		  'Codigo' : codigoPrestacion,
-		  'Valor' : montoProcedimiento]), FailureHandling.STOP_ON_FAILURE);
+		  'Valor' : montoProcedimiento]));
 	  
-	  String codigoAutorizacion = responseObject.getResponseText().trim();
+	  String codigoAutorizacion = responseContentString;
 	  
 	  println "\n\n" + "Codigo Autorizacion: " + codigoAutorizacion + "\n\n";
 	  
