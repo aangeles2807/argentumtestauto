@@ -179,7 +179,8 @@ try {
 	String codigoServicioPrestadorSalud;
 	String nombrePrestadorBD = null;
 	String nombreServicioBD = null;
-	
+	String codigoSucursal = null;
+
 	//IPSCODSUP
 	codigoPrestadorSalud = queryResult.get("IPSCODSUP");
 	
@@ -191,13 +192,17 @@ try {
 	
 	// SERIPSNOM
 	nombreServicioBD = queryResult.get("SERIPSNOM");
+
+	//IPSSUCCOD
+	codigoSucursal = queryResult.get("IPSSUCCOD");
 	
 	println "\n\n" + 
 			"Codigo Cobertura: " + codigoCobertura + "\n" +
 			"Codigo Prestador Salud: " + codigoPrestadorSalud + "\n" +
 			"Codigo De Servicio De Prestador Salud: " + codigoServicioPrestadorSalud +  "\n" +
 			"Nombre Prestador: " + nombrePrestadorBD + "\n" + 
-			"Nombre Servicio: " + nombreServicioBD +
+			"Nombre Servicio: " + nombreServicioBD + "\n" + 
+			"Codigo Sucursal: " + codigoSucursal +
 			"\n\n";
 	
 	//*********************************
@@ -290,7 +295,7 @@ try {
 		'codigoUsuario' : numeroAfiliado,
 		'idInteraccion' : '0',
 		'codigoPrestadorSalud' : codigoPrestadorSalud,
-		'codigoSucursalPrestadorSalud' : '0',
+		'codigoSucursalPrestadorSalud' : codigoSucursal,
 		'numeroAfiliado' : numeroAfiliado,
 		'codigoServicio' : codigoServicioPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
 	
