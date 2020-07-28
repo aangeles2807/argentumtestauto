@@ -33,6 +33,7 @@ import helper.CommonAction
 import helper.DBConnection
 import helper.Keyword
 import helper.QueryTemplate
+import helper.ReportGenerator
 import internal.GlobalVariable as GlobalVariable
 
 //********************
@@ -44,6 +45,7 @@ DBConnection dbConnection = null;
 // Helper Variables
 //*****************
 CommonAction commonAction = CommonAction.getUniqueIntance();
+ReportGenerator reportGenerator = null;
 
 //***************
 // APIs Variables
@@ -57,8 +59,8 @@ Map<String, String> queryResult = null;
 
 try {
 	
-	// Instanciamos la clase de conexion a la base de datos
 	dbConnection = DBConnection.getDBConnectionUniqueIntance();
+	reportGenerator = ReportGenerator.getUniqueIntance();
 	
 	if (tipoAfiliado.toString().equals(Keyword.AFILIADO_MPP.value)) {
 		
@@ -231,6 +233,7 @@ try {
 		if (responseContentMap.get(i).get(Keyword.KEY_IDENTIFICACION.value).equals(numeroDocumentoAfiliado)) {
 			
 			KeywordUtil.markPassed(String.valueOf("El API /api/Afiliado presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
+			reportGenerator.setLogStatusPASS(String.valueOf("El API /api/Afiliado presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
 			
 			break verifyCodeAndService;
 		}
@@ -238,6 +241,7 @@ try {
 		if ( i == (responseContentMap.size() - 1) ) {
 			
 			KeywordUtil.markFailed(String.valueOf("El API /api/Afiliado no presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
+			reportGenerator.setLogStatusFAIL(String.valueOf("El API /api/Afiliado no presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
 		}
 	}
 	
@@ -258,17 +262,19 @@ try {
 	if (nombrePrestadorAPI.equals(nombrePrestadorBD)) {
 		
 		KeywordUtil.markPassed(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
+		reportGenerator.setLogStatusPASS(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
 		 
 	}else{
 	
 		KeywordUtil.markFailed(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
+		reportGenerator.setLogStatusFAIL(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
 	}
 	
 	//******************************************
 	// API de consulta de # Prestador Servicios
 	//******************************************
 	
-	responseContentMap = commonAction.getResponseContentIntoMapOrString(commonAction.getRequestURL(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
+	responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud]));
 	
 	verifyCodeAndService:
 	for(int i = 0; responseContentMap.size(); i++){
@@ -277,6 +283,7 @@ try {
 			&& responseContentMap.get(i).get(Keyword.KEY_DESCRIPCION.value).equals(nombreServicioBD)) {
 			
 			KeywordUtil.markPassed(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
+			reportGenerator.setLogStatusPASS(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
 			
 			break verifyCodeAndService;
 		}
@@ -284,6 +291,7 @@ try {
 		if ( i == (responseContentMap.size() - 1) ) {
 			
 			KeywordUtil.markFailed(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} no contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
+			reportGenerator.setLogStatusFAIL("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} no contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}.");
 		}
 	}
 	
@@ -301,12 +309,6 @@ try {
 		'codigoSucursalPrestadorSalud' : codigoSucursal,
 		'numeroAfiliado' : numeroAfiliado,
 		'codigoServicio' : codigoServicioPrestadorSalud]), true);
-	
-	idInteraccion = responseContentString;
-	
-	println "\n\n" + "idInteraccion: " + idInteraccion + "\n\n";
-	
-	println "\n\n" + "Status API Code: " + responseObject.getStatusCode() + "\n\n";
 	
 	/*
 	responseObject = WS.sendRequestAndVerify(findTestObject('Authorization/AutorizacionPortalValidarCobertura', [
@@ -335,22 +337,7 @@ try {
 	
 } catch (Exception e) {
 
-	//KeywordUtil.markError(e.getMessage());
-}
-finally{
-	
-	if (dbConnection.getResultSet() != null) {
-		
-		dbConnection.getResultSet().close()
-	}
-	
-	if (dbConnection.getStatement() != null) {
-		
-		dbConnection.getConnection().close()
-	}
-	
-	if (dbConnection.getConnection() != null) {
-		
-		dbConnection.getConnection().close()
-	}
+	KeywordUtil.markError(e.getMessage());
+
+	reportGenerator.setLogStatusFAIL(e.getMessage());
 }

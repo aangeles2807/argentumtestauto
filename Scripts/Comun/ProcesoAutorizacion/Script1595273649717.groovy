@@ -33,12 +33,14 @@ import helper.CommonAction
 import helper.DBConnection
 import helper.Keyword
 import helper.QueryTemplate
+import helper.ReportGenerator
 import internal.GlobalVariable as GlobalVariable
 
 //********************
 // Data Base Variables
 //********************
 DBConnection dbConnection = null;
+ReportGenerator reportGenerator = null;
 
 //*****************
 // Helper Variables
@@ -55,8 +57,8 @@ Map<String, String> queryResult = null;
 
 try {
 	
-	// Instanciamos la clase de conexion a la base de datos
 	dbConnection = DBConnection.getDBConnectionUniqueIntance();
+	reportGenerator = ReportGenerator.getUniqueIntance();
 	
 	if (tipoAfiliado.toString().equals(Keyword.AFILIADO_MPP.value)) {
 		
@@ -236,6 +238,7 @@ try {
 		if (responseContentMap.get(i).get(Keyword.KEY_IDENTIFICACION.value).equals(numeroDocumentoAfiliado)) {
 			
 			KeywordUtil.markPassed(String.valueOf("El API /api/Afiliado presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
+			reportGenerator.setLogStatusPASS(String.valueOf("El API /api/Afiliado presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
 			
 			break verifyCodeAndService;
 		}
@@ -243,6 +246,7 @@ try {
 		if ( i == (responseContentMap.size() - 1) ) {
 			
 			KeywordUtil.markFailed(String.valueOf("El API /api/Afiliado no presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
+			reportGenerator.setLogStatusFAIL(String.valueOf("El API /api/Afiliado no presento el numero Documento Afiliado ${numeroDocumentoAfiliado}"));
 		}
 	}
 	
@@ -263,10 +267,12 @@ try {
 	if (nombrePrestadorAPI.equals(nombrePrestadorBD)) {
 		
 		KeywordUtil.markPassed(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
+		reportGenerator.setLogStatusPASS(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
 		 
 	}else{
 	
 		KeywordUtil.markFailed(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
+		reportGenerator.setLogStatusFAIL(String.valueOf("El API presento el nombre del prestador ${nombrePrestadorAPI} y la Base de Datos ${nombrePrestadorBD}"));
 	}
 	
 	//******************************************
@@ -282,6 +288,7 @@ try {
 			&& responseContentMap.get(i).get(Keyword.KEY_DESCRIPCION.value).equals(nombreServicioBD)) {
 			
 			KeywordUtil.markPassed(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
+			reportGenerator.setLogStatusPASS(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
 			
 			break verifyCodeAndService;
 		}
@@ -289,6 +296,7 @@ try {
 		if ( i == (responseContentMap.size() - 1) ) {
 			
 			KeywordUtil.markFailed(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} no contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
+			reportGenerator.setLogStatusFAIL(String.valueOf("El API /api/PrestadorSalud/Servicios mediante la consulta del codigo prestador ${codigoPrestadorSalud} no contiene el el codigo ${codigoServicioPrestadorSalud} con el servicio ${nombreServicioBD}."));
 		}
 	}
 	
@@ -358,10 +366,12 @@ try {
 	if (nombreDiagnosticoAPI.equals(nombreDiagnosticoBD)) {
 		  
 		  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
+		  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
 		   
 	 }else{
 	  
 		  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
+		  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
 	 }
 	
 	//**********************************************************
@@ -435,10 +445,12 @@ try {
 	  if (descripcionPrestacionAPI.equals(descripcionPrestacionBD)) {
 		  
 		  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+		  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
 		   
 	  }else{
 	  
 		  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+		  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
 	  }
 	  
 	  //********************************
@@ -458,10 +470,12 @@ try {
 	  if (descripcionPrestacionAPI.equals(descripcionPrestacionBD)) {
 		  
 		  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+		  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
 		   
 	  }else{
 	  
 		  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+		  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
 	  }
 	  
 	  //************************************************
@@ -496,21 +510,6 @@ try {
 } catch (Exception e) {
 
 	KeywordUtil.markError(e.getMessage());
-}
-finally{
 	
-	if (dbConnection.getResultSet() != null) {
-		
-		dbConnection.getResultSet().close()
-	}
-	
-	if (dbConnection.getStatement() != null) {
-		
-		dbConnection.getConnection().close()
-	}
-	
-	if (dbConnection.getConnection() != null) {
-		
-		dbConnection.getConnection().close()
-	}
+	reportGenerator.setLogStatusFAIL(e.getMessage());
 }

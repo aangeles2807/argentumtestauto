@@ -78,9 +78,9 @@ public class DBConnection {
 	 * @return - A Map of String (Key or Column) and String (Value or Cell). 
 	 */
 	public Map<String, String> executeQueryAndGetResult(String queryName, String queryToExecute){
-		
+
 		reportGenerator = ReportGenerator.getUniqueIntance();
-		
+
 		//println "\n\n" + queryToExecute + "\n\n";
 
 		if(queryResult == null){
@@ -134,26 +134,26 @@ public class DBConnection {
 		}
 
 		resultSetMetaData = null;
-		
+
 		// **************
 		// Report message
-		// ************** 
-		
+		// **************
+
 		message = String.valueOf("El query <b>${queryName}</b>, el cual ejecuta la siguiente sentencia en la Base de Datos:<br>");
-		
+
 		message += String.valueOf("<br>${queryToExecute}<br>");
-		
+
 		message += String.valueOf("<br>Obtuvo la siguiente información:<br><br>");
-		
+
 		for(String key : queryResult.keySet()){
-				
+
 			message += key + " : " + queryResult.get(key) + "<br>";
 		}
-		
+
 		message += String.valueOf("<br>En un lapso de tiempo de <b>${interval.getSeconds()} segundo(s)</b>.<br><br>");
-		
-		message += String.valueOf("<b>Observación: Este tiempo es medido desde que se ejecuta la consulta/query hasta que se recibe la respuesta.</b>");
-		
+
+		//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se ejecuta la consulta/query hasta que se recibe la respuesta.</b>");
+
 		reportGenerator.setLogStatusINFO(message);
 
 		return queryResult;

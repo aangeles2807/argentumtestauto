@@ -65,7 +65,25 @@ class TestListener {
 		
 		//if(dbConnection.getConnectionvariable() == null){dbConnection.close(dbConnection.getConnectionvariable());}
 		
-		if (testSuiteName == null) {reportGenerator.generateReport();}
+		if (testSuiteName == null) {
+			
+			if (dbConnection.getResultSet() != null) {
+				
+				dbConnection.getResultSet().close()
+			}
+			
+			if (dbConnection.getStatement() != null) {
+				
+				dbConnection.getConnection().close()
+			}
+			
+			if (dbConnection.getConnection() != null) {
+				
+				dbConnection.getConnection().close()
+			}
+			
+			reportGenerator.generateReport();
+		}
 	}
 
 	/**
@@ -93,8 +111,21 @@ class TestListener {
 	def sampleAfterTestSuite(TestSuiteContext testSuiteContext) {
 		println testSuiteContext.getTestSuiteId()
 		
-		//if(dbConnection.getConnectionvariable() == null){dbConnection.close(dbConnection.getConnectionvariable());}
+		if (dbConnection.getResultSet() != null) {
+			
+			dbConnection.getResultSet().close()
+		}
 		
-		//reportGenerator.generateReport();
+		if (dbConnection.getStatement() != null) {
+			
+			dbConnection.getConnection().close()
+		}
+		
+		if (dbConnection.getConnection() != null) {
+			
+			dbConnection.getConnection().close()
+		}
+		
+		reportGenerator.generateReport();
 	}
 }

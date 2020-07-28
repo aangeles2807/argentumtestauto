@@ -48,7 +48,6 @@ public class CommonAction {
 	private String message;
 
 	public CommonAction(){
-
 	}
 
 	// Singleton Pattern
@@ -77,10 +76,10 @@ public class CommonAction {
 	 * @return Object - can be an ArrayList<Map<String, String>> or String.
 	 */
 	public Object getResponseContentIntoMapOrString(RequestObject requestObject){
-		
+
 		return getResponseContentIntoMapOrString(requestObject, false);
 	}
-	
+
 	/**
 	 * 
 	 * Can get one of two objects types:
@@ -93,7 +92,7 @@ public class CommonAction {
 	 * @return Object - can be an ArrayList<Map<String, String>> or String.
 	 */
 	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean ifInverseCase){
-		
+
 		reportGenerator = ReportGenerator.getUniqueIntance();
 
 		// ****************
@@ -112,70 +111,68 @@ public class CommonAction {
 				apiPath += "/" + requestObject.getRestUrl().split("/")[i].substring(0, requestObject.getRestUrl().split("/")[i].indexOf("?"));
 			}
 		}
-		
+
 		// *************************
 		// Generate template message
 		// *************************
-		
+
 		message = String.valueOf("El servicio web: <b>${apiPath}</b> que fue consultado con el/los parametro(s): <br><br>");
-		
+
 		for (String key in requestObject.getVariables().keySet()) {
-			
+
 			if (!key.equals("GlobalVariable")) {
-				
+
 				message += String.valueOf("${key} : ${requestObject.getVariables().get(key)}<br>");
 			}
 		}
-		
+
 		// ***************************************
 		// Consult API and get the response object
 		// ***************************************
-		
+
 		responseObject = WS.sendRequestAndVerify(requestObject, FailureHandling.STOP_ON_FAILURE);
-		
+
 		// ********************
 		// Verify response code
 		// ********************
-		
+
 		if (responseObject.getStatusCode() == 200) {
-			
+
 			// *******************************************************
 			// Verify if response body is in JSon format or plain text
 			// *******************************************************
-			
-			try {
-				
-				Json.createParser(responseObject.getBodyContent().getInputStream()).next();
-			}
-			catch (Exception e) {
-				
-				if (e.getMessage().contains("Expected Tokens [CURLYOPEN, SQUAREOPEN]")) {
-					
-					message += String.valueOf("<br>Obtuvo la siguiente respuesta: ${responseObject.getResponseText().trim()}.<br>");
-					
-					message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
-					
-					message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
-					
-					if (ifInverseCase) {
-						
-						reportGenerator.setLogStatusFAIL(message);
-						
-						throw new RuntimeException(message);
-					}
-					else{
-						
-						reportGenerator.setLogStatusINFO(message);
-						
-						return String.valueOf(responseObject.getResponseText().trim());
-					}
+
+			if (apiPath.equals("/api/Autorizacion/Portal/ValidarCobertura") ||
+			apiPath.equals("/api/Autorizacion/Portal/Ingresar") ||
+			apiPath.equals("/api/Autorizacion/Portal/TarifaProcedimiento") ||
+			apiPath.equals("/api/Autorizacion/Portal/Autorizar")) {
+
+				message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
+
+				message += String.valueOf("<br>Obtuvo la siguiente respuesta: ${responseObject.getResponseText().trim()}.<br>");
+
+				message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
+
+				//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
+
+				if (ifInverseCase) {
+
+					reportGenerator.setLogStatusFAIL(message);
+
+					throw new RuntimeException(message);
 				}
-			}			
-			
+				else{
+
+					reportGenerator.setLogStatusINFO(message);
+
+					return String.valueOf(responseObject.getResponseText().trim());
+				}
+			}
+
 			// **********************************************************
 			// Convert/Parse response content body into JSonParser Object
 			// **********************************************************
-			
+
 			jsonParser = Json.createParser(responseObject.getBodyContent().getInputStream());
 
 			if (mapResponseBodyKeyAndValue == null) {
@@ -298,35 +295,37 @@ public class CommonAction {
 					//System.out.println("\nFinal de Arreglo\n");
 				}
 			}
-			
+
+			message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
+
 			message += String.valueOf("<br>Obtuvo la siguiente respuesta:<br><br>");
-			
+
 			for(Map<String, String> contentBodyMap : mapResponseBody){
-				
+
 				for(String key : contentBodyMap.keySet()){
-					
+
 					message += key + " : " + contentBodyMap.get(key) + "<br>";
 				}
 			}
-			
+
 			message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
-			
-			message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
-			
+
+			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
+
 			reportGenerator.setLogStatusINFO(message);
 		}
 		else{
 
 			message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
-			
+
 			message += String.valueOf("<br>Mostrando el mensaje: <b>${responseObject.getResponseText()}</b>.");
-			
+
 			if (ifInverseCase) {
-				
+
 				reportGenerator.setLogStatusPASS(message);
 			}
 			else{
-				
+
 				throw new RuntimeException(message);
 			}
 		}
@@ -408,9 +407,9 @@ public class CommonAction {
 
 		simpleDateFormat.format(date);
 	}
-	
+
 	public String getApiPath() {
-		
+
 		return apiPath;
 	}
 }
