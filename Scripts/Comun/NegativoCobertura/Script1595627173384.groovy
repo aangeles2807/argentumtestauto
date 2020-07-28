@@ -65,9 +65,7 @@ try {
 		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s) 
-		tipoAfiliado = QueryTemplate.afiliadoMPP.render().toString();
-		
-		println tipoAfiliado;
+		tipoAfiliado = QueryTemplate.afiliadoMPP.render().toString();		
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 		QueryTemplate.afiliadoMPP.remove("conditions");
@@ -181,7 +179,6 @@ try {
 	String codigoServicioPrestadorSalud;
 	String nombrePrestadorBD = null;
 	String nombreServicioBD = null;
-	String codigoSucursal = null;
 	
 	//IPSCODSUP
 	codigoPrestadorSalud = queryResult.get("IPSCODSUP");
@@ -195,16 +192,12 @@ try {
 	// SERIPSNOM
 	nombreServicioBD = queryResult.get("SERIPSNOM");
 	
-	//IPSSUCCOD
-	codigoSucursal = queryResult.get("IPSSUCCOD");
-	
 	println "\n\n" + 
 			"Codigo Cobertura: " + codigoCobertura + "\n" +
 			"Codigo Prestador Salud: " + codigoPrestadorSalud + "\n" +
 			"Codigo De Servicio De Prestador Salud: " + codigoServicioPrestadorSalud +  "\n" +
 			"Nombre Prestador: " + nombrePrestadorBD + "\n" + 
-			"Nombre Servicio: " + nombreServicioBD + "\n" + 
-			"Codigo Sucursal: " + codigoSucursal +
+			"Nombre Servicio: " + nombreServicioBD +
 			"\n\n";
 	
 	//*********************************
@@ -212,11 +205,9 @@ try {
 	//*********************************
 	
 	// Consultamos el API
-	responseObject = WS.sendRequestAndVerify(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]), FailureHandling.STOP_ON_FAILURE);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]));
 	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado])), Keyword.METHOD_GET.value);
-	
-	println "\n" + "Informacion del Afiliado" + "\n";
+	println "\n" + "Informacion del Afiliado Obtenida de API" + "\n";
 	
 	for(Map<String, String> APIsconsultContent : responseContent){
 		
@@ -248,11 +239,9 @@ try {
 	// API de consulta de # Prestador
 	//*******************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
-	
 	String nombrePrestadorAPI = null;
 	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]));
 	
 	for (Map<String, String> mapKeyAndValue : responseContent) {
 		
@@ -273,9 +262,7 @@ try {
 	// API de consulta de # Prestador Servicios
 	//******************************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
-	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
+	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestURL(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
 	
 	verifyCodeAndService:
 	for(int i = 0; responseContent.size(); i++){
@@ -303,7 +290,7 @@ try {
 		'codigoUsuario' : numeroAfiliado,
 		'idInteraccion' : '0',
 		'codigoPrestadorSalud' : codigoPrestadorSalud,
-		'codigoSucursalPrestadorSalud' : codigoSucursal,
+		'codigoSucursalPrestadorSalud' : '0',
 		'numeroAfiliado' : numeroAfiliado,
 		'codigoServicio' : codigoServicioPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
 	
