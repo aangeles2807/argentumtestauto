@@ -48,8 +48,6 @@ CommonAction commonAction = CommonAction.getUniqueIntance();
 //***************
 // APIs Variables
 //***************
-String numeroAfiliado = null;
-String tipoAfiliadoBD = null;
 ArrayList<Map<String, String>> responseContent = null;
 ResponseObject responseObject = null;
 Map<String, String> queryResult = null;
@@ -109,6 +107,8 @@ try {
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", tipoAfiliado);
 	}
 	
+	String numeroAfiliado = "";
+	String tipoAfiliadoBD = "";
 	String nombreAfiliadoBD = "";
 	String codigoCobertura = "";
 	String generoAfiliado = "";
@@ -145,7 +145,12 @@ try {
 	tipoAfiliadoBD = queryResult.get("PRONOM");
 	numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
 	
-	println "\n\n" + "Numero Afiliado: " + numeroAfiliado + "\n" + "Genero Afiliado: " + generoAfiliado + "\n" + "Tipo Afiliado: " + tipoAfiliadoBD  + "\n" + "Numero Documento Afiliado: " + numeroDocumentoAfiliado + "\n\n";
+	println "\n\n" + "Nombre Afiliado: " + nombreAfiliadoBD +
+			"\n" + "Numero Afiliado: " + numeroAfiliado +
+			"\n" + "Genero Afiliado: " + generoAfiliado +
+			"\n" + "Tipo Afiliado: " + tipoAfiliadoBD  +
+			"\n" + "Numero Documento Afiliado: " + numeroDocumentoAfiliado +
+			"\n\n";
 	
 	/*
 	 * 
@@ -205,9 +210,19 @@ try {
 	//*********************************
 	
 	// Consultamos el API
-	responseObject = WS.sendRequestAndVerify(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]), FailureHandling.STOP_ON_FAILURE);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]));
 	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado])), Keyword.METHOD_GET.value);
+	println "\n" + "Informacion del Afiliado Obtenida de API" + "\n";
+	
+	for(Map<String, String> APIsconsultContent : responseContent){
+		
+		for(String key : APIsconsultContent.keySet()){
+			
+			println key + " : " + APIsconsultContent.get(key);
+		}
+	}
+	
+	println "\n";
 	
 	verifyCodeAndService:
 	for(int i = 0; responseContent.size(); i++){
@@ -229,11 +244,9 @@ try {
 	// API de consulta de # Prestador
 	//*******************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
-	
 	String nombrePrestadorAPI = null;
 	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]));
 	
 	for (Map<String, String> mapKeyAndValue : responseContent) {
 		
@@ -254,9 +267,7 @@ try {
 	// API de consulta de # Prestador Servicios
 	//******************************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
-	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud]));
 	
 	verifyCodeAndService:
 	for(int i = 0; responseContent.size(); i++){
@@ -337,11 +348,9 @@ try {
 	// API de Consultar Diagnosticos
 	//******************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('Consult/ConsultarDiagnosticos', ['descripcion' : codigoDiagnosticoBD]), FailureHandling.STOP_ON_FAILURE);
-	
 	String nombreDiagnosticoAPI = null;
 	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('Consult/ConsultarDiagnosticos', ['descripcion' : codigoDiagnosticoBD])), Keyword.METHOD_GET.value);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('Consult/ConsultarDiagnosticos', ['descripcion' : codigoDiagnosticoBD]));
 	
 	for (Map<String, String> mapKeyAndValue : responseContent) {
 		
@@ -424,17 +433,12 @@ try {
 	 // API de consulta de Autorizacion Portal Prestador Salud Procedimientos
 	 //**********************************************************************
 	  
-	 responseObject = WS.sendRequestAndVerify(findTestObject('Authorization/AutorizacionPortalPrestadorSaludProcedimientos', [
+	 String descripcionPrestacionAPI = null;
+	  
+	  responseContent = commonAction.getResponseContentIntoMap(findTestObject('Authorization/AutorizacionPortalPrestadorSaludProcedimientos', [
 		  'codigoUsuario' : numeroAfiliado,
 		  'idInteraccion' : idInteraccion,
-		  'descripcion' : codigoPrestacion]), FailureHandling.STOP_ON_FAILURE);
-	  
-	  String descripcionPrestacionAPI = null;
-	  
-	  responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('Authorization/AutorizacionPortalPrestadorSaludProcedimientos', [
-		  'codigoUsuario' : numeroAfiliado,
-		  'idInteraccion' : idInteraccion,
-		  'descripcion' : codigoPrestacion])), Keyword.METHOD_GET.value);
+		  'descripcion' : codigoPrestacion]));
 	  
 	  for (Map<String, String> mapKeyAndValue : responseContent) {
 		  
@@ -455,11 +459,9 @@ try {
 	  // API de Consultar Procedimientos
 	  //********************************
 	  
-	  responseObject = WS.sendRequestAndVerify(findTestObject('Consult/ConsultarProcedimientos', ['descripcion' : codigoPrestacion]), FailureHandling.STOP_ON_FAILURE);
-	  
 	  descripcionPrestacionAPI = null;
 	  
-	  responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('Consult/ConsultarProcedimientos', ['descripcion' : codigoPrestacion])), Keyword.METHOD_GET.value);
+	  responseContent = commonAction.getResponseContentIntoMap(findTestObject('Consult/ConsultarProcedimientos', ['descripcion' : codigoPrestacion]));
 	  
 	  for (Map<String, String> mapKeyAndValue : responseContent) {
 		  

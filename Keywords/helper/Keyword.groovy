@@ -21,10 +21,16 @@ import internal.GlobalVariable
 
 public enum Keyword {
 
+	// ************
 	// HTTP Methods
+	// ************
+	
 	METHOD_GET("GET"),
 
-	// Responses Key
+	// *****************
+	// API Responses Key
+	// *****************
+	
 	KEY_CODIGO("Codigo"),
 	KEY_DESCRIPCION("Descripcion"),
 	KEY_NUMERO("Numero"),
@@ -45,9 +51,10 @@ public enum Keyword {
 	KEY_VIENEDETRASPASO("VieneDeTraspaso"),
 	KEY_TIENEPBS("TienePBS"),
 
-	//********************
-	// Condiciones Query *
-	//********************
+	// ****************
+	// Query Conditions
+	// ****************
+	
 	AFILIADO_MPP_ACTIVO("AND Trim(ben.afibenestcod) IN ('A') "),
 	AFILIADO_MPP_INACTIVO("AND Trim(ben.afibenestcod) <> ('A') "),
 	AFILIADO_PBS_ACTIVO("AND trim(hij.afihijestcod) IN ('A') "),
@@ -65,10 +72,27 @@ public enum Keyword {
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
 
-	// Other
+	// **************	
+	// Affiliate Type
+	// **************
+	
 	AFILIADO_MPP("MPP"),
 	AFILIADO_PBS("PBS"),
 	AFILIADO("MPP o PBS"),
+	
+	// ******
+	// Report
+	// ******
+	
+	TEST_NAME("Test Name"),
+	//LOG_STATUS_ERROR("ERROR"),
+	//LOG_STATUS_FAIL("FAIL"),
+	//LOG_STATUS_FATAL("FATAL"),
+	//LOG_STATUS_INFO("INFO"),
+	//LOG_STATUS_PASS("PASS"),
+	//LOG_STATUS_SKIP("SKIP"),
+	//LOG_STATUS_UNKNOWN("UNKNOWN"),
+	//LOG_STATUS_WARNING("WARNING"),
 
 	// Attribute
 	public String value;

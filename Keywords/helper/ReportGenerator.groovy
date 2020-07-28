@@ -6,9 +6,6 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 
-import org.stringtemplate.v4.ST
-import org.stringtemplate.v4.compiler.STParser.ifstat_return
-
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.checkpoint.Checkpoint
 import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
@@ -34,8 +31,14 @@ public class ReportGenerator {
 	private CommonAction commonAction;
 	private String actualTime;
 	private String actualDate;
+	private ArrayList<Object> messageType;
+	private ArrayList<String> messageContent;
 
 	public ReportGenerator(){
+
+		messageType = new ArrayList<String>();
+
+		messageContent = new ArrayList<String>();
 	}
 
 	// Singleton Pattern
@@ -53,6 +56,67 @@ public class ReportGenerator {
 	}
 	//******************************************************************************
 
+	/**
+	 *
+	 * Set the name that will be shown in report.
+	 *
+	 * @param testName - Test name.
+	 */
+	public void setTestName(String testName){
+
+		messageType.add(helper.Keyword.TEST_NAME.value);
+
+		messageContent.add(testName);
+	}
+
+	public void setLogStatusINFO(String infoMessage){
+
+		messageType.add(LogStatus.INFO);
+		messageContent.add(infoMessage);
+	}
+
+	public void setLogStatusPASS(String passMessage){
+
+		messageType.add(LogStatus.PASS);
+		messageContent.add(passMessage);
+	}
+
+	public void setLogStatusWARNING(String warningMessage){
+
+		messageType.add(LogStatus.WARNING);
+		messageContent.add(warningMessage);
+	}
+
+	public void setLogStatusSKIP(String skipMessage){
+
+		messageType.add(LogStatus.SKIP);
+		messageContent.add(skipMessage);
+	}
+
+	public void setLogStatusERROR(String errorMessage){
+
+		messageType.add(LogStatus.ERROR);
+		messageContent.add(errorMessage);
+	}
+
+	public void setLogStatusFAIL(String failMessage){
+
+		messageType.add(LogStatus.FAIL);
+		messageContent.add(failMessage);
+	}
+
+	public void setLogStatusFATAL(String fatalMessage){
+
+		messageType.add(LogStatus.FATAL);
+		messageContent.add(fatalMessage);
+	}
+
+	public void setLogStatusUNKNOWN(String unknownMessage){
+
+		messageType.add(LogStatus.UNKNOWN);
+		messageContent.add(unknownMessage);
+	}
+
 	public void generateReport(){
 
 		commonAction = CommonAction.getUniqueIntance();
@@ -69,37 +133,63 @@ public class ReportGenerator {
 			extentReports.setFilePath(String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html"))
 		}
 
-		// Caso Prueba 1
+		for(int i = 0; i < messageType.size(); i++){
 
-		extentTest = extentReports.startTest("Prueba 1");
+			if (messageType.get(i) == helper.Keyword.TEST_NAME.value) {
 
-		extentTest.log(LogStatus.INFO, "El Querys: <br >" + QueryTemplate.afiliadoMPP.render().toString());
+				extentTest = extentReports.startTest(messageContent.get(i));
+			}
+			else if (messageType.get(i) == LogStatus.INFO) {
 
-		extentTest.log(LogStatus.PASS, "Prueba Exitosa 1");
+				extentTest.log(LogStatus.INFO, messageContent.get(i));
+			}
+			else if (messageType.get(i) == LogStatus.PASS) {
 
-		extentTest.log(LogStatus.PASS, "Prueba Exitosa 2");
+				extentTest.log(LogStatus.PASS, messageContent.get(i));
 
-		// Caso Prueba 2
+			}else if (messageType.get(i) == LogStatus.WARNING) {
 
-		extentTest = extentReports.startTest("Prueba 2");
+				extentTest.log(LogStatus.WARNING, messageContent.get(i));
 
-		extentTest.log(LogStatus.INFO, "El Querys: <br >" + QueryTemplate.afiliadoMPPoPBS.render().toString());
+			}else if (messageType.get(i) == LogStatus.SKIP) {
 
-		extentTest.log(LogStatus.PASS, "Prueba Exitosa 1");
+				extentTest.log(LogStatus.SKIP, messageContent.get(i));
 
-		extentTest.log(LogStatus.PASS, "Prueba Exitosa 2");
+			}else if (messageType.get(i) == LogStatus.ERROR) {
 
-		extentTest.log(LogStatus.ERROR, "Prueba Error 1");
+				extentTest.log(LogStatus.ERROR, messageContent.get(i));
+
+			}else if (messageType.get(i) == LogStatus.FAIL) {
+
+				extentTest.log(LogStatus.FAIL, messageContent.get(i));
+
+			}else if (messageType.get(i) == LogStatus.FATAL) {
+
+				extentTest.log(LogStatus.FATAL, messageContent.get(i));
+
+			}else if (messageType.get(i) == LogStatus.UNKNOWN) {
+
+				extentTest.log(LogStatus.UNKNOWN, messageContent.get(i));
+			}
+		}
 
 		extentReports.endTest(extentTest);
 
 		extentReports.flush();
+
+		extentReports = null;
+		extentTest = null;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 
-		ReportGenerator reportGenerator = ReportGenerator.getUniqueIntance();
+		Map<Object, String> mapObjectString = new HashMap<Object, String>();
 
-		reportGenerator.generateReport();
+		mapObjectString.put(LogStatus.INFO, "Hola");
+		mapObjectString.put(LogStatus.INFO, "Buen dia");
+
+		System.out.println(mapObjectString.size());
+
+		System.out.println(mapObjectString.get(LogStatus.INFO));
 	}
 }

@@ -205,11 +205,9 @@ try {
 	//*********************************
 	
 	// Consultamos el API
-	responseObject = WS.sendRequestAndVerify(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]), FailureHandling.STOP_ON_FAILURE);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado]));
 	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('Affiliate/Afiliado', ["descripcion" : numeroAfiliado])), Keyword.METHOD_GET.value);
-	
-	println "\n" + "Informacion del Afiliado" + "\n";
+	println "\n" + "Informacion del Afiliado Obtenida de API" + "\n";
 	
 	for(Map<String, String> APIsconsultContent : responseContent){
 		
@@ -241,11 +239,9 @@ try {
 	// API de consulta de # Prestador
 	//*******************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
-	
 	String nombrePrestadorAPI = null;
 	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
+	responseContent = commonAction.getResponseContentIntoMap(findTestObject('HealthProvider/PrestadorSalud', ['descripcion' : codigoPrestadorSalud]));
 	
 	for (Map<String, String> mapKeyAndValue : responseContent) {
 		
@@ -266,9 +262,7 @@ try {
 	// API de consulta de # Prestador Servicios
 	//******************************************
 	
-	responseObject = WS.sendRequestAndVerify(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud]), FailureHandling.STOP_ON_FAILURE);
-	
-	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestObjectURL(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
+	responseContent = commonAction.getResponseContentIntoMap(commonAction.getRequestURL(findTestObject('HealthProvider/PrestadorSaludServicios', ['codigoPrestadorSalud' : codigoPrestadorSalud])), Keyword.METHOD_GET.value);
 	
 	verifyCodeAndService:
 	for(int i = 0; responseContent.size(); i++){

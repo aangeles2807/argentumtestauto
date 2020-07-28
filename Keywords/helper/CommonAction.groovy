@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat
 import javax.json.Json
 import javax.json.stream.JsonParser
 import javax.json.stream.JsonParser.Event
+import javax.swing.JOptionPane
 
 import org.stringtemplate.v4.compiler.STParser.ifstat_return
 
@@ -22,6 +23,7 @@ import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testcase.TestCase
 import com.kms.katalon.core.testdata.TestData
 import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -38,14 +40,13 @@ public class CommonAction {
 	private String valor = null;
 	private Map<String, String> mapResponseBodyKeyAndValue = null;
 	private ArrayList<Map<String, String>> mapResponseBody = null;
-	private URL url;
-	private HttpURLConnection httpURLConnection;
 	private JsonParser jsonParser;
 	private Event jasonParserEvent;
-	private int responseCode;
 	private static final String projectPath = new File("").getAbsolutePath();
 	private Date date;
 	private SimpleDateFormat simpleDateFormat;
+	private ReportGenerator reportGenerator;
+	private ResponseObject responseObject;
 
 	public CommonAction(){
 
@@ -67,45 +68,22 @@ public class CommonAction {
 	//*************************************************************
 
 	/**
-	 *  Get an ArrayList of Map<String, String>, where each Map is the
-	 *  set of Keys and Value of response body of the URL consulted from API.
 	 * 
-	 * @param endPoint - The Rest API URL.
-	 * @param httpRestApiMethod - The http rest method (GET, POST, PUT, DELETE, etc.).
-	 * @return
+	 * Get an ArrayList of Map<String, String>, where each Map is the set of Keys and Value of response body of the URL consulted from API.
+	 * 
+	 * @param responseObject - Object with all response data from API.
+	 * @return ArrayList<Map<String, String>>
 	 */
-	public ArrayList<Map<String, String>> getResponseContentIntoMap(String endPoint, String httpRestApiMethod){
+	public ArrayList<Map<String, String>> getResponseContentIntoMap(RequestObject requestObject){
+		
+		reportGenerator = ReportGenerator.getUniqueIntance();
+		
+		responseObject = WS.sendRequestAndVerify(requestObject, FailureHandling.STOP_ON_FAILURE);
+		
+		// Verify response code
+		if (responseObject.getStatusCode() == 200) {
 
-		// Pass the desired URL as an object
-		url = new URL(String.valueOf(endPoint));
-
-		/*
-		 * Type cast the URL object into a HttpURLConnection object.
-		 * The benefit of doing this is that we will be able to harness
-		 * the properties of the HttpURLConnection class to validate features.
-		 *
-		 * For example, set the request type or check the status of the response code:
-		 * */
-		httpURLConnection = (HttpURLConnection) url.openConnection();
-
-		//  Set the request type, as in, whether the request to the API is a GET request or a POST request.
-		httpURLConnection.setRequestMethod(httpRestApiMethod);
-
-		// Open a connection stream to the corresponding API.
-		httpURLConnection.connect();
-
-		// Get the corresponding response code.
-		responseCode = httpURLConnection.getResponseCode();
-
-		/*
-		 * Now we need to perform a check so that if the response code is not 200, we throw a runtime exception,
-		 * or otherwise carry on the rest of the procedure.
-		 *
-		 * The structure would be like this:
-		 * */
-		if (responseCode == 200) {
-
-			jsonParser = Json.createParser(httpURLConnection.getInputStream());
+			jsonParser = Json.createParser(responseObject.getBodyContent().getInputStream());
 
 			if (mapResponseBodyKeyAndValue == null) {
 
@@ -124,7 +102,7 @@ public class CommonAction {
 
 				mapResponseBody.clear();
 			}
-
+			
 			while(jsonParser.hasNext()){
 
 				jasonParserEvent = jsonParser.next();
@@ -227,10 +205,12 @@ public class CommonAction {
 					//System.out.println("\nFinal de Arreglo\n");
 				}
 			}
+			
+			JOptionPane.showMessageDialog(null, responseObject.getResponseText());
 		}
 		else{
-
-			throw new RuntimeException("HttpResponseCode: " + responseCode);
+			
+			throw new RuntimeException("HttpResponseCode: " + responseObject.getStatusCode());
 		}
 
 		return mapResponseBody;
@@ -242,7 +222,7 @@ public class CommonAction {
 	 * @param requestObject
 	 * @return the API's URL.
 	 */
-	public String getRequestObjectURL(RequestObject requestObject){
+	public String getRequestURL(RequestObject requestObject){
 
 		return requestObject.getRestUrl();
 	}
