@@ -47,6 +47,8 @@ public class CommonAction {
 	private SimpleDateFormat simpleDateFormat;
 	private ReportGenerator reportGenerator;
 	private ResponseObject responseObject;
+	private String apiPath;
+	private String errorMessage;
 
 	public CommonAction(){
 
@@ -78,6 +80,23 @@ public class CommonAction {
 		
 		reportGenerator = ReportGenerator.getUniqueIntance();
 		
+		// ****************
+		// Get the API Path
+		// ****************
+		apiPath = "";
+		
+		for(int i=0; i < requestObject.getRestUrl().split("/").length; i++){
+			
+			if (i >= 3 && !requestObject.getRestUrl().split("/")[i].contains("?")) {
+				
+				apiPath += "/" + requestObject.getRestUrl().split("/")[i];
+			}
+			else if (requestObject.getRestUrl().split("/")[i].contains("?")) {
+				
+				apiPath += "/" + requestObject.getRestUrl().split("/")[i].substring(0, requestObject.getRestUrl().split("/")[i].indexOf("?"));
+			}
+		}
+		
 		responseObject = WS.sendRequestAndVerify(requestObject, FailureHandling.STOP_ON_FAILURE);
 		
 		// Verify response code
@@ -102,6 +121,8 @@ public class CommonAction {
 
 				mapResponseBody.clear();
 			}
+			
+			println responseObject.getResponseText();
 			
 			while(jsonParser.hasNext()){
 
@@ -205,12 +226,12 @@ public class CommonAction {
 					//System.out.println("\nFinal de Arreglo\n");
 				}
 			}
-			
-			JOptionPane.showMessageDialog(null, responseObject.getResponseText());
 		}
 		else{
 			
-			throw new RuntimeException("HttpResponseCode: " + responseObject.getStatusCode());
+			errorMessage = String.valueOf("El API: ${apiPath} lanzo el codigo de respuesta HTTP: " + responseObject.getStatusCode());
+			
+			throw new RuntimeException(errorMessage);
 		}
 
 		return mapResponseBody;
