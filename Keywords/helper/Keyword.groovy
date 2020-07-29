@@ -76,12 +76,7 @@ public enum Keyword {
 	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
-	AFILIADO_CONTRATO_ACTIVO("AND trim(crt.AFICRTESTCOD) not in ('14', '8') "),
-	AFILIADO_CONTRATO_INACTIVO("AND trim(crt.AFICRTESTCOD) in ('14', '8') "),
-	AFILIADO_MPP_CON_COBERTURA_INMEDIATA("AND crt.crtcobinm = 1 "),
-	AFILIADO_MPP_SIN_COBERTURA_INMEDIATA("AND crt.crtcobinm <> 1 "),
-	AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO("AND hij.natide not in (SELECT ben.natide FROM tabcrt crt, tabsbc sbc, tabben ben WHERE 1=1 AND crt.crtcon = sbc.crtcon AND sbc.sbccon = ben.sbccon AND ben.natide = hij.natide AND  trim(crt.AFICRTESTCOD) in ('14','8')) "),
-
+	
 	// **************
 	// Affiliate Type
 	// **************
