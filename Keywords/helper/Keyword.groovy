@@ -63,6 +63,11 @@ public enum Keyword {
 	AFILIADO_MENOR_EDAD("AND round(( sysdate - nat.natfecnac) /365.242199,0) < 18 "),
 	AFILIADO_MENOR_7("AND round(( sysdate - nat.natfecnac) /365.242199,0) < 18 "),
 	AFILIADO_MAYOR_EDAD("AND round(( sysdate - nat.natfecnac) /365.242199,0) >= 18 "),
+	AFILIADO_CONTRATO_ACTIVO("AND trim(crt.AFICRTESTCOD) not in ('14', '8') "),
+	AFILIADO_CONTRATO_INACTIVO("AND trim(crt.AFICRTESTCOD) in ('14', '8') "),
+	AFILIADO_MPP_CON_COBERTURA_INMEDIATA("AND crt.crtcobinm = 1 "),
+	AFILIADO_MPP_SIN_COBERTURA_INMEDIATA("AND crt.crtcobinm <> 1 "),
+	AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO("AND hij.natide not in (SELECT ben.natide FROM tabcrt crt, tabsbc sbc, tabben ben WHERE 1=1 AND crt.crtcon = sbc.crtcon AND sbc.sbccon = ben.sbccon AND ben.natide = hij.natide AND  trim(crt.AFICRTESTCOD) in ('14','8')) "),
 	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
 	SERVICIO_LABORATORIO("AND trim(tips.seripscod) IN ('31', '32', '33') "),
 	SERVICIO_ESTUDIOS_ESPECIALES("AND trim(tips.seripscod) IN ('20') "),
@@ -71,12 +76,7 @@ public enum Keyword {
 	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
-	AFILIADO_CONTRATO_ACTIVO("AND trim(crt.AFICRTESTCOD) not in ('14', '8') "),
-	AFILIADO_CONTRATO_INACTIVO("AND trim(crt.AFICRTESTCOD) in ('14', '8') "),
-	AFILIADO_MPP_CON_COBERTURA_INMEDIATA("AND crt.crtcobinm = 1 "),
-	AFILIADO_MPP_SIN_COBERTURA_INMEDIATA("AND crt.crtcobinm <> 1 "),
-	AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO("AND hij.natide not in (SELECT ben.natide FROM tabcrt crt, tabsbc sbc, tabben ben WHERE 1=1 AND crt.crtcon = sbc.crtcon AND sbc.sbccon = ben.sbccon AND ben.natide = hij.natide AND  trim(crt.AFICRTESTCOD) in ('14','8')) "),
-
+	
 	// **************
 	// Affiliate Type
 	// **************
