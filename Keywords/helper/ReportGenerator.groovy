@@ -6,6 +6,8 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 
+import org.jsoup.Jsoup
+
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.checkpoint.Checkpoint
 import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
@@ -69,9 +71,9 @@ public class ReportGenerator {
 	}
 
 	public void setLogStatusINFO(String infoMessage){
-		
+
 		infoMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.INFO);
 		messageContent.add(infoMessage);
 	}
@@ -79,7 +81,7 @@ public class ReportGenerator {
 	public void setLogStatusPASS(String passMessage){
 
 		passMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.PASS);
 		messageContent.add(passMessage);
 	}
@@ -87,7 +89,7 @@ public class ReportGenerator {
 	public void setLogStatusWARNING(String warningMessage){
 
 		warningMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.WARNING);
 		messageContent.add(warningMessage);
 	}
@@ -95,7 +97,7 @@ public class ReportGenerator {
 	public void setLogStatusSKIP(String skipMessage){
 
 		skipMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.SKIP);
 		messageContent.add(skipMessage);
 	}
@@ -103,7 +105,7 @@ public class ReportGenerator {
 	public void setLogStatusERROR(String errorMessage){
 
 		errorMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.ERROR);
 		messageContent.add(errorMessage);
 	}
@@ -111,7 +113,7 @@ public class ReportGenerator {
 	public void setLogStatusFAIL(String failMessage){
 
 		failMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.FAIL);
 		messageContent.add(failMessage);
 	}
@@ -119,7 +121,7 @@ public class ReportGenerator {
 	public void setLogStatusFATAL(String fatalMessage){
 
 		fatalMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.FATAL);
 		messageContent.add(fatalMessage);
 	}
@@ -127,7 +129,7 @@ public class ReportGenerator {
 	public void setLogStatusUNKNOWN(String unknownMessage){
 
 		unknownMessage.replace("\n", "<br>");
-		
+
 		messageType.add(LogStatus.UNKNOWN);
 		messageContent.add(unknownMessage);
 	}
@@ -198,13 +200,40 @@ public class ReportGenerator {
 
 	public static void main(String[] args){
 
-		Map<Object, String> mapObjectString = new HashMap<Object, String>();
+		try {
 
-		mapObjectString.put(LogStatus.INFO, "Hola");
-		mapObjectString.put(LogStatus.INFO, "Buen dia");
+			String content = "";
+			
+			content = Jsoup.parse(new File("C:\\Katalon_Studio_Projects\\Universal Apolo\\Reports\\091146326_29-07-2020.html"), "UTF-8").toString();
+			
+			//println content;
 
-		System.out.println(mapObjectString.size());
+			// content = content.replaceAll("", "");
 
-		System.out.println(mapObjectString.get(LogStatus.INFO));
+			content = content.replaceAll("ExtentReports 2.0", "Reporte de Pruebas");
+			
+			content = content.replaceAll("<a class=\"logo-content\" href=\"http:\\/\\/extentreports.relevantcodes.com\"> <span>ExtentReports<\\/span> <\\/a>",
+					"<a class=\"logo-content\" href=\"#\"> <span>Universal (Apolo)<\\/span> <\\/a>");
+
+			content = content.replaceAll("<span class=\"report-name\">Automation Report<\\/span>",
+					"<span class=\"report-name\">Reporte De Pruebas Automatizadas (APIs-Web)<\\/span>");
+
+			content = content.replaceAll("<th>Status<\\/th>", "<th>Estado<\\/th>");
+			content = content.replaceAll("<th>Timestamp<\\/th>", "<th><center>Tiempo</center><\\/th>");
+			content = content.replaceAll("<th>Details<\\/th>", "<th>Detalles<\\/th>");
+
+			FileWriter fileWriter = new FileWriter("C:\\Katalon_Studio_Projects\\Universal Apolo\\Reports\\prueba.html");
+
+			fileWriter.write(content);
+
+			fileWriter.close();
+
+		}
+		catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		println "FIN";
 	}
 }
