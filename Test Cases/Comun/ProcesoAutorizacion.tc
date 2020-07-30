@@ -33,4 +33,11 @@
       <masked>false</masked>
       <name>servicioConsulta</name>
    </variable>
+   <variable>
+      <defaultValue>1</defaultValue>
+      <description></description>
+      <id>67efc035-d575-43e6-82cc-c338642c3bd8</id>
+      <masked>false</masked>
+      <name>cantidadIteracion</name>
+   </variable>
 </TestCaseEntity>
