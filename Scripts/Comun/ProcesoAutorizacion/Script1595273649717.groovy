@@ -57,32 +57,33 @@ Map<String, String> queryResult = null;
 
 try {
 	
-	/*
-	numeroAfiliado = "";
-	tipoAfiliado = "";
-	nombreAfiliado = "";
-	codigoCobertura = "";
-	generoAfiliado = "";
-	numeroDocumentoAfiliado = "";
-	*/
 	for(int indice=0; indice <= cantidadIteracion; indice++){
 		
 		dbConnection = DBConnection.getDBConnectionUniqueIntance();
 		reportGenerator = ReportGenerator.getUniqueIntance();
 		
+		/*
+		 * Obtencion de la informacion del afiliado segun el tipo
+		 * desde la base de datos.
+		 * 
+		 * Las cuales son:
+		 * 
+		 * MPP
+		 * PBS
+		 * MPP o PBS (Aleatoriamente se toma uno de los dos)
+		 * 
+		 */
 		if (queryTipoAfiliado.toString().equals(Keyword.AFILIADO_MPP.value)) {
 			
 			// Agregamos la(s) llave(s) y valor(es) al String Template
 			QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
 			
 			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-			queryTipoAfiliado = QueryTemplate.afiliadoMPP.render().toString();
+			// Ejecutamos la consulta y obtenemos los resultados
+			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
 			
 			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 			QueryTemplate.afiliadoMPP.remove("conditions");
-			
-			// Ejecutamos la consulta y obtenemos los resultados
-			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", queryTipoAfiliado);
 		}
 		else if (queryTipoAfiliado.toString().equals(Keyword.AFILIADO_PBS.value)) {
 			
@@ -90,13 +91,11 @@ try {
 			QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
 			
 			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-			queryTipoAfiliado = QueryTemplate.afiliadoPBS.render().toString();
+			// Ejecutamos la consulta y obtenemos los resultados
+			queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
 			
 			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 			QueryTemplate.afiliadoPBS.remove("conditions");
-			
-			// Ejecutamos la consulta y obtenemos los resultados
-			queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", queryTipoAfiliado);
 		
 		}
 		else if (queryTipoAfiliado.toString().equals(Keyword.AFILIADO.value)) {
@@ -108,48 +107,64 @@ try {
 			QueryTemplate.afiliadoMPPoPBS.add("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
 			
 			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-			queryTipoAfiliado = QueryTemplate.afiliadoMPPoPBS.render().toString();
+			// Ejecutamos la consulta y obtenemos los resultados
+			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", QueryTemplate.afiliadoMPPoPBS.render().toString());
 			
 			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 			QueryTemplate.afiliadoMPP.remove("conditions");
 			QueryTemplate.afiliadoPBS.remove("conditions");
 			QueryTemplate.afiliadoMPPoPBS.remove("afiliadoMPP");
 			QueryTemplate.afiliadoMPPoPBS.remove("afiliadoPBS");
-			
-			// Ejecutamos la consulta y obtenemos los resultados
-			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", queryTipoAfiliado);
 		}
 		
-		numeroAfiliado = queryResult.get("NATIDE");
-		
-		// Primer Nombre
-		if(!queryResult.get("NATPRINOM").trim().isEmpty()){
+		/**
+		 * Las variables del Script son cargadas con la informacion obtenida desde
+		 * la base de datos.
+		 * 
+		 * Observacion:
+		 * 
+		 * Estas variables tambien pueden recibir valores desde el Script padre
+		 * que decida llamar este Script como hijo.
+		 */
+		if (queryTipoAfiliado.toString().equals(Keyword.AFILIADO_MPP.value) ||
+			queryTipoAfiliado.toString().equals(Keyword.AFILIADO_PBS.value) ||
+			queryTipoAfiliado.toString().equals(Keyword.AFILIADO.value)) {
 			
-			nombreAfiliado += queryResult.get("NATPRINOM").trim() + " ";
-		}
-		
-		// Segundo Nombre
-		if(!queryResult.get("NATSEGNOM").trim().isEmpty()){
+			numeroAfiliado = queryResult.get("NATIDE");
 			
-			nombreAfiliado += queryResult.get("NATSEGNOM").trim() + " ";
-		}
-		
-		// Primer Aprellido
-		if(!queryResult.get("NATPRIAPE").trim().isEmpty()){
+			// Primer Nombre
+			if(!queryResult.get("NATPRINOM").trim().isEmpty()){
+				
+				nombreAfiliado += queryResult.get("NATPRINOM").trim() + " ";
+			}
 			
-			nombreAfiliado += queryResult.get("NATPRIAPE").trim() + " ";
-		}
-		
-		// Segundo Apellido
-		if(!queryResult.get("NATSEGAPE").trim().isEmpty()){
+			// Segundo Nombre
+			if(!queryResult.get("NATSEGNOM").trim().isEmpty()){
+				
+				nombreAfiliado += queryResult.get("NATSEGNOM").trim() + " ";
+			}
 			
-			nombreAfiliado += queryResult.get("NATSEGAPE").trim() + " ";
+			// Primer Aprellido
+			if(!queryResult.get("NATPRIAPE").trim().isEmpty()){
+				
+				nombreAfiliado += queryResult.get("NATPRIAPE").trim() + " ";
+			}
+			
+			// Segundo Apellido
+			if(!queryResult.get("NATSEGAPE").trim().isEmpty()){
+				
+				nombreAfiliado += queryResult.get("NATSEGAPE").trim() + " ";
+			}
+			
+			if (codigoCobertura.toString().isEmpty()) {
+				
+				codigoCobertura = queryResult.get("MPLCOD");
+			}
+			
+			generoAfiliado = queryResult.get("NATSEX");
+			tipoAfiliado = queryResult.get("PRONOM");
+			numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
 		}
-		
-		codigoCobertura = queryResult.get("MPLCOD");
-		generoAfiliado = queryResult.get("NATSEX");
-		tipoAfiliado = queryResult.get("PRONOM");
-		numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
 		
 		println "\n\n" + "Nombre Afiliado: " + nombreAfiliado +
 				"\n" + "Numero Afiliado: " + numeroAfiliado +
@@ -168,51 +183,49 @@ try {
 		 *
 		 * */
 		
-		String estadoPrestador = 1;
+		if (queryPrestadorServicio.toString().equals(Keyword.PRESTADOR_SERVICIO.value)) {
+			
+			// Agregamos la(s) llave(s) y valor(es) al String Template
+			QueryTemplate.prestadorServicio.add("codigoCobertura", codigoCobertura);
+			QueryTemplate.prestadorServicio.add("generoAfiliado", generoAfiliado);
+			QueryTemplate.prestadorServicio.add("estadoPrestador", estadoPrestador);
+			QueryTemplate.prestadorServicio.add("servicioConsulta", servicioConsulta);
+			
+			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			// Ejecutamos la consulta y obtenemos los resultados
+			queryResult = dbConnection.executeQueryAndGetResult("prestadorServicio", QueryTemplate.prestadorServicio.render().toString());
+			
+			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+			QueryTemplate.prestadorServicio.remove("codigoCobertura");
+			QueryTemplate.prestadorServicio.remove("generoAfiliado");
+			QueryTemplate.prestadorServicio.remove("estadoPrestador");
+			QueryTemplate.prestadorServicio.remove("servicioConsulta");
+			
+			//IPSCODSUP
+			codigoPrestadorSalud = queryResult.get("IPSCODSUP");
+			
+			//SERIPSCOD
+			codigoServicioPrestadorSalud = queryResult.get("SERIPSCOD");
+			
+			//IPSNOM
+			nombrePrestador = queryResult.get("IPSNOM");
+			
+			// SERIPSNOM
+			nombreServicio = queryResult.get("SERIPSNOM");
 		
-		// Agregamos la(s) llave(s) y valor(es) al String Template
-		QueryTemplate.prestadorServicio.add("codigoCobertura", codigoCobertura);
-		QueryTemplate.prestadorServicio.add("generoAfiliado", generoAfiliado);
-		QueryTemplate.prestadorServicio.add("estadoPrestador", estadoPrestador);
-		QueryTemplate.prestadorServicio.add("servicioConsulta", servicioConsulta);
-		
-		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-		// Ejecutamos la consulta y obtenemos los resultados
-		queryResult = dbConnection.executeQueryAndGetResult("prestadorServicio", QueryTemplate.prestadorServicio.render().toString());
-		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.prestadorServicio.remove("codigoCobertura");
-		QueryTemplate.prestadorServicio.remove("generoAfiliado");
-		QueryTemplate.prestadorServicio.remove("estadoPrestador");
-		QueryTemplate.prestadorServicio.remove("servicioConsulta");
-		
-		String codigoPrestadorSalud = null;
-		String codigoServicioPrestadorSalud;
-		String nombrePrestadorBD = null;
-		String nombreServicioBD = null;
-		String codigoSucursal = null;
-		
-		//IPSCODSUP
-		codigoPrestadorSalud = queryResult.get("IPSCODSUP");
-		
-		//SERIPSCOD
-		codigoServicioPrestadorSalud = queryResult.get("SERIPSCOD");
-		
-		//IPSNOM
-		nombrePrestadorBD = queryResult.get("IPSNOM");
-		
-		// SERIPSNOM
-		nombreServicioBD = queryResult.get("SERIPSNOM");
-	
-		//IPSSUCCOD
-		codigoSucursal = queryResult.get("IPSSUCCOD");
+			//IPSSUCCOD
+			codigoSucursal = queryResult.get("IPSSUCCOD");
+			
+			// MPLCOD
+			codigoCobertura = queryResult.get("MPLCOD");
+		}
 		
 		println "\n\n" +
 				"Codigo Cobertura: " + codigoCobertura + "\n" +
 				"Codigo Prestador Salud: " + codigoPrestadorSalud + "\n" +
 				"Codigo De Servicio De Prestador Salud: " + codigoServicioPrestadorSalud +  "\n" +
-				"Nombre Prestador: " + nombrePrestadorBD + "\n" +
-				"Nombre Servicio: " + nombreServicioBD + "\n" +
+				"Nombre Prestador: " + nombrePrestador + "\n" +
+				"Nombre Servicio: " + nombreServicio + "\n" +
 				"Codigo Sucursal: " + codigoSucursal +
 				"\n\n";
 		
@@ -330,26 +343,26 @@ try {
 		
 		// Consulta Diagnostico
 		
-		// Agregamos la(s) llave(s) y valor(es) al String Template
-		QueryTemplate.diagnostico.add("generoAfiliado", generoAfiliado);
-		
-		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-		// Ejecutamos la consulta y obtenemos los resultados
-		queryResult = dbConnection.executeQueryAndGetResult("diagnostico", QueryTemplate.diagnostico.render().toString());
-		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.diagnostico.remove("generoAfiliado");
-		
-		String codigoDiagnosticoBD = null;
-		String nombreDiagnosticoBD = null;
-		
-		// DIA_DIA_CODIGO
-		codigoDiagnosticoBD = queryResult.get("DIA_DIA_CODIGO");
-		
-		// DIA_DIA_DESCRIPCIO
-		nombreDiagnosticoBD = queryResult.get("DIA_DIA_DESCRIPCIO");
+		if (queryDiagnostico.toString().equals(Keyword.DIAGNOSTICO.value)) {
 			
-		println "\n\n" + "Codigo Diagnostico: " + codigoDiagnosticoBD + ", Nombre Diagnostico: " + nombreDiagnosticoBD + "\n\n";
+			// Agregamos la(s) llave(s) y valor(es) al String Template
+			QueryTemplate.diagnostico.add("generoAfiliado", generoAfiliado);
+			
+			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			// Ejecutamos la consulta y obtenemos los resultados
+			queryResult = dbConnection.executeQueryAndGetResult("diagnostico", QueryTemplate.diagnostico.render().toString());
+			
+			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+			QueryTemplate.diagnostico.remove("generoAfiliado");
+			
+			// DIA_DIA_CODIGO
+			codigoDiagnostico = queryResult.get("DIA_DIA_CODIGO");
+			
+			// DIA_DIA_DESCRIPCIO
+			nombreDiagnostico = queryResult.get("DIA_DIA_DESCRIPCIO");
+		}
+			
+		println "\n\n" + "Codigo Diagnostico: " + codigoDiagnostico + ", Nombre Diagnostico: " + nombreDiagnostico + "\n\n";
 		
 		//******************************
 		// API de Consultar Diagnosticos
@@ -357,7 +370,7 @@ try {
 		
 		String nombreDiagnosticoAPI = null;
 		
-		responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('Consult/ConsultarDiagnosticos', ['descripcion' : codigoDiagnosticoBD]));
+		responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('Consult/ConsultarDiagnosticos', ['descripcion' : codigoDiagnostico]));
 		
 		for (Map<String, String> mapKeyAndValue : responseContentMap) {
 			
@@ -366,15 +379,15 @@ try {
 		
 		// Comparacion de descriipcion de diagnosticos
 		
-		if (nombreDiagnosticoAPI.equals(nombreDiagnosticoBD)) {
+		if (nombreDiagnosticoAPI.equals(nombreDiagnostico)) {
 			  
-			  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
-			  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
+			  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnostico}"));
+			  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnostico}"));
 			   
 		 }else{
 		  
-			  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
-			  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnosticoBD}"));
+			  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnostico}"));
+			  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion del diagnostico ${nombreDiagnosticoAPI} y la Base de Datos ${nombreDiagnostico}"));
 		 }
 		
 		//**********************************************************
@@ -391,8 +404,8 @@ try {
 			'idDoctor' : '0',
 			'telefono' : '8091112222',
 			'email' : 'prueba@prueba.com',
-			'codigoDiagnostico' : codigoDiagnosticoBD,
-			'observacion' : nombreDiagnosticoBD]));
+			'codigoDiagnostico' : codigoDiagnostico,
+			'observacion' : nombreDiagnostico]));
 		
 		println "\n\n" + "API de Autorizacion Portal Ingresar: " + responseContentString + "\n\n";
 		 
@@ -401,32 +414,32 @@ try {
 		  *
 		  * */
 		 
-		 String codigoPrestacion = "";
-		 String descripcionPrestacionBD = "";
+		 if (queryProcedimientoPorPrestador.toString().equals(Keyword.PROCEDIMIENTO_POR_PRESTADOR.value)) {
+			
+			 // Agregamos la(s) llave(s) y valor(es) al String Template
+			 QueryTemplate.procedimientoPorPrestador.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
+			 QueryTemplate.procedimientoPorPrestador.add("generoAfiliado", generoAfiliado);
+			 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
+			 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
+			 
+			 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			 // Ejecutamos la consulta y obtenemos los resultados
+			 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
+			 
+			 // Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+			 QueryTemplate.procedimientoPorPrestador.remove("codigoServicioPrestadorSalud");
+			 QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
+			 QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
+			 QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
+			 
+			 // CODIGO_PRESTACION
+			 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
+			 
+			 // DESCRIPCION_PRESTACION
+			 descripcionPrestacion = queryResult.get("DESCRIPCION_PRESTACION");
+		 }
 		 
-		 // Agregamos la(s) llave(s) y valor(es) al String Template
-		 QueryTemplate.procedimientoPorPrestador.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("generoAfiliado", generoAfiliado);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
-		 
-		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-		 // Ejecutamos la consulta y obtenemos los resultados
-		 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
-		 
-		 // Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoServicioPrestadorSalud");
-		 QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
-		 
-		 // CODIGO_PRESTACION
-		 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
-		 
-		 // DESCRIPCION_PRESTACION
-		 descripcionPrestacionBD = queryResult.get("DESCRIPCION_PRESTACION");
-		 
-		 println "\n\n" + "Codigo Prestacion: " + codigoPrestacion + ", Descripcion Prestacion: " + descripcionPrestacionBD + "\n\n";
+		 println "\n\n" + "Codigo Prestacion: " + codigoPrestacion + ", Descripcion Prestacion: " + descripcionPrestacion + "\n\n";
 		 
 		 //**********************************************************************
 		 // API de consulta de Autorizacion Portal Prestador Salud Procedimientos
@@ -445,15 +458,15 @@ try {
 		  }
 		  
 		  // Comparacion descripcion prestacion de base de datos Vs. API
-		  if (descripcionPrestacionAPI.equals(descripcionPrestacionBD)) {
+		  if (descripcionPrestacionAPI.equals(descripcionPrestacion)) {
 			  
-			  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
-			  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+			  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
+			  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
 			   
 		  }else{
 		  
-			  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
-			  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+			  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
+			  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
 		  }
 		  
 		  //********************************
@@ -470,15 +483,15 @@ try {
 		  }
 		  
 		  // Comparacion de descriipcion de Procedimiento
-		  if (descripcionPrestacionAPI.equals(descripcionPrestacionBD)) {
+		  if (descripcionPrestacionAPI.equals(descripcionPrestacion)) {
 			  
-			  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
-			  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+			  KeywordUtil.markPassed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
+			  reportGenerator.setLogStatusPASS(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
 			   
 		  }else{
 		  
-			  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
-			  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacionBD}"));
+			  KeywordUtil.markFailed(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
+			  reportGenerator.setLogStatusFAIL(String.valueOf("El API presento la descripcion de la prestacion ${descripcionPrestacionAPI} y la Base de Datos ${descripcionPrestacion}"));
 		  }
 		  
 		  //************************************************

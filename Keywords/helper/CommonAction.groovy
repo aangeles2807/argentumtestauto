@@ -313,13 +313,17 @@ public class CommonAction {
 			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
 
 			reportGenerator.setLogStatusINFO(message);
+			
+			JOptionPane.showMessageDialog(null, "200: " + message);
 		}
 		else{
 
 			message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
 
 			message += String.valueOf("<br>Mostrando el mensaje: <b>${responseObject.getResponseText()}</b>.");
-
+			
+			JOptionPane.showMessageDialog(null, "500: " + message);
+			
 			if (ifInverseCase) {
 
 				reportGenerator.setLogStatusPASS(message);

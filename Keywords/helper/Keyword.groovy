@@ -77,13 +77,16 @@ public enum Keyword {
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
 	
-	// **************
-	// Affiliate Type
-	// **************
+	// *******************
+	// Query to be execute
+	// *******************
 
 	AFILIADO_MPP("MPP"),
 	AFILIADO_PBS("PBS"),
 	AFILIADO("MPP o PBS"),
+	PRESTADOR_SERVICIO("Prestador Servicio"),
+	DIAGNOSTICO("Diagnostico"),
+	PROCEDIMIENTO_POR_PRESTADOR("Procedimiento Por Prestador"),
 
 	// ******
 	// Report
