@@ -57,7 +57,7 @@ Map<String, String> queryResult = null;
 
 try {
 	
-	for(int indice=0; indice <= cantidadIteracion; indice++){
+	for(int indice=1; indice <= cantidadIteracion; indice++){
 		
 		dbConnection = DBConnection.getDBConnectionUniqueIntance();
 		reportGenerator = ReportGenerator.getUniqueIntance();
