@@ -19,6 +19,7 @@ import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/NegativoCobertura'), [
 	'queryTipoAfiliado' : Keyword.AFILIADO.value,
+	'queryPrestadorServicio' : Keyword.PRESTADOR_SERVICIO.value,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_INACTIVO.value,
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_INACTIVO.value,
 	'servicioConsulta' : Keyword.SERVICIO_RAYOS_X.value], FailureHandling.STOP_ON_FAILURE);
