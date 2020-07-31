@@ -35,6 +35,6 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-	'tipoAfiliado' : Keyword.AFILIADO_PBS.value,
+	'queryTipoAfiliado' : Keyword.AFILIADO_PBS.value,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value,
 	'servicioConsulta' : Keyword.SERVICIO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);

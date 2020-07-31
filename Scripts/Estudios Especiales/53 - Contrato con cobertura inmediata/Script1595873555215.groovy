@@ -33,7 +33,7 @@ import internal.GlobalVariable as GlobalVariable
 
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-	'tipoAfiliado' : Keyword.AFILIADO_MPP.value,
+	'queryTipoAfiliado' : Keyword.AFILIADO_MPP.value,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_CON_COBERTURA_INMEDIATA.value,
 	'servicioConsulta' : Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value], FailureHandling.STOP_ON_FAILURE);
 

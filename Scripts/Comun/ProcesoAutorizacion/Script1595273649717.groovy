@@ -57,41 +57,49 @@ Map<String, String> queryResult = null;
 
 try {
 	
+	/*
+	numeroAfiliado = "";
+	tipoAfiliado = "";
+	nombreAfiliado = "";
+	codigoCobertura = "";
+	generoAfiliado = "";
+	numeroDocumentoAfiliado = "";
+	*/
 	for(int indice=0; indice <= cantidadIteracion; indice++){
 		
 		dbConnection = DBConnection.getDBConnectionUniqueIntance();
 		reportGenerator = ReportGenerator.getUniqueIntance();
 		
-		if (tipoAfiliado.toString().equals(Keyword.AFILIADO_MPP.value)) {
+		if (queryTipoAfiliado.toString().equals(Keyword.AFILIADO_MPP.value)) {
 			
 			// Agregamos la(s) llave(s) y valor(es) al String Template
 			QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
 			
 			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-			tipoAfiliado = QueryTemplate.afiliadoMPP.render().toString();
+			queryTipoAfiliado = QueryTemplate.afiliadoMPP.render().toString();
 			
 			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 			QueryTemplate.afiliadoMPP.remove("conditions");
 			
 			// Ejecutamos la consulta y obtenemos los resultados
-			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", tipoAfiliado);
+			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", queryTipoAfiliado);
 		}
-		else if (tipoAfiliado.toString().equals(Keyword.AFILIADO_PBS.value)) {
+		else if (queryTipoAfiliado.toString().equals(Keyword.AFILIADO_PBS.value)) {
 			
 			// Agregamos la(s) llave(s) y valor(es) al String Template
 			QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
 			
 			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-			tipoAfiliado = QueryTemplate.afiliadoPBS.render().toString();
+			queryTipoAfiliado = QueryTemplate.afiliadoPBS.render().toString();
 			
 			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 			QueryTemplate.afiliadoPBS.remove("conditions");
 			
 			// Ejecutamos la consulta y obtenemos los resultados
-			queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", tipoAfiliado);
+			queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", queryTipoAfiliado);
 		
 		}
-		else if (tipoAfiliado.toString().equals(Keyword.AFILIADO.value)) {
+		else if (queryTipoAfiliado.toString().equals(Keyword.AFILIADO.value)) {
 			
 			// Agregamos la(s) llave(s) y valor(es) al String Template
 			QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
@@ -100,7 +108,7 @@ try {
 			QueryTemplate.afiliadoMPPoPBS.add("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
 			
 			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-			tipoAfiliado = QueryTemplate.afiliadoMPPoPBS.render().toString();
+			queryTipoAfiliado = QueryTemplate.afiliadoMPPoPBS.render().toString();
 			
 			// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 			QueryTemplate.afiliadoMPP.remove("conditions");
@@ -109,51 +117,44 @@ try {
 			QueryTemplate.afiliadoMPPoPBS.remove("afiliadoPBS");
 			
 			// Ejecutamos la consulta y obtenemos los resultados
-			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", tipoAfiliado);
+			queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", queryTipoAfiliado);
 		}
-		
-		String numeroAfiliado = "";
-		String tipoAfiliadoBD = "";
-		String nombreAfiliadoBD = "";
-		String codigoCobertura = "";
-		String generoAfiliado = "";
-		String numeroDocumentoAfiliado = "";
 		
 		numeroAfiliado = queryResult.get("NATIDE");
 		
 		// Primer Nombre
 		if(!queryResult.get("NATPRINOM").trim().isEmpty()){
 			
-			nombreAfiliadoBD += queryResult.get("NATPRINOM").trim() + " ";
+			nombreAfiliado += queryResult.get("NATPRINOM").trim() + " ";
 		}
 		
 		// Segundo Nombre
 		if(!queryResult.get("NATSEGNOM").trim().isEmpty()){
 			
-			nombreAfiliadoBD += queryResult.get("NATSEGNOM").trim() + " ";
+			nombreAfiliado += queryResult.get("NATSEGNOM").trim() + " ";
 		}
 		
 		// Primer Aprellido
 		if(!queryResult.get("NATPRIAPE").trim().isEmpty()){
 			
-			nombreAfiliadoBD += queryResult.get("NATPRIAPE").trim() + " ";
+			nombreAfiliado += queryResult.get("NATPRIAPE").trim() + " ";
 		}
 		
 		// Segundo Apellido
 		if(!queryResult.get("NATSEGAPE").trim().isEmpty()){
 			
-			nombreAfiliadoBD += queryResult.get("NATSEGAPE").trim() + " ";
+			nombreAfiliado += queryResult.get("NATSEGAPE").trim() + " ";
 		}
 		
 		codigoCobertura = queryResult.get("MPLCOD");
 		generoAfiliado = queryResult.get("NATSEX");
-		tipoAfiliadoBD = queryResult.get("PRONOM");
+		tipoAfiliado = queryResult.get("PRONOM");
 		numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
 		
-		println "\n\n" + "Nombre Afiliado: " + nombreAfiliadoBD +
+		println "\n\n" + "Nombre Afiliado: " + nombreAfiliado +
 				"\n" + "Numero Afiliado: " + numeroAfiliado +
 				"\n" + "Genero Afiliado: " + generoAfiliado +
-				"\n" + "Tipo Afiliado: " + tipoAfiliadoBD  +
+				"\n" + "Tipo Afiliado: " + tipoAfiliado  +
 				"\n" + "Numero Documento Afiliado: " + numeroDocumentoAfiliado +
 				"\n\n";
 		

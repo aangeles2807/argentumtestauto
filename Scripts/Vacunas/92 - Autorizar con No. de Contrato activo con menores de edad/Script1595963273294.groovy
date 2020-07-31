@@ -18,6 +18,6 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-	'tipoAfiliado' : Keyword.AFILIADO_MPP.value,
+	'queryTipoAfiliado' : Keyword.AFILIADO_MPP.value,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_CONTRATO_ACTIVO.value + Keyword.AFILIADO_MENOR_EDAD.value,
 	'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value], FailureHandling.STOP_ON_FAILURE);

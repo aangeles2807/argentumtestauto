@@ -10,7 +10,7 @@
       <description></description>
       <id>8f40228e-38ef-4344-be2c-07666779693c</id>
       <masked>false</masked>
-      <name>tipoAfiliado</name>
+      <name>queryTipoAfiliado</name>
    </variable>
    <variable>
       <defaultValue>''</defaultValue>

@@ -35,6 +35,9 @@ public class ReportGenerator {
 	private String actualDate;
 	private ArrayList<Object> messageType;
 	private ArrayList<String> messageContent;
+	private String reportPatnAndName;
+	private String htmlContent;
+	private FileWriter fileWriter;
 
 	public ReportGenerator(){
 
@@ -136,98 +139,200 @@ public class ReportGenerator {
 
 	public void generateReport(){
 
-		commonAction = CommonAction.getUniqueIntance();
+		try {
 
-		actualTime = commonAction.getActualTimeInSpecificFormat("HH:mm:ss:SSS").replace(":", "");
-		actualDate = commonAction.getActualDateInSpecificFormat("dd-MM-yyyy");
+			commonAction = CommonAction.getUniqueIntance();
 
-		if (extentReports == null) {
+			actualTime = commonAction.getActualTimeInSpecificFormat("HH:mm:ss:SSS").replace(":", "");
+			actualDate = commonAction.getActualDateInSpecificFormat("dd-MM-yyyy");
+			reportPatnAndName = String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html");
 
-			extentReports = new ExtentReports(String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html"));
-		}
-		else{
+			extentReports = new ExtentReports(reportPatnAndName);
 
-			extentReports.setFilePath(String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html"))
-		}
+			for(int i = 0; i < messageType.size(); i++){
 
-		for(int i = 0; i < messageType.size(); i++){
+				if (messageType.get(i) == helper.Keyword.TEST_NAME.value) {
 
-			if (messageType.get(i) == helper.Keyword.TEST_NAME.value) {
+					extentTest = extentReports.startTest(messageContent.get(i));
+				}
+				else if (messageType.get(i) == LogStatus.INFO) {
 
-				extentTest = extentReports.startTest(messageContent.get(i));
+					extentTest.log(LogStatus.INFO, messageContent.get(i));
+				}
+				else if (messageType.get(i) == LogStatus.PASS) {
+
+					extentTest.log(LogStatus.PASS, messageContent.get(i));
+
+				}else if (messageType.get(i) == LogStatus.WARNING) {
+
+					extentTest.log(LogStatus.WARNING, messageContent.get(i));
+
+				}else if (messageType.get(i) == LogStatus.SKIP) {
+
+					extentTest.log(LogStatus.SKIP, messageContent.get(i));
+
+				}else if (messageType.get(i) == LogStatus.ERROR) {
+
+					extentTest.log(LogStatus.ERROR, messageContent.get(i));
+
+				}else if (messageType.get(i) == LogStatus.FAIL) {
+
+					extentTest.log(LogStatus.FAIL, messageContent.get(i));
+
+				}else if (messageType.get(i) == LogStatus.FATAL) {
+
+					extentTest.log(LogStatus.FATAL, messageContent.get(i));
+
+				}else if (messageType.get(i) == LogStatus.UNKNOWN) {
+
+					extentTest.log(LogStatus.UNKNOWN, messageContent.get(i));
+				}
 			}
-			else if (messageType.get(i) == LogStatus.INFO) {
 
-				extentTest.log(LogStatus.INFO, messageContent.get(i));
-			}
-			else if (messageType.get(i) == LogStatus.PASS) {
+			extentReports.endTest(extentTest);
 
-				extentTest.log(LogStatus.PASS, messageContent.get(i));
+			extentReports.flush();
 
-			}else if (messageType.get(i) == LogStatus.WARNING) {
+			Thread.sleep(5000);
 
-				extentTest.log(LogStatus.WARNING, messageContent.get(i));
+			htmlContent = "";
 
-			}else if (messageType.get(i) == LogStatus.SKIP) {
+			htmlContent = Jsoup.parse(new File(reportPatnAndName), "UTF-8").toString();
 
-				extentTest.log(LogStatus.SKIP, messageContent.get(i));
+			//content = content.replaceAll("", "");
 
-			}else if (messageType.get(i) == LogStatus.ERROR) {
+			htmlContent = htmlContent.replaceAll("ExtentReports 2.0", "Reporte de Pruebas");
 
-				extentTest.log(LogStatus.ERROR, messageContent.get(i));
+			htmlContent = htmlContent.replaceAll("<a class=\"logo-content\" href=\"http:\\/\\/extentreports.relevantcodes.com\"> <span>ExtentReports<\\/span> <\\/a>",
+					"<a class=\"logo-content\" href=\"#\"> <span>Universal (Apolo)<\\/span> <\\/a>");
 
-			}else if (messageType.get(i) == LogStatus.FAIL) {
+			htmlContent = htmlContent.replaceAll("<span class=\"report-name\">Automation Report<\\/span>",
+					"<span class=\"report-name\">Reporte De Pruebas Automatizadas (APIs-Web)<\\/span>");
 
-				extentTest.log(LogStatus.FAIL, messageContent.get(i));
+			htmlContent = htmlContent.replaceAll("<th>Status<\\/th>", "<th>Estado<\\/th>");
+			htmlContent = htmlContent.replaceAll("<th>Timestamp<\\/th>", "<th><center>Tiempo</center><\\/th>");
+			htmlContent = htmlContent.replaceAll("<th>Details<\\/th>", "<th>Detalles<\\/th>");
 
-			}else if (messageType.get(i) == LogStatus.FATAL) {
+			htmlContent = htmlContent.replaceAll(">pass<", ">exitoso<");
+			//content = content.replaceAll(">Pass<", ">Exitoso<");
 
-				extentTest.log(LogStatus.FATAL, messageContent.get(i));
+			htmlContent = htmlContent.replaceAll(">fail<", ">fallido<");
+			//content = content.replaceAll(">Fail<", ">Fallido<");
 
-			}else if (messageType.get(i) == LogStatus.UNKNOWN) {
+			htmlContent = htmlContent.replaceAll("<h5>Tests</h5>", "<h5>Caso(s) de Prueba(s)</h5>");
 
-				extentTest.log(LogStatus.UNKNOWN, messageContent.get(i));
-			}
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Tests<\\/span>", "<span class=\"panel-name\">Total Casos<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Steps<\\/span>", "<span class=\"panel-name\">Total Pasos<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Time Taken \\(Current Run\\)<\\/span>",
+					"<span class=\"panel-name\">Total Tiempo \\(Corrida Actual\\)<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Time Taken \\(Overall\\)<\\/span>",
+					"<span class=\"panel-name\">Total Tiempo \\(General\\)<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Start<\\/span>", "<span class=\"panel-name\">Inicio<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">End<\\/span>", "<span class=\"panel-name\">Final<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Tests View<\\/span>", "<span class=\"panel-name\">Vista de Casos<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Steps View<\\/span>", "<span class=\"panel-name\">Vista de Pasos<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Pass Percentage<\\/span>", "<span class=\"panel-name\">Porcentage de Casos Exitosos<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"label info outline right\">Environment<\\/span>", "<span class=\"label info outline right\">Ambiente<\\/span>");
+			htmlContent = htmlContent.replaceAll("<th>Param<\\/th>", "<th>Parametro<\\/th>");
+			htmlContent = htmlContent.replaceAll("<th>Value<\\/th>", "<th>Valor<\\/th>");
+
+			htmlContent = htmlContent.replaceAll("<td>OS<\\/td>", "<td>Sistema Operativo<\\/td>");
+			htmlContent = htmlContent.replaceAll("<td>User Name<\\/td>", "<td>Nombre de Usuario<\\/td>");
+			htmlContent = htmlContent.replaceAll("<td>Java Version<\\/td>", "<td>Versión de Java<\\/td>");
+			htmlContent = htmlContent.replaceAll("<td>Host Name<\\/td>", "<td>Nombre del Host<\\/td>");
+
+			htmlContent = htmlContent.replaceAll("test\\(s\\) passed", "Caso\\(s\\) Exitoso\\(s\\)");
+			htmlContent = htmlContent.replaceAll("test\\(s\\) failed", "Caso\\(s\\) Fallido\\(s\\)");
+			htmlContent = htmlContent.replaceAll("step\\(s\\) passed", "Pasos\\(s\\) Exitoso\\(s\\)");
+			htmlContent = htmlContent.replaceAll("step\\(s\\) failed", "Pasos\\(s\\) Fallido\\(s\\)");
+			htmlContent = htmlContent.replaceAll(" others", " Otros");
+
+			fileWriter = new FileWriter(reportPatnAndName);
+
+			fileWriter.write(htmlContent);
+
+			fileWriter.close();
+
+			htmlContent = null;
+			fileWriter = null;
+			extentReports = null;
+			extentTest = null;
 		}
+		catch (Exception e) {
 
-		extentReports.endTest(extentTest);
-
-		extentReports.flush();
-
-		extentReports = null;
-		extentTest = null;
+			System.out.println("Class ReportGenerator: " + e.getMessage());
+		}
 	}
 
 	public static void main(String[] args){
 
 		try {
 
-			String content = "";
-			
-			content = Jsoup.parse(new File("C:\\Katalon_Studio_Projects\\Universal Apolo\\Reports\\091146326_29-07-2020.html"), "UTF-8").toString();
-			
-			//println content;
+			String htmlContent = "";
 
-			// content = content.replaceAll("", "");
+			htmlContent = Jsoup.parse(new File("C:\\Katalon_Studio_Projects\\Universal Apolo\\Reports\\091146326_29-07-2020.html"), "UTF-8").toString();
 
-			content = content.replaceAll("ExtentReports 2.0", "Reporte de Pruebas");
-			
-			content = content.replaceAll("<a class=\"logo-content\" href=\"http:\\/\\/extentreports.relevantcodes.com\"> <span>ExtentReports<\\/span> <\\/a>",
+			//content = content.replaceAll("", "");
+
+			htmlContent = htmlContent.replaceAll("ExtentReports 2.0", "Reporte de Pruebas");
+
+			htmlContent = htmlContent.replaceAll("<a class=\"logo-content\" href=\"http:\\/\\/extentreports.relevantcodes.com\"> <span>ExtentReports<\\/span> <\\/a>",
 					"<a class=\"logo-content\" href=\"#\"> <span>Universal (Apolo)<\\/span> <\\/a>");
 
-			content = content.replaceAll("<span class=\"report-name\">Automation Report<\\/span>",
+			htmlContent = htmlContent.replaceAll("<span class=\"report-name\">Automation Report<\\/span>",
 					"<span class=\"report-name\">Reporte De Pruebas Automatizadas (APIs-Web)<\\/span>");
 
-			content = content.replaceAll("<th>Status<\\/th>", "<th>Estado<\\/th>");
-			content = content.replaceAll("<th>Timestamp<\\/th>", "<th><center>Tiempo</center><\\/th>");
-			content = content.replaceAll("<th>Details<\\/th>", "<th>Detalles<\\/th>");
+			htmlContent = htmlContent.replaceAll("<th>Status<\\/th>", "<th>Estado<\\/th>");
+			htmlContent = htmlContent.replaceAll("<th>Timestamp<\\/th>", "<th><center>Tiempo</center><\\/th>");
+			htmlContent = htmlContent.replaceAll("<th>Details<\\/th>", "<th>Detalles<\\/th>");
+
+			htmlContent = htmlContent.replaceAll(">pass<", ">exitoso<");
+			//content = content.replaceAll(">Pass<", ">Exitoso<");
+
+			htmlContent = htmlContent.replaceAll(">fail<", ">fallido<");
+			//content = content.replaceAll(">Fail<", ">Fallido<");
+
+			htmlContent = htmlContent.replaceAll("<h5>Tests</h5>", "<h5>Caso(s) de Prueba(s)</h5>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Tests<\\/span>", "<span class=\"panel-name\">Total Casos<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Steps<\\/span>", "<span class=\"panel-name\">Total Pasos<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Time Taken \\(Current Run\\)<\\/span>",
+					"<span class=\"panel-name\">Total Tiempo \\(Corrida Actual\\)<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Total Time Taken \\(Overall\\)<\\/span>",
+					"<span class=\"panel-name\">Total Tiempo \\(General\\)<\\/span>");
+
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Start<\\/span>", "<span class=\"panel-name\">Inicio<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">End<\\/span>", "<span class=\"panel-name\">Final<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Tests View<\\/span>", "<span class=\"panel-name\">Vista de Casos<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Steps View<\\/span>", "<span class=\"panel-name\">Vista de Pasos<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"panel-name\">Pass Percentage<\\/span>", "<span class=\"panel-name\">Porcentage de Casos Exitosos<\\/span>");
+			htmlContent = htmlContent.replaceAll("<span class=\"label info outline right\">Environment<\\/span>", "<span class=\"label info outline right\">Ambiente<\\/span>");
+			htmlContent = htmlContent.replaceAll("<th>Param<\\/th>", "<th>Parametro<\\/th>");
+			htmlContent = htmlContent.replaceAll("<th>Value<\\/th>", "<th>Valor<\\/th>");
+
+			htmlContent = htmlContent.replaceAll("<td>OS<\\/td>", "<td>Sistema Operativo<\\/td>");
+			htmlContent = htmlContent.replaceAll("<td>User Name<\\/td>", "<td>Nombre de Usuario<\\/td>");
+			htmlContent = htmlContent.replaceAll("<td>Java Version<\\/td>", "<td>Versión de Java<\\/td>");
+			htmlContent = htmlContent.replaceAll("<td>Host Name<\\/td>", "<td>Nombre del Host<\\/td>");
+
+			htmlContent = htmlContent.replaceAll("test\\(s\\) passed", "Caso\\(s\\) Exitoso\\(s\\)");
+			htmlContent = htmlContent.replaceAll("test\\(s\\) failed", "Caso\\(s\\) Fallido\\(s\\)");
+			htmlContent = htmlContent.replaceAll("step\\(s\\) passed", "Pasos\\(s\\) Exitoso\\(s\\)");
+			htmlContent = htmlContent.replaceAll("step\\(s\\) failed", "Pasos\\(s\\) Fallido\\(s\\)");
+			htmlContent = htmlContent.replaceAll(" others", " Otros");
 
 			FileWriter fileWriter = new FileWriter("C:\\Katalon_Studio_Projects\\Universal Apolo\\Reports\\prueba.html");
 
-			fileWriter.write(content);
+			fileWriter.write(htmlContent);
 
 			fileWriter.close();
-
 		}
 		catch (IOException e) {
 
