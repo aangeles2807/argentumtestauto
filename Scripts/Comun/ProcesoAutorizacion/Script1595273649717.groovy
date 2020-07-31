@@ -146,7 +146,12 @@ try {
 			nombreAfiliado += queryResult.get("NATSEGAPE").trim() + " ";
 		}
 		
-		codigoCobertura = queryResult.get("MPLCOD");
+		if(codigoCobertura.toString().isEmpty()){
+			
+			codigoCobertura =  queryResult.get("MPLCOD");
+		}
+		
+		
 		generoAfiliado = queryResult.get("NATSEX");
 		tipoAfiliado = queryResult.get("PRONOM");
 		numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
@@ -170,7 +175,7 @@ try {
 		
 		String estadoPrestador = 1;
 		
-		// Agregamos la(s) llave(s) y valor(es) al String Template
+		// Agregamos la(s) llave(s) y valor(es) al String Template		
 		QueryTemplate.prestadorServicio.add("codigoCobertura", codigoCobertura);
 		QueryTemplate.prestadorServicio.add("generoAfiliado", generoAfiliado);
 		QueryTemplate.prestadorServicio.add("estadoPrestador", estadoPrestador);
@@ -206,6 +211,9 @@ try {
 	
 		//IPSSUCCOD
 		codigoSucursal = queryResult.get("IPSSUCCOD");
+		
+		//MPLCOD
+		codigoCobertura =  queryResult.get("MPLCOD");
 		
 		println "\n\n" +
 				"Codigo Cobertura: " + codigoCobertura + "\n" +
