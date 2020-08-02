@@ -35,9 +35,10 @@ public class ReportGenerator {
 	private String actualDate;
 	private ArrayList<Object> messageType;
 	private ArrayList<String> messageContent;
-	private String reportPatnAndName;
+	private String stringReportPatnAndName;
 	private String htmlContent;
 	private FileWriter fileWriter;
+	private File fileReportPatnAndName;
 
 	public ReportGenerator(){
 
@@ -145,9 +146,9 @@ public class ReportGenerator {
 
 			actualTime = commonAction.getActualTimeInSpecificFormat("HH:mm:ss:SSS").replace(":", "");
 			actualDate = commonAction.getActualDateInSpecificFormat("dd-MM-yyyy");
-			reportPatnAndName = String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html");
+			stringReportPatnAndName = String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html");
 
-			extentReports = new ExtentReports(reportPatnAndName);
+			extentReports = new ExtentReports(stringReportPatnAndName);
 
 			for(int i = 0; i < messageType.size(); i++){
 
@@ -192,12 +193,17 @@ public class ReportGenerator {
 			extentReports.endTest(extentTest);
 
 			extentReports.flush();
-
-			Thread.sleep(5000);
+			
+			fileReportPatnAndName = new File(stringReportPatnAndName);
+			
+			while(!fileReportPatnAndName.exists()){
+				
+				Thread.sleep(1000);
+			}
 
 			htmlContent = "";
 
-			htmlContent = Jsoup.parse(new File(reportPatnAndName), "UTF-8").toString();
+			htmlContent = Jsoup.parse(fileReportPatnAndName, "UTF-8").toString();
 
 			//content = content.replaceAll("", "");
 
@@ -251,7 +257,7 @@ public class ReportGenerator {
 			htmlContent = htmlContent.replaceAll("step\\(s\\) failed", "Pasos\\(s\\) Fallido\\(s\\)");
 			htmlContent = htmlContent.replaceAll(" others", " Otros");
 
-			fileWriter = new FileWriter(reportPatnAndName);
+			fileWriter = new FileWriter(stringReportPatnAndName);
 
 			fileWriter.write(htmlContent);
 
@@ -271,10 +277,19 @@ public class ReportGenerator {
 	public static void main(String[] args){
 
 		try {
-
+			
 			String htmlContent = "";
+			
+			File reportPatnAndName = new File("C:\\Katalon_Studio_Projects\\argentumtestauto\\Reports\\091146326_29-07-2020.html");
+			
+			println reportPatnAndName;
+			
+			while(!reportPatnAndName.exists()){
+				
+				Thread.sleep(1000);
+			}
 
-			htmlContent = Jsoup.parse(new File("C:\\Katalon_Studio_Projects\\Universal Apolo\\Reports\\091146326_29-07-2020.html"), "UTF-8").toString();
+			htmlContent = Jsoup.parse(reportPatnAndName, "UTF-8").toString();
 
 			//content = content.replaceAll("", "");
 
@@ -334,9 +349,9 @@ public class ReportGenerator {
 
 			fileWriter.close();
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 
-			e.printStackTrace();
+			println e.getMessage();
 		}
 
 		println "FIN";
