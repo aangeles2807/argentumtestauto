@@ -311,8 +311,15 @@ public class CommonAction {
 			message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
 
 			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
-
-			reportGenerator.setLogStatusINFO(message);
+			
+			if(mapResponseBody.isEmpty()){
+				
+				reportGenerator.setLogStatusWARNING(message);
+			}
+			else{
+				
+				reportGenerator.setLogStatusINFO(message);
+			}
 		}
 		else{
 

@@ -175,7 +175,7 @@ try {
 	 *
 	 * */
 	
-	if (queryPrestadorServicio.toString().equals(Keyword.PRESTADOR_SERVICIO.value)) {
+	if (ejecutarQueryPrestadorServicio) {
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.prestadorServicio.add("codigoCobertura", codigoCobertura);
@@ -419,7 +419,7 @@ try {
 	// Consulta query Diagnostico
 	//***************************
 	
-	if (queryDiagnostico.toString().equals(Keyword.DIAGNOSTICO.value)) {
+	if (ejecutarQueryDiagnostico) {
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.diagnostico.add("generoAfiliado", generoAfiliado);
@@ -515,7 +515,7 @@ try {
 	// Consulta query Procedimiento Por Prestador
 	//*******************************************
 	 
-	if (queryProcedimientoPorPrestador.toString().equals(Keyword.PROCEDIMIENTO_POR_PRESTADOR.value)) {
+	if (ejecutarQueryProcedimientoPorPrestador) {
 		
 		 // Agregamos la(s) llave(s) y valor(es) al String Template
 		 QueryTemplate.procedimientoPorPrestador.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
@@ -679,6 +679,4 @@ try {
 } catch (Exception e) {
 
 	KeywordUtil.markError(e.getMessage());
-	
-	reportGenerator.setLogStatusFAIL(e.getMessage());
 }
