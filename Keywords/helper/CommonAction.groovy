@@ -91,7 +91,7 @@ public class CommonAction {
 	 * @param ifInverseCase - true is case is inverse, otherwise false. 
 	 * @return Object - can be an ArrayList<Map<String, String>> or String.
 	 */
-	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean ifInverseCase){
+	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean isInverseCase){
 
 		reportGenerator = ReportGenerator.getUniqueIntance();
 
@@ -155,7 +155,7 @@ public class CommonAction {
 
 				//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
 
-				if (ifInverseCase) {
+				if (isInverseCase) {
 
 					reportGenerator.setLogStatusFAIL(message);
 
@@ -320,7 +320,7 @@ public class CommonAction {
 
 			message += String.valueOf("<br>Mostrando el mensaje: <b>${responseObject.getResponseText()}</b>.");
 			
-			if (ifInverseCase) {
+			if (isInverseCase) {
 
 				reportGenerator.setLogStatusPASS(message);
 			}

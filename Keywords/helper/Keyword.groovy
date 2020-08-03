@@ -82,12 +82,12 @@ public enum Keyword {
 	// Query to be execute
 	// *******************
 
-	AFILIADO_MPP("MPP"),
-	AFILIADO_PBS("PBS"),
-	AFILIADO("MPP o PBS"),
-	PRESTADOR_SERVICIO("Prestador Servicio"),
-	DIAGNOSTICO("Diagnostico"),
-	PROCEDIMIENTO_POR_PRESTADOR("Procedimiento Por Prestador"),
+	//AFILIADO_MPP("MPP"),
+	//AFILIADO_PBS("PBS"),
+	//AFILIADO("MPP o PBS"),
+	//PRESTADOR_SERVICIO("Prestador Servicio"),
+	//DIAGNOSTICO("Diagnostico"),
+	//PROCEDIMIENTO_POR_PRESTADOR("Procedimiento Por Prestador"),
 
 	// ******
 	// Report

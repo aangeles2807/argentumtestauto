@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
-   <description>Consulta los afiliados según el dato enviado</description>
-   <name>ProcesoAutorizacion</name>
+   <description></description>
+   <name>ProcesoAutorizacionActualizado</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>dc4a1e85-c9f2-47e5-ac9f-f367b1d43fa5</testCaseGuid>
+   <testCaseGuid>eb03efdc-fa33-4bc8-926a-6215e053291d</testCaseGuid>
    <variable>
       <defaultValue>true</defaultValue>
       <description></description>
