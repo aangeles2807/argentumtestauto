@@ -57,8 +57,7 @@ try {
 	reportGenerator = ReportGenerator.getUniqueIntance();
 	
 	/*
-	 * Obtencion de la informacion del afiliado segun el tipo
-	 * desde la base de datos.
+	 * Obtencion de la informacion del afiliado segun el tipo desde la base de datos.
 	 *
 	 * Las cuales son:
 	 *
