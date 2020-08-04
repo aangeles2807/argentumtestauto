@@ -40,7 +40,7 @@ for(int i=1; i <= 2; i++){
 		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
 		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
 		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);

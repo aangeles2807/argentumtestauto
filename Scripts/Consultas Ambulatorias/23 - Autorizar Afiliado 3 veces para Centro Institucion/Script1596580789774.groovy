@@ -32,8 +32,26 @@ for(int i=1; i <= 3; i++){
 			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
 			'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value + Keyword.PRESTADOR_CENTRO_INST.value], FailureHandling.STOP_ON_FAILURE);
 	}
-	else if (i == 2 || i == 3) {
+	else if (i == 2) {
 		
+		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
+		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
+		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
+		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
+		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
+		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
+		mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
+		
+		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
+	}else if(i == 3){
+	
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
