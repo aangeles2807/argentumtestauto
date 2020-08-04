@@ -76,15 +76,11 @@ public class ReportGenerator {
 
 	public void setLogStatusINFO(String infoMessage){
 
-		infoMessage.replace("\n", "<br>");
-
 		messageType.add(LogStatus.INFO);
 		messageContent.add(infoMessage);
 	}
 
 	public void setLogStatusPASS(String passMessage){
-
-		passMessage.replace("\n", "<br>");
 
 		messageType.add(LogStatus.PASS);
 		messageContent.add(passMessage);
@@ -92,15 +88,11 @@ public class ReportGenerator {
 
 	public void setLogStatusWARNING(String warningMessage){
 
-		warningMessage.replace("\n", "<br>");
-
 		messageType.add(LogStatus.WARNING);
-		messageContent.add(warningMessage);
+		messageContent.add(String.valueOf("<font color=\"orange\">${warningMessage}</font>"));
 	}
 
 	public void setLogStatusSKIP(String skipMessage){
-
-		skipMessage.replace("\n", "<br>");
 
 		messageType.add(LogStatus.SKIP);
 		messageContent.add(skipMessage);
@@ -108,31 +100,23 @@ public class ReportGenerator {
 
 	public void setLogStatusERROR(String errorMessage){
 
-		errorMessage.replace("\n", "<br>");
-
 		messageType.add(LogStatus.ERROR);
 		messageContent.add(errorMessage);
 	}
 
 	public void setLogStatusFAIL(String failMessage){
 
-		failMessage.replace("\n", "<br>");
-
 		messageType.add(LogStatus.FAIL);
-		messageContent.add(failMessage);
+		messageContent.add(String.valueOf("<font color=\"red\">${failMessage}</font>"));
 	}
 
 	public void setLogStatusFATAL(String fatalMessage){
-
-		fatalMessage.replace("\n", "<br>");
 
 		messageType.add(LogStatus.FATAL);
 		messageContent.add(fatalMessage);
 	}
 
 	public void setLogStatusUNKNOWN(String unknownMessage){
-
-		unknownMessage.replace("\n", "<br>");
 
 		messageType.add(LogStatus.UNKNOWN);
 		messageContent.add(unknownMessage);

@@ -48,13 +48,6 @@
       <name>servicioConsulta</name>
    </variable>
    <variable>
-      <defaultValue>1</defaultValue>
-      <description></description>
-      <id>67efc035-d575-43e6-82cc-c338642c3bd8</id>
-      <masked>false</masked>
-      <name>cantidadIteracion</name>
-   </variable>
-   <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>2d1b1476-ee01-4523-92bc-4a1ebda5890d</id>

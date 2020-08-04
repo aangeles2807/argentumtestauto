@@ -164,7 +164,7 @@ public class QueryTemplate {
 	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
 	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP \n"+
 	"	WHERE 1 = 1 \n" +
-	"	AND trim(mplcod) in ('<codigoCobertura>') \n" + // Parametro
+	"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
 	"	AND trim(ser.sercon) = 'S' \n" +
 	"	AND trim(SERIPS_SEXO) IN ('A', '<generoAfiliado>') \n" + // Parametro
 	"	AND trim(ips.ipsestado) = '<estadoPrestador>' \n" + // Parametro

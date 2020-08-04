@@ -50,6 +50,7 @@ String responseContentString = null;
 ResponseObject responseObject = null;
 Map<String, String> queryResult = null;
 String message = null;
+Map<String, String> mapaVariablesScript = null;
 
 try {
 	
@@ -508,6 +509,20 @@ try {
 			
 			println "\n\n" + "API de Autorizacion Portal Ingresar: " + responseContentString + "\n\n";
 		}
+		// Si es un caso positivo
+		else{
+			
+			// Consultamos el Web Service
+			responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalIngresar', [
+				'codigoUsuario' : numeroAfiliado,
+				'idInteraccion' : idInteraccion,
+				'fecha' : formatoFecha.format(fecha),
+				'idDoctor' : '0',
+				'telefono' : '8091112222',
+				'email' : 'prueba@prueba.com',
+				'codigoDiagnostico' : codigoDiagnostico,
+				'observacion' : nombreDiagnostico]), true);
+		}
 	}
 	
 	//*******************************************
@@ -605,14 +620,14 @@ try {
 			 // Comparacion descripcion prestacion de base de datos Vs. API
 			 if (!descripcionPrestacionAPI.equals(descripcionPrestacion)) {
 				 
-				 message += String.valueOf("<br>La prestacion <b>${descripcionPrestacion}</b> no es adecuada para el servicio <b>${nombreServicio}</b> y prestador <b>${nombrePrestador}</b>");
+				 message += String.valueOf("<br>No permitio seleccionar la prestacion <b>${descripcionPrestacion}</b> para el servicio <b>${nombreServicio}</b> y el prestador <b>${nombrePrestador}</b>");
 				 
 				 //KeywordUtil.markPassed(message);
 				 reportGenerator.setLogStatusPASS(message);
 			}
 			else{
 				
-				message += String.valueOf("<br>La prestacion <b>${descripcionPrestacion}</b> es adecuada para el servicio <b>${nombreServicio}</b> y prestador <b>${nombrePrestador}</b>");
+				message += String.valueOf("<br>Permitio seleccionar la prestacion <b>${descripcionPrestacion}</b> para el servicio <b>${nombreServicio}</b> y el prestador <b>${nombrePrestador}</b>");
 				
 				KeywordUtil.markFailed(message);
 				reportGenerator.setLogStatusFAIL(message);
@@ -709,6 +724,28 @@ try {
 			  println "\n\n" + "Codigo Autorizacion: " + codigoAutorizacion + "\n\n";
 		  }
 	  }
+	  
+	  mapaVariablesScript = new HashMap<String, String>();
+	  
+	  mapaVariablesScript.put("numeroAfiliado", numeroAfiliado);
+	  mapaVariablesScript.put("tipoAfiliado", tipoAfiliado);
+	  mapaVariablesScript.put("nombreAfiliado", nombreAfiliado);
+	  mapaVariablesScript.put("codigoCobertura", codigoCobertura);
+	  mapaVariablesScript.put("generoAfiliado", generoAfiliado);
+	  mapaVariablesScript.put("numeroDocumentoAfiliado", numeroDocumentoAfiliado);
+	  mapaVariablesScript.put("estadoPrestador", estadoPrestador);
+	  mapaVariablesScript.put("codigoPrestadorSalud", codigoPrestadorSalud);
+	  mapaVariablesScript.put("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
+	  mapaVariablesScript.put("nombrePrestador", nombrePrestador);
+	  mapaVariablesScript.put("nombreServicio", nombreServicio);
+	  mapaVariablesScript.put("codigoSucursal", codigoSucursal);
+	  mapaVariablesScript.put("codigoDiagnostico", codigoDiagnostico);
+	  mapaVariablesScript.put("nombreDiagnostico", nombreDiagnostico);
+	  mapaVariablesScript.put("codigoPrestacion", codigoPrestacion);
+	  mapaVariablesScript.put("descripcionPrestacion", descripcionPrestacion);
+	  mapaVariablesScript.put("fechaAutorizacion", fechaAutorizacion);
+	  
+	  return mapaVariablesScript;
 	  
 } catch (Exception e) {
 
