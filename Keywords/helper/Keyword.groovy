@@ -78,6 +78,9 @@ public enum Keyword {
 	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
+	
+	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
+	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
 
 	// *******************
 	// Query to be execute

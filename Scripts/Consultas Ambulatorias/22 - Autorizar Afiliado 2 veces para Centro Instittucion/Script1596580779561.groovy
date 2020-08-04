@@ -20,7 +20,7 @@ import internal.GlobalVariable as GlobalVariable
 Map<String, String> mapaVariablesScript = null;
 
 // Iteraciones de autorizaciones
-for(int i=1; i <= 3; i++){
+for(int i=1; i <= 2; i++){
 	
 	// Se aprueba la autorizacion
 	if (i == 1) {
@@ -30,9 +30,9 @@ for(int i=1; i <= 3; i++){
 			'ejecutarQueryCapturaAfiliadoMPP' : false,
 			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
 			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
-			'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value], FailureHandling.STOP_ON_FAILURE);
+			'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value + Keyword.PRESTADOR_CENTRO_INST.value], FailureHandling.STOP_ON_FAILURE);
 	}
-	else if (i == 2 || i == 3) {
+	else if (i == 2) {
 		
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
