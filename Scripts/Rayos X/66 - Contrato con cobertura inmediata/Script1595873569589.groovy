@@ -32,10 +32,8 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-	'queryTipoAfiliado' : Keyword.AFILIADO_MPP.value,
-	'queryPrestadorServicio' : Keyword.PRESTADOR_SERVICIO.value,
-	'queryDiagnostico' : Keyword.DIAGNOSTICO.value,
-	'queryProcedimientoPorPrestador' : Keyword.PROCEDIMIENTO_POR_PRESTADOR.value,
+	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_CON_COBERTURA_INMEDIATA.value,
 	'servicioConsulta' : Keyword.SERVICIO_RAYOS_X.value], FailureHandling.STOP_ON_FAILURE);
 

@@ -18,10 +18,8 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-	'queryTipoAfiliado' : Keyword.AFILIADO_PBS.value,
-	'queryPrestadorServicio' : Keyword.PRESTADOR_SERVICIO.value,
-	'queryDiagnostico' : Keyword.DIAGNOSTICO.value,
-	'queryProcedimientoPorPrestador' : Keyword.PROCEDIMIENTO_POR_PRESTADOR.value,
+	'ejecutarQueryCapturaAfiliadoMPP' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
 	'codigoCobertura' : Keyword.AFILIADO_PBS_CODIGO_COBERTURA.value,
 	'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value], FailureHandling.STOP_ON_FAILURE);

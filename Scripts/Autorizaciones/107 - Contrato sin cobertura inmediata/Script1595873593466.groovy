@@ -31,9 +31,17 @@ import helper.DBConnection
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
-
-WS.callTestCase(findTestCase('Comun/NegativoCobertura'), [
-	'queryTipoAfiliado' : Keyword.AFILIADO_MPP.value,
-	'queryPrestadorServicio' : Keyword.PRESTADOR_SERVICIO.value,
+WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
+	'ejecutarQueryDiagnostico' : false,
+	'ejecutarQueryProcedimientoPorPrestador' : false,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
+	'consultarApiAutorizacionPortalCamposRequeridos' : false,
+	'consultarApiConsultarDiagnosticos' : false,
+	'consultarApiAutorizacionPortalIngresar' : false,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
+	'consultarApiConsultarProcedimientos' : false,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
+	'consultarApiAutorizacionPortalAutorizar' : false,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_SIN_COBERTURA_INMEDIATA.value], FailureHandling.STOP_ON_FAILURE);
-
