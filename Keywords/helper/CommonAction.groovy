@@ -297,14 +297,22 @@ public class CommonAction {
 			}
 
 			message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
-
-			message += String.valueOf("<br>Obtuvo la siguiente respuesta:<br><br>");
-
-			for(Map<String, String> contentBodyMap : mapResponseBody){
-
-				for(String key : contentBodyMap.keySet()){
-
-					message += key + " : " + contentBodyMap.get(key) + "<br>";
+			
+			// If response body is empty
+			if(mapResponseBody.isEmpty() && !apiPath.equals("/api/Autorizacion/Portal/CamposRequeridos")){
+				
+				message += String.valueOf("<br><b><font color=\"orange\">El Web Service no devolvio ningun resultado.</font></b><br>");
+			}
+			else{
+				
+				message += String.valueOf("<br>Obtuvo la siguiente respuesta:<br><br>");
+				
+				for(Map<String, String> contentBodyMap : mapResponseBody){
+					
+					for(String key : contentBodyMap.keySet()){
+	
+						message += key + " : " + contentBodyMap.get(key) + "<br>";
+					}
 				}
 			}
 
@@ -312,7 +320,8 @@ public class CommonAction {
 
 			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
 			
-			if(mapResponseBody.isEmpty()){
+			// If response body is empty
+			if(mapResponseBody.isEmpty() && !apiPath.equals("/api/Autorizacion/Portal/CamposRequeridos")){
 				
 				reportGenerator.setLogStatusWARNING(message);
 			}

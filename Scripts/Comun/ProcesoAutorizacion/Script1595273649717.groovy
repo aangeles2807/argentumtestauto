@@ -521,6 +521,7 @@ try {
 		 QueryTemplate.procedimientoPorPrestador.add("generoAfiliado", generoAfiliado);
 		 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
 		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
+		 QueryTemplate.procedimientoPorPrestador.add("fechaAutorizacion", fechaAutorizacion);
 		 
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
@@ -531,6 +532,7 @@ try {
 		 QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
 		 QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
 		 QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
+		 QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
 		 
 		 // CODIGO_PRESTACION
 		 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
@@ -578,6 +580,39 @@ try {
 			else{
 				
 				message += String.valueOf("<br>La descripcion de la prestacion obtenida no es semejante a la capturada desde la base de datos. La capturada desde la base de datos es: <b>${descripcionPrestacion}</b>");
+				
+				KeywordUtil.markFailed(message);
+				reportGenerator.setLogStatusFAIL(message);
+			}
+		 }
+		 // Si es un caso negativo
+		 else{
+			 
+			 // Consultamos el Web Service
+			 responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalPrestadorSaludProcedimientos', [
+				 'codigoUsuario' : numeroAfiliado,
+				 'idInteraccion' : idInteraccion,
+				 'descripcion' : codigoPrestacion]));
+			 
+			 // Mensaje reporte/consola
+			 message = String.valueOf("En la consulta al servicio web: <b>${commonAction.getApiPath()}</b>:<br>");
+			 
+			 for (Map<String, String> mapKeyAndValue : responseContentMap) {
+				 
+				 descripcionPrestacionAPI = mapKeyAndValue.get(Keyword.KEY_DESCRIPCION.value);
+			 }
+			 
+			 // Comparacion descripcion prestacion de base de datos Vs. API
+			 if (!descripcionPrestacionAPI.equals(descripcionPrestacion)) {
+				 
+				 message += String.valueOf("<br>La prestacion <b>${descripcionPrestacion}</b> no es adecuada para el servicio <b>${nombreServicio}</b> y prestador <b>${nombrePrestador}</b>");
+				 
+				 //KeywordUtil.markPassed(message);
+				 reportGenerator.setLogStatusPASS(message);
+			}
+			else{
+				
+				message += String.valueOf("<br>La prestacion <b>${descripcionPrestacion}</b> es adecuada para el servicio <b>${nombreServicio}</b> y prestador <b>${nombrePrestador}</b>");
 				
 				KeywordUtil.markFailed(message);
 				reportGenerator.setLogStatusFAIL(message);
@@ -678,4 +713,5 @@ try {
 } catch (Exception e) {
 
 	KeywordUtil.markError(e.getMessage());
+	reportGenerator.setLogStatusFAIL(e.getMessage());
 }

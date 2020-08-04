@@ -341,4 +341,11 @@
       <masked>false</masked>
       <name>consultarApiAutorizacionPortalAutorizarCasoPositivo</name>
    </variable>
+   <variable>
+      <defaultValue>'sysdate'</defaultValue>
+      <description></description>
+      <id>c83e02db-1f4f-4f2b-9579-81da00866c2e</id>
+      <masked>false</masked>
+      <name>fechaAutorizacion</name>
+   </variable>
 </TestCaseEntity>
