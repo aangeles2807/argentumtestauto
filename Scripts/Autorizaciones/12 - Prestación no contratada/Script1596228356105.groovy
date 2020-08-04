@@ -20,15 +20,13 @@ import internal.GlobalVariable as GlobalVariable
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
-	'ejecutarQueryDiagnostico' : false,
 	'ejecutarQueryProcedimientoPorPrestador' : false,
-	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
-	'consultarApiAutorizacionPortalCamposRequeridos' : false,
-	'consultarApiConsultarDiagnosticos' : false,
-	'consultarApiAutorizacionPortalIngresar' : false,
-	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
+	'codigoPrestacion' : '881135',
+	'descripcionPrestacion' : 'ULTRASONOGRAFIA DE CUELLO',
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : false,
 	'consultarApiConsultarProcedimientos' : false,
 	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
 	'consultarApiAutorizacionPortalAutorizar' : false,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
-	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value], FailureHandling.STOP_ON_FAILURE);
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value, 
+	'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value], FailureHandling.STOP_ON_FAILURE)
