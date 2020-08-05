@@ -33,19 +33,20 @@ import internal.GlobalVariable
 
 public class CommonAction {
 
-	private String llave = null;
-	private String valor = null;
-	private Map<String, String> mapResponseBodyKeyAndValue = null;
-	private ArrayList<Map<String, String>> mapResponseBody = null;
+	private static final String projectPath = new File("").getAbsolutePath();
+	private String llave;
+	private String valor;
+	private Map<String, String> mapResponseBodyKeyAndValue;
+	private ArrayList<Map<String, String>> mapResponseBody;
 	private JsonParser jsonParser;
 	private Event jasonParserEvent;
-	private static final String projectPath = new File("").getAbsolutePath();
 	private Date date;
 	private SimpleDateFormat simpleDateFormat;
 	private ReportGenerator reportGenerator;
 	private ResponseObject responseObject;
 	private String apiPath;
 	private String message;
+	private Map<String, Object> mapStringString;
 
 	public CommonAction(){
 	}
@@ -427,5 +428,15 @@ public class CommonAction {
 	public String getApiPath() {
 
 		return apiPath;
+	}
+
+	public Map<String, Object> getMapStringString() {
+		
+		if (mapStringString == null) {
+			
+			mapStringString = new HashMap<String, Object>();
+		}
+		
+		return mapStringString;
 	}
 }

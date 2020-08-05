@@ -216,14 +216,14 @@ public class QueryTemplate {
 	"	AND mpr.procod = mpl.procod \n" +
 	"	AND mpr.mplcod = mpl.mplcod \n" +
 	"	AND mpr.pre_pre_codigo = pre.pre_pre_codigo \n" +
-	"	AND <fechaAutorizacion> BETWEEN mpr.mprperini \n" +
+	"	AND <fechaAutorizacion> BETWEEN mpr.mprperini \n" + // Parametro
 	"	AND mpr.mprperfin \n" +
 	"	JOIN con_convenio con \n" +
 	"	ON 1 = 1 \n" +
 	"	AND con.ipscodsup = ips.ipscodsup \n" +
 	"	AND con.procod = mpl.procod \n" +
 	"	AND con.mplcod = mpl.mplcod \n" +
-	"	AND <fechaAutorizacion> BETWEEN con.confechaleg \n" +
+	"	AND <fechaAutorizacion> BETWEEN con.confechaleg \n" + // Parametro
 	"	AND con.confechavenci \n" +
 	"	JOIN tabconpag pag \n" +
 	"	ON 1 = 1 \n" +
@@ -236,7 +236,7 @@ public class QueryTemplate {
 	"	AND cvn.mplcod = mpl.mplcod \n" +
 	"	AND cvn.tipodocconvcodigo = con.tipodocconvcodigo \n" +
 	"	AND cvn.con_con_codigo = con.con_con_codigo \n" +
-	"	AND <fechaAutorizacion> BETWEEN cvn.cvnperini \n" +
+	"	AND <fechaAutorizacion> BETWEEN cvn.cvnperini \n" + // Parametro
 	"	AND cvn.cvnperfin \n" +
 	"	AND cvn.tipmodcod = '1' \n" +
 	"	JOIN tabconmcv mcv \n" +
@@ -248,7 +248,7 @@ public class QueryTemplate {
 	"	ELSE \n" +
 	"		cvn.cvnmod \n" +
 	"	END \n" +
-	"	AND <fechaAutorizacion> BETWEEN mcv.mcvperini \n" +
+	"	AND <fechaAutorizacion> BETWEEN mcv.mcvperini \n" + // Parametro
 	"	AND mcv.mcvperfin \n" +
 	"	AND mcv.pre_pre_codigo = pre.pre_pre_codigo \n" +
 	"	AND mcv.tipatecod = mpr.tipatecod \n" +
@@ -256,7 +256,7 @@ public class QueryTemplate {
 	"	JOIN con_tarifas tar \n" +
 	"	ON 1 = 1 \n" +
 	"	AND tar.tipotarifcodigo = mcv.tipotarifcodigo \n" +
-	"	AND <fechaAutorizacion> BETWEEN tar.pre_tar_periodoini \n" +
+	"	AND <fechaAutorizacion> BETWEEN tar.pre_tar_periodoini \n" + // Parametro
 	"	AND tar.pre_tar_periodofin \n" +
 	"	JOIN net_contarprepre net \n" +
 	"	ON 1 = 1 \n" +

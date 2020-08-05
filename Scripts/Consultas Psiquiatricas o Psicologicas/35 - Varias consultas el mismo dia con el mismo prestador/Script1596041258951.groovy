@@ -14,10 +14,11 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
+import helper.CommonAction
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
-Map<String, String> mapaVariablesScript = null;
+CommonAction commonAction = CommonAction.getUniqueIntance();
 
 // Iteraciones de autorizaciones
 for(int i=1; i <= 2; i++){
@@ -25,7 +26,7 @@ for(int i=1; i <= 2; i++){
 	// Se aprueba la autorizacion
 	if (i == 1) {
 		
-		mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 			'ejecutarQueryCapturaAfiliadoPBS' : false,
 			'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
 			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
@@ -33,21 +34,21 @@ for(int i=1; i <= 2; i++){
 	}
 	else if (i == 2) {
 		
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
-		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
-		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
-		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
-		mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
+		commonAction.getMapStringString().put("ejecutarQueryCapturaAfiliadoMPP", false);
+		commonAction.getMapStringString().put("ejecutarQueryCapturaAfiliadoPBS", false);
+		commonAction.getMapStringString().put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
+		commonAction.getMapStringString().put("ejecutarQueryPrestadorServicio", false);
+		commonAction.getMapStringString().put("ejecutarQueryDiagnostico", false);
+		commonAction.getMapStringString().put("ejecutarQueryProcedimientoPorPrestador", false);
+		commonAction.getMapStringString().put("consultarApiAutorizacionPortalIngresarCasoPositivo", false);
+		commonAction.getMapStringString().put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
+		commonAction.getMapStringString().put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
+		commonAction.getMapStringString().put("consultarApiConsultarProcedimientos", false);
+		commonAction.getMapStringString().put("consultarApiConsultarProcedimientosCasoPositivo", false);
+		commonAction.getMapStringString().put("consultarApiAutorizacionPortalTarifaProcedimiento", false);
+		commonAction.getMapStringString().put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", false);
+		commonAction.getMapStringString().put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
 		
-		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
+		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), commonAction.getMapStringString(), FailureHandling.STOP_ON_FAILURE);
 	}
 }
