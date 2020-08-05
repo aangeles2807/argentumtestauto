@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>100 - Solicitar autorización de consulta odontológica Afiliado PBS</name>
+   <name>101 - Solicitar autorización de consulta odontológica Afiliado PBS</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>df518e7e-222c-4deb-962c-b5f7322c3eb3</testCaseGuid>
