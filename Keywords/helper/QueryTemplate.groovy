@@ -77,6 +77,7 @@ public class QueryTemplate {
 	"	AND best.afibenestcod = ben.afibenestcod \n" +
 	"	AND par.plaparcod = ben.plaparcod \n" +
 	"	AND mpl.mplcod = ben.mplcod \n" +
+	"	AND <fechaAutorizacion> between crt.crtinivig AND crt.crtfinvig \n" + // Parametro
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -125,6 +126,7 @@ public class QueryTemplate {
 	"	AND hest.afihijestcod = hij.afihijestcod \n" +
 	"	AND par.plaparcod = hij.plaparcod \n" +
 	"	AND mpl.mplcod = hij.mplcod \n" +
+	"	AND <fechaAutorizacion> between con.coninivig AND con.confinvig \n" + // Parametro
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
