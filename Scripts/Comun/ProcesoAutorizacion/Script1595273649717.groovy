@@ -71,6 +71,7 @@ try {
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
+		QueryTemplate.afiliadoMPP.add("fechaAutorizacion", fechaAutorizacion);
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
@@ -78,11 +79,13 @@ try {
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 		QueryTemplate.afiliadoMPP.remove("conditions");
+		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
 	}
 	else if (ejecutarQueryCapturaAfiliadoPBS) {
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
+		QueryTemplate.afiliadoPBS.add("fechaAutorizacion", fechaAutorizacion);
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
@@ -90,13 +93,16 @@ try {
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 		QueryTemplate.afiliadoPBS.remove("conditions");
+		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
 	
 	}
 	else if (ejecutarQueryCapturaAfiliadoMPPoPBS) {
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
-		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
+		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS);
+		QueryTemplate.afiliadoMPP.add("fechaAutorizacion", fechaAutorizacion);
+		QueryTemplate.afiliadoPBS.add("fechaAutorizacion", fechaAutorizacion);
 		QueryTemplate.afiliadoMPPoPBS.add("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
 		QueryTemplate.afiliadoMPPoPBS.add("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
 		
@@ -105,8 +111,10 @@ try {
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", QueryTemplate.afiliadoMPPoPBS.render().toString());
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.afiliadoMPP.remove("conditions");
+		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
+		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
 		QueryTemplate.afiliadoPBS.remove("conditions");
+		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
 		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoMPP");
 		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoPBS");
 	}
