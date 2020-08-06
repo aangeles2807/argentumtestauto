@@ -63,6 +63,8 @@ public enum Keyword {
 	AFILIADO_MENOR_EDAD("AND round(( sysdate - nat.natfecnac) /365.242199,0) < 18 "),
 	AFILIADO_MENOR_7("AND round(( sysdate - nat.natfecnac) /365.242199,0) < 18 "),
 	AFILIADO_MAYOR_EDAD("AND round(( sysdate - nat.natfecnac) /365.242199,0) >= 18 "),
+	AFILIADO_CONTRATO_ACTIVO_PBS("AND trim(con.AFICONESTCOD) not in ('14', '8') "),
+	AFILIADO_CONTRATO_INACTIVO_PBS("AND trim(con.AFICONESTCOD) in ('14', '8') "),
 	AFILIADO_CONTRATO_ACTIVO("AND trim(crt.AFICRTESTCOD) not in ('14', '8') "),
 	AFILIADO_CONTRATO_INACTIVO("AND trim(crt.AFICRTESTCOD) in ('14', '8') "),
 	AFILIADO_MPP_CON_COBERTURA_INMEDIATA("AND crt.crtcobinm = 1 "),
@@ -71,6 +73,7 @@ public enum Keyword {
 	AFILIADO_AUTORIZACION_1_ANO("ADD_MONTHS(sysdate,-13)"),
 	AFILIADO_AUTORIZACION_6_MESES("ADD_MONTHS(sysdate,-6)"),
 	AFILIADO_AUTORIZACION_5_DIAS("(SYSDATE - 30)"),
+	AFILIADO_AUTORIZACION_SYSDATE("sysdate"),
 	//AFILIADO_PBS_CODIGO_COBERTURA("EXCV2','E880', 'E886','E887', 'EHBA1','E879','EXP18','E881','E883', 'EXP17','EX873','EX877','EX878', 'E888','EX879','E889','E8538','E890','E878','EX876','E882','EX880','E891"),
 	AFILIADO_PBS_CODIGO_COBERTURA("EX%"),
 	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
@@ -81,7 +84,7 @@ public enum Keyword {
 	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
-	
+
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
 

@@ -31,7 +31,7 @@ for(int i=1; i <= 2; i++){
 			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
 			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
 			'fechaAutorizacion' : Keyword.AFILIADO_AUTORIZACION_1_ANO.value,
-			'servicioConsulta' : Keyword.SERVICIO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);
+			'servicioConsulta' : Keyword.SERVICIO_RAYOS_X.value], FailureHandling.STOP_ON_FAILURE);
 	}
 	else if (i == 2) {
 		
@@ -39,7 +39,7 @@ for(int i=1; i <= 2; i++){
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
 		mapaVariablesScript.put("fechaAutorizacion", Keyword.AFILIADO_AUTORIZACION_SYSDATE.value);
-		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", true);
+		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
 		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
 		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);

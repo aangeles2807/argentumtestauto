@@ -29,27 +29,24 @@ for(int i=1; i <= 2; i++){
 			'ejecutarQueryCapturaAfiliadoMPP' : false,
 			'ejecutarQueryCapturaAfiliadoPBS' : false,
 			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
-			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
-			'fechaAutorizacion' : Keyword.AFILIADO_AUTORIZACION_1_ANO.value,
-			'servicioConsulta' : Keyword.SERVICIO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);
+			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value], FailureHandling.STOP_ON_FAILURE);
 	}
 	else if (i == 2) {
 		
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
-		mapaVariablesScript.put("fechaAutorizacion", Keyword.AFILIADO_AUTORIZACION_SYSDATE.value);
-		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", true);
+		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
 		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
 		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", false);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", true);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", true);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", true);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
 		
 		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
 	}

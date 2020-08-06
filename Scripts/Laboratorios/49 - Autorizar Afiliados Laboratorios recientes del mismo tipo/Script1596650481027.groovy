@@ -22,7 +22,7 @@ Map<String, String> mapaVariablesScript = null;
 // Iteraciones de autorizaciones
 for(int i=1; i <= 2; i++){
 	
-	// Se aprueba la autorizacion
+	//Se aprueba la autorizacion
 	if (i == 1) {
 		
 		mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
@@ -40,13 +40,13 @@ for(int i=1; i <= 2; i++){
 		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
 		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
 		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", true);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", true);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
 		
 		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
