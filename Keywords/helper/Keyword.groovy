@@ -84,6 +84,11 @@ public enum Keyword {
 	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
+	SERVICIO_EMERGENCIA("AND trim(tips.seripscod) IN ('49') "),
+	SERVICIO_EMERGENCIA_TRIAGE_1("AND trim(tips.seripscod) IN ('126') "),
+	SERVICIO_EMERGENCIA_TRIAGE_2("AND trim(tips.seripscod) IN ('127') "),
+	SERVICIO_EMERGENCIA_TRIAGE_3("AND trim(tips.seripscod) IN ('128') "),
+	SERVICIO_EMERGENCIA_TRIAGE_4("AND trim(tips.seripscod) IN ('129') "),
 
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
