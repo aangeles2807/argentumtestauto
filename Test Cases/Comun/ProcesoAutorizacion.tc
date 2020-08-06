@@ -335,10 +335,31 @@
       <name>consultarApiAutorizacionPortalAutorizarCasoPositivo</name>
    </variable>
    <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>5293c171-d52b-47f6-8c0e-614014d6f7f8</id>
+      <masked>false</masked>
+      <name>consultarApiAutorizacionPortalAutorizarMensajeError</name>
+   </variable>
+   <variable>
       <defaultValue>'sysdate'</defaultValue>
       <description></description>
       <id>c83e02db-1f4f-4f2b-9579-81da00866c2e</id>
       <masked>false</masked>
       <name>fechaAutorizacion</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>b8bdd1b7-2e2e-480c-a846-e0279eba3c31</id>
+      <masked>false</masked>
+      <name>tarifaProcedimiento</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>a6b11583-5181-4f8d-a74b-769190a62b78</id>
+      <masked>false</masked>
+      <name>idInteraccion</name>
    </variable>
 </TestCaseEntity>

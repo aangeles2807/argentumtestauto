@@ -46,7 +46,7 @@ public class CommonAction {
 	private ResponseObject responseObject;
 	private String apiPath;
 	private String message;
-	private Map<String, Object> mapStringString;
+	private Map<String, Object> mapStringObject;
 
 	public CommonAction(){
 	}
@@ -78,7 +78,7 @@ public class CommonAction {
 	 */
 	public Object getResponseContentIntoMapOrString(RequestObject requestObject){
 
-		return getResponseContentIntoMapOrString(requestObject, false);
+		return getResponseContentIntoMapOrString(requestObject, false, null);
 	}
 
 	/**
@@ -93,6 +93,22 @@ public class CommonAction {
 	 * @return Object - can be an ArrayList<Map<String, String>> or String.
 	 */
 	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean isInverseCase){
+		
+		return getResponseContentIntoMapOrString(requestObject, isInverseCase, null);
+	}
+	
+	/**
+	 * Can get one of two objects types:
+	 * 
+	 * 1-) Get an ArrayList of Map<String, String>, where each Map is the set of Keys and Value of response body of the URL consulted from API.
+	 * 2-) When the response content is not a JSon structure then return the text.
+	 * 
+	 * @param requestObject - Object with all request data to consult the API.
+	 * @param ifInverseCase - true is case is inverse, otherwise false.
+	 * @param otherMessage - Other message that is not the common used. 
+	 * @return Object - can be an ArrayList<Map<String, String>> or String.
+	 */
+	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean isInverseCase, String addMoreInformationMessage){
 
 		reportGenerator = ReportGenerator.getUniqueIntance();
 
@@ -132,6 +148,14 @@ public class CommonAction {
 		// ***************************************
 
 		responseObject = WS.sendRequestAndVerify(requestObject, FailureHandling.STOP_ON_FAILURE);
+		
+		// *****************************************
+		// Continuation of Generate template message
+		// *****************************************
+		
+		message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
+		
+		message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br>");
 
 		// ********************
 		// Verify response code
@@ -148,17 +172,18 @@ public class CommonAction {
 			apiPath.equals("/api/Autorizacion/Portal/TarifaProcedimiento") ||
 			apiPath.equals("/api/Autorizacion/Portal/Autorizar")) {
 
-				message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
-
-				message += String.valueOf("<br>Obtuvo la siguiente respuesta: ${responseObject.getResponseText().trim()}.<br>");
-
-				message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
-
-				//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
+				// *****************************************
+				// Continuation of Generate template message
+				// *****************************************
+			
+				message += String.valueOf("<br>Obtuvo la respuesta: ${responseObject.getResponseText().trim()}.<br>");
+				
+				if (addMoreInformationMessage != null) {
+					
+					message += String.valueOf("<br>${addMoreInformationMessage}<br>");
+				}
 
 				if (isInverseCase) {
-
-					reportGenerator.setLogStatusFAIL(message);
 
 					throw new RuntimeException(message);
 				}
@@ -296,8 +321,10 @@ public class CommonAction {
 					//System.out.println("\nFinal de Arreglo\n");
 				}
 			}
-
-			message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
+			
+			// *****************************************
+			// Continuation of Generate template message
+			// *****************************************
 			
 			// If response body is empty
 			if(mapResponseBody.isEmpty() && !apiPath.equals("/api/Autorizacion/Portal/CamposRequeridos")){
@@ -306,18 +333,21 @@ public class CommonAction {
 			}
 			else{
 				
-				message += String.valueOf("<br>Obtuvo la siguiente respuesta:<br><br>");
+				message += String.valueOf("<br>Obtuvo respuesta:<br><br>");
 				
 				for(Map<String, String> contentBodyMap : mapResponseBody){
 					
 					for(String key : contentBodyMap.keySet()){
-	
+						
 						message += key + " : " + contentBodyMap.get(key) + "<br>";
 					}
 				}
 			}
-
-			message += String.valueOf("<br>En un lapso de tiempo de: <b>${responseObject.getElapsedTime()} ms</b>.<br><br>");
+			
+			if (addMoreInformationMessage != null) {
+				
+				message += String.valueOf("<br>${addMoreInformationMessage}<br>");
+			}
 
 			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
 			
@@ -332,10 +362,17 @@ public class CommonAction {
 			}
 		}
 		else{
-
-			message += String.valueOf("<br>Lanzo el codigo de respuesta HTTP: <b>${responseObject.getStatusCode()}</b>.<br>");
+			
+			// *****************************************
+			// Continuation of Generate template message
+			// *****************************************
 
 			message += String.valueOf("<br>Mostrando el mensaje: <b>${responseObject.getResponseText()}</b>.");
+			
+			if (addMoreInformationMessage != null) {
+				
+				message += String.valueOf("<br>${addMoreInformationMessage}<br>");
+			}
 			
 			if (isInverseCase) {
 
@@ -430,13 +467,15 @@ public class CommonAction {
 		return apiPath;
 	}
 
-	public Map<String, Object> getMapStringString() {
+	public Map<String, Object> getMapStringObject() {
 		
-		if (mapStringString == null) {
+		if (mapStringObject == null) {
 			
-			mapStringString = new HashMap<String, Object>();
+			mapStringObject = new HashMap<String, Object>();
 		}
 		
-		return mapStringString;
+		return mapStringObject;
 	}
+
+	
 }

@@ -90,6 +90,7 @@ public class ReportGenerator {
 
 		messageType.add(LogStatus.WARNING);
 		messageContent.add(String.valueOf("<font color=\"orange\">${warningMessage}</font>"));
+		//messageContent.add(warningMessage);
 	}
 
 	public void setLogStatusSKIP(String skipMessage){
@@ -108,6 +109,7 @@ public class ReportGenerator {
 
 		messageType.add(LogStatus.FAIL);
 		messageContent.add(String.valueOf("<font color=\"red\">${failMessage}</font>"));
+		//messageContent.add(String.valueOf(failMessage));
 	}
 
 	public void setLogStatusFATAL(String fatalMessage){

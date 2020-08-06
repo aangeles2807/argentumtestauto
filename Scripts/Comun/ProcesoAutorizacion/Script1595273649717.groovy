@@ -369,8 +369,6 @@ try {
 	// Consulta del Web Service: /api/Autorizacion/Portal/ValidarCobertura
 	//********************************************************************
 	
-	String idInteraccion = null;
-	
 	// Si deseamos consultar este Web Service
 	if (consultarApiAutorizacionPortalValidarCobertura) {
 		
@@ -687,8 +685,6 @@ try {
 	  // Consulta del Web Service: /api/Autorizacion/Portal/TarifaProcedimiento
 	  //***********************************************************************
 	  
-	  String montoProcedimiento = null;
-	  
 	  // Si deseamos consultar este Web Service
 	  if (consultarApiAutorizacionPortalTarifaProcedimiento) {
 		  
@@ -701,9 +697,9 @@ try {
 				  'idInteraccion' : idInteraccion,
 				  'codigoProcedimiento' : codigoPrestacion]));
 			  
-			  montoProcedimiento = responseContentString;
+			  tarifaProcedimiento = responseContentString;
 			  
-			  println "\n\n" + "Monto Procedimiento: " + montoProcedimiento + "\n\n";
+			  println "\n\n" + "Monto Procedimiento: " + tarifaProcedimiento + "\n\n";
 		  }
 	  }
 	  
@@ -724,11 +720,31 @@ try {
 				  'codigoUsuario' : numeroAfiliado,
 				  'idInteraccion' : idInteraccion,
 				  'Codigo' : codigoPrestacion,
-				  'Valor' : montoProcedimiento]));
+				  'Valor' : tarifaProcedimiento]));
 			  
 			  codigoAutorizacion = responseContentString;
 			  
 			  println "\n\n" + "Codigo Autorizacion: " + codigoAutorizacion + "\n\n";
+		  }
+		  else{
+			  
+			  // En caso de querer agregar un mensaje adicional de error
+			  if (!consultarApiAutorizacionPortalAutorizarMensajeError.toString().isEmpty()) {
+				  
+				  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAutorizar', [
+					  'codigoUsuario' : numeroAfiliado,
+					  'idInteraccion' : idInteraccion,
+					  'Codigo' : codigoPrestacion,
+					  'Valor' : tarifaProcedimiento]), true, consultarApiAutorizacionPortalAutorizarMensajeError.toString());
+			  }
+			  else{
+				  
+				  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAutorizar', [
+					  'codigoUsuario' : numeroAfiliado,
+					  'idInteraccion' : idInteraccion,
+					  'Codigo' : codigoPrestacion,
+					  'Valor' : tarifaProcedimiento]), true);
+			  }
 		  }
 	  }
 	  
@@ -737,59 +753,61 @@ try {
 	   * para ser retornadas en caso de ser necesarias para otro escenario.
 	   */
 	  
-	  commonAction.getMapStringString().put("ejecutarQueryCapturaAfiliadoMPP", ejecutarQueryCapturaAfiliadoMPP);
-	  commonAction.getMapStringString().put("ejecutarQueryCapturaAfiliadoPBS", ejecutarQueryCapturaAfiliadoPBS);
-	  commonAction.getMapStringString().put("ejecutarQueryCapturaAfiliadoMPPoPBS", ejecutarQueryCapturaAfiliadoMPPoPBS);
-	  commonAction.getMapStringString().put("condicionAfiliadoMPP", condicionAfiliadoMPP);
-	  commonAction.getMapStringString().put("condicionAfiliadoPBS", condicionAfiliadoPBS);
-	  commonAction.getMapStringString().put("servicioConsulta", servicioConsulta);
-	  commonAction.getMapStringString().put("numeroAfiliado", numeroAfiliado);
-	  commonAction.getMapStringString().put("tipoAfiliado", tipoAfiliado);
-	  commonAction.getMapStringString().put("nombreAfiliado", nombreAfiliado);
-	  commonAction.getMapStringString().put("codigoCobertura", codigoCobertura);
-	  commonAction.getMapStringString().put("generoAfiliado", generoAfiliado);
-	  commonAction.getMapStringString().put("numeroDocumentoAfiliado", numeroDocumentoAfiliado);
-	  commonAction.getMapStringString().put("ejecutarQueryPrestadorServicio", ejecutarQueryPrestadorServicio);
-	  commonAction.getMapStringString().put("estadoPrestador", estadoPrestador);
-	  commonAction.getMapStringString().put("codigoPrestadorSalud", codigoPrestadorSalud);
-	  commonAction.getMapStringString().put("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
-	  commonAction.getMapStringString().put("nombrePrestador", nombrePrestador);
-	  commonAction.getMapStringString().put("nombreServicio", nombreServicio);
-	  commonAction.getMapStringString().put("codigoSucursal", codigoSucursal);
-	  commonAction.getMapStringString().put("ejecutarQueryDiagnostico", ejecutarQueryDiagnostico);
-	  commonAction.getMapStringString().put("codigoDiagnostico", codigoDiagnostico);
-	  commonAction.getMapStringString().put("nombreDiagnostico", nombreDiagnostico);
-	  commonAction.getMapStringString().put("ejecutarQueryProcedimientoPorPrestador", ejecutarQueryProcedimientoPorPrestador);
-	  commonAction.getMapStringString().put("codigoPrestacion", codigoPrestacion);
-	  commonAction.getMapStringString().put("descripcionPrestacion", descripcionPrestacion);
-	  commonAction.getMapStringString().put("consultarApiAfiliado", consultarApiAfiliado);
-	  commonAction.getMapStringString().put("consultarApiAfiliadoCasoPositivo", consultarApiAfiliadoCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiPrestadorSalud", consultarApiPrestadorSalud);
-	  commonAction.getMapStringString().put("consultarApiPrestadorSaludCasoPositivo", consultarApiPrestadorSaludCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiPrestadorSaludServicios", consultarApiPrestadorSaludServicios);
-	  commonAction.getMapStringString().put("consultarApiPrestadorSaludServiciosCasoPositivo", consultarApiPrestadorSaludServiciosCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalValidarCobertura", consultarApiAutorizacionPortalValidarCobertura);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalValidarCoberturaCasoPositivo", consultarApiAutorizacionPortalValidarCoberturaCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalCamposRequeridos", consultarApiAutorizacionPortalCamposRequeridos);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalCamposRequeridosCasoPositivo", consultarApiAutorizacionPortalCamposRequeridosCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiConsultarDiagnosticos", consultarApiConsultarDiagnosticos);
-	  commonAction.getMapStringString().put("consultarApiConsultarDiagnosticosCasoPositivo", consultarApiConsultarDiagnosticosCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalIngresar", consultarApiAutorizacionPortalIngresar);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalIngresarCasoPositivo", consultarApiAutorizacionPortalIngresarCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", consultarApiAutorizacionPortalPrestadorSaludProcedimientos);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiConsultarProcedimientos", consultarApiConsultarProcedimientos);
-	  commonAction.getMapStringString().put("consultarApiConsultarProcedimientosCasoPositivo", consultarApiConsultarProcedimientosCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalTarifaProcedimiento", consultarApiAutorizacionPortalTarifaProcedimiento);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalAutorizar", consultarApiAutorizacionPortalAutorizar);
-	  commonAction.getMapStringString().put("consultarApiAutorizacionPortalAutorizarCasoPositivo", consultarApiAutorizacionPortalAutorizarCasoPositivo);
-	  commonAction.getMapStringString().put("fechaAutorizacion", fechaAutorizacion);
+	  commonAction.getMapStringObject().put("ejecutarQueryCapturaAfiliadoMPP", ejecutarQueryCapturaAfiliadoMPP);
+	  commonAction.getMapStringObject().put("ejecutarQueryCapturaAfiliadoPBS", ejecutarQueryCapturaAfiliadoPBS);
+	  commonAction.getMapStringObject().put("ejecutarQueryCapturaAfiliadoMPPoPBS", ejecutarQueryCapturaAfiliadoMPPoPBS);
+	  commonAction.getMapStringObject().put("condicionAfiliadoMPP", condicionAfiliadoMPP);
+	  commonAction.getMapStringObject().put("condicionAfiliadoPBS", condicionAfiliadoPBS);
+	  commonAction.getMapStringObject().put("servicioConsulta", servicioConsulta);
+	  commonAction.getMapStringObject().put("numeroAfiliado", numeroAfiliado);
+	  commonAction.getMapStringObject().put("tipoAfiliado", tipoAfiliado);
+	  commonAction.getMapStringObject().put("nombreAfiliado", nombreAfiliado);
+	  commonAction.getMapStringObject().put("codigoCobertura", codigoCobertura);
+	  commonAction.getMapStringObject().put("generoAfiliado", generoAfiliado);
+	  commonAction.getMapStringObject().put("numeroDocumentoAfiliado", numeroDocumentoAfiliado);
+	  commonAction.getMapStringObject().put("ejecutarQueryPrestadorServicio", ejecutarQueryPrestadorServicio);
+	  commonAction.getMapStringObject().put("estadoPrestador", estadoPrestador);
+	  commonAction.getMapStringObject().put("codigoPrestadorSalud", codigoPrestadorSalud);
+	  commonAction.getMapStringObject().put("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
+	  commonAction.getMapStringObject().put("nombrePrestador", nombrePrestador);
+	  commonAction.getMapStringObject().put("nombreServicio", nombreServicio);
+	  commonAction.getMapStringObject().put("codigoSucursal", codigoSucursal);
+	  commonAction.getMapStringObject().put("ejecutarQueryDiagnostico", ejecutarQueryDiagnostico);
+	  commonAction.getMapStringObject().put("codigoDiagnostico", codigoDiagnostico);
+	  commonAction.getMapStringObject().put("nombreDiagnostico", nombreDiagnostico);
+	  commonAction.getMapStringObject().put("ejecutarQueryProcedimientoPorPrestador", ejecutarQueryProcedimientoPorPrestador);
+	  commonAction.getMapStringObject().put("codigoPrestacion", codigoPrestacion);
+	  commonAction.getMapStringObject().put("descripcionPrestacion", descripcionPrestacion);
+	  commonAction.getMapStringObject().put("consultarApiAfiliado", consultarApiAfiliado);
+	  commonAction.getMapStringObject().put("consultarApiAfiliadoCasoPositivo", consultarApiAfiliadoCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiPrestadorSalud", consultarApiPrestadorSalud);
+	  commonAction.getMapStringObject().put("consultarApiPrestadorSaludCasoPositivo", consultarApiPrestadorSaludCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiPrestadorSaludServicios", consultarApiPrestadorSaludServicios);
+	  commonAction.getMapStringObject().put("consultarApiPrestadorSaludServiciosCasoPositivo", consultarApiPrestadorSaludServiciosCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalValidarCobertura", consultarApiAutorizacionPortalValidarCobertura);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalValidarCoberturaCasoPositivo", consultarApiAutorizacionPortalValidarCoberturaCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalCamposRequeridos", consultarApiAutorizacionPortalCamposRequeridos);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalCamposRequeridosCasoPositivo", consultarApiAutorizacionPortalCamposRequeridosCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiConsultarDiagnosticos", consultarApiConsultarDiagnosticos);
+	  commonAction.getMapStringObject().put("consultarApiConsultarDiagnosticosCasoPositivo", consultarApiConsultarDiagnosticosCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalIngresar", consultarApiAutorizacionPortalIngresar);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalIngresarCasoPositivo", consultarApiAutorizacionPortalIngresarCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", consultarApiAutorizacionPortalPrestadorSaludProcedimientos);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiConsultarProcedimientos", consultarApiConsultarProcedimientos);
+	  commonAction.getMapStringObject().put("consultarApiConsultarProcedimientosCasoPositivo", consultarApiConsultarProcedimientosCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalTarifaProcedimiento", consultarApiAutorizacionPortalTarifaProcedimiento);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAutorizar", consultarApiAutorizacionPortalAutorizar);
+	  commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAutorizarCasoPositivo", consultarApiAutorizacionPortalAutorizarCasoPositivo);
+	  commonAction.getMapStringObject().put("fechaAutorizacion", fechaAutorizacion);
+	  commonAction.getMapStringObject().put("tarifaProcedimiento", tarifaProcedimiento);
+	  commonAction.getMapStringObject().put("idInteraccion", idInteraccion);
 	  
-	   return commonAction.getMapStringString();
+	   return commonAction.getMapStringObject();
 	  
 } catch (Exception e) {
 
-	KeywordUtil.markError(e.getMessage());
 	reportGenerator.setLogStatusFAIL(e.getMessage());
+	KeywordUtil.markErrorAndStop(e.getMessage());
 }

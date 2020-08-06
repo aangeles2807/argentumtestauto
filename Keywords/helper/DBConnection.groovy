@@ -80,6 +80,8 @@ public class DBConnection {
 	public Map<String, String> executeQueryAndGetResult(String queryName, String queryToExecute){
 
 		reportGenerator = ReportGenerator.getUniqueIntance();
+		
+		System.out.println(String.valueOf("\n\nEjecucion de query ${queryName}\n\n"));
 
 		//println "\n\n" + queryToExecute + "\n\n";
 
