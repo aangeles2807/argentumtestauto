@@ -165,12 +165,40 @@ try {
 		numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
 	}
 	
-	println "\n\n" + "Nombre Afiliado: " + nombreAfiliado +
-			"\n" + "Numero Afiliado: " + numeroAfiliado +
-			"\n" + "Genero Afiliado: " + generoAfiliado +
-			"\n" + "Tipo Afiliado: " + tipoAfiliado  +
-			"\n" + "Numero Documento Afiliado: " + numeroDocumentoAfiliado +
-			"\n\n";
+	// ****************************
+	// Imprimir estado de variables
+	// ****************************
+	
+	message = "\n\n";
+	
+	if (!nombreAfiliado.toString().isEmpty()) {
+		
+		message += String.valueOf("Nombre Afiliado: ${nombreAfiliado}" + "\n");
+	}
+	
+	if (!numeroAfiliado.toString().isEmpty()) {
+		
+		message += String.valueOf("Numero Afiliado: ${numeroAfiliado}" + "\n");
+	}
+	
+	if (!generoAfiliado.toString().isEmpty()) {
+		
+		message += String.valueOf("Genero Afiliado: ${generoAfiliado}" + "\n");
+	}
+	
+	if (!tipoAfiliado.toString().isEmpty()) {
+		
+		message += String.valueOf("Tipo Afiliado: ${tipoAfiliado}" + "\n");
+	}
+	
+	if (!numeroDocumentoAfiliado.toString().isEmpty()) {
+		
+		message += String.valueOf("Numero Documento Afiliado: ${numeroDocumentoAfiliado}" + "\n");
+	}
+	
+	message += "\n\n";
+	
+	println message;
 	
 	/*
 	 *
@@ -219,14 +247,45 @@ try {
 		codigoCobertura = queryResult.get("MPLCOD");
 	}
 	
-	println "\n\n" +
-			"Codigo Cobertura: " + codigoCobertura + "\n" +
-			"Codigo Prestador Salud: " + codigoPrestadorSalud + "\n" +
-			"Codigo De Servicio De Prestador Salud: " + codigoServicioPrestadorSalud +  "\n" +
-			"Nombre Prestador: " + nombrePrestador + "\n" +
-			"Nombre Servicio: " + nombreServicio + "\n" +
-			"Codigo Sucursal: " + codigoSucursal +
-			"\n\n";
+	// ****************************
+	// Imprimir estado de variables
+	// ****************************
+	
+	message = "\n\n";
+	
+	if (!codigoCobertura.toString().isEmpty()) {
+		
+		message += String.valueOf("Codigo Cobertura: ${codigoCobertura}" + "\n");
+	}
+	
+	if (!codigoPrestadorSalud.toString().isEmpty()) {
+		
+		message += String.valueOf("Codigo Prestador Salud ${codigoPrestadorSalud}" + "\n");
+	}
+	
+	if (!codigoServicioPrestadorSalud.toString().isEmpty()) {
+		
+		message += String.valueOf("Codigo De Servicio De Prestador Salud: ${codigoServicioPrestadorSalud}" + "\n");
+	}
+	
+	if (!nombrePrestador.toString().isEmpty()) {
+		
+		message += String.valueOf("Nombre Prestador: ${nombrePrestador}" + "\n");
+	}
+	
+	if (!nombreServicio.toString().isEmpty()) {
+		
+		message += String.valueOf("Nombre Servicio: ${nombreServicio}" + "\n");
+	}
+	
+	if (!codigoSucursal.toString().isEmpty()) {
+		
+		message += String.valueOf("Codigo Sucursal: ${codigoSucursal}" + "\n");
+	}
+	
+	message += "\n\n";
+	
+	println message;
 	
 	//***************************************
 	// Consulta del Web Service /api/Afiliado
@@ -442,8 +501,26 @@ try {
 		// DIA_DIA_DESCRIPCIO
 		nombreDiagnostico = queryResult.get("DIA_DIA_DESCRIPCIO");
 	}
+	
+	// ****************************
+	// Imprimir estado de variables
+	// ****************************
+	
+	message = "\n\n";
+	
+	if (!codigoDiagnostico.toString().isEmpty()) {
 		
-	println "\n\n" + "Codigo Diagnostico: " + codigoDiagnostico + ", Nombre Diagnostico: " + nombreDiagnostico + "\n\n";
+		message += String.valueOf("Codigo Diagnostico: ${codigoDiagnostico}" + "\n");
+	}
+	
+	if (!nombreDiagnostico.toString().isEmpty()) {
+		
+		message += String.valueOf("Nombre Diagnostico: ${nombreDiagnostico}" + "\n");
+	}
+	
+	message += "\n\n";
+	
+	println message;
 	
 	//******************************************************
 	// Consulta del Web Service: /api/Consultar/Diagnosticos
@@ -560,8 +637,26 @@ try {
 		 // DESCRIPCION_PRESTACION
 		 descripcionPrestacion = queryResult.get("DESCRIPCION_PRESTACION");
 	 }
-	 
-	 println "\n\n" + "Codigo Prestacion: " + codigoPrestacion + ", Descripcion Prestacion: " + descripcionPrestacion + "\n\n";
+	
+	// ****************************
+	// Imprimir estado de variables
+	// ****************************
+	
+	message = "\n\n";
+	
+	if (!codigoPrestacion.toString().isEmpty()) {
+		
+		message += String.valueOf("Codigo Prestacion: ${codigoPrestacion}" + "\n");
+	}
+	
+	if (!descripcionPrestacion.toString().isEmpty()) {
+		
+		message += String.valueOf("Descripcion Prestacion: ${descripcionPrestacion}" + "\n");
+	}
+	
+	message += "\n\n";
+	
+	println message;
 	 
 	 //*********************************************************************************
 	 // Consulta del Web Service: /api/Autorizacion/Portal/PrestadorSalud/Procedimientos
