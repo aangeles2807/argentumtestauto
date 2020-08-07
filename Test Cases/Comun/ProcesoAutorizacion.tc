@@ -97,7 +97,7 @@
       <name>ejecutarQueryPrestadorServicio</name>
    </variable>
    <variable>
-      <defaultValue>'1'</defaultValue>
+      <defaultValue>'AND trim(ips.ipsestado) = \'1\''</defaultValue>
       <description></description>
       <id>cd731f01-ef08-463a-acf3-e3ad5ce7c98a</id>
       <masked>false</masked>
@@ -361,5 +361,12 @@
       <id>a6b11583-5181-4f8d-a74b-769190a62b78</id>
       <masked>false</masked>
       <name>idInteraccion</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ca0f2622-a864-4718-9a23-b7bb9f7dbfc4</id>
+      <masked>false</masked>
+      <name>condicionProcedimiento</name>
    </variable>
 </TestCaseEntity>

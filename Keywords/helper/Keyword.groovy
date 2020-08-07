@@ -74,6 +74,8 @@ public enum Keyword {
 	AFILIADO_AUTORIZACION_6_MESES("ADD_MONTHS(sysdate,-6)"),
 	AFILIADO_AUTORIZACION_5_DIAS("(SYSDATE - 30)"),
 	AFILIADO_AUTORIZACION_SYSDATE("sysdate"),
+	AFILIADO_EXCLUSIVO("AND mpl.mplcod like 'EX%' "),
+	AFILIADO_MASCULINO("AND nat.NATSEX = 'M' "),
 	//AFILIADO_PBS_CODIGO_COBERTURA("EXCV2','E880', 'E886','E887', 'EHBA1','E879','EXP18','E881','E883', 'EXP17','EX873','EX877','EX878', 'E888','EX879','E889','E8538','E890','E878','EX876','E882','EX880','E891"),
 	AFILIADO_PBS_CODIGO_COBERTURA("EX%"),
 	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
@@ -89,9 +91,15 @@ public enum Keyword {
 	SERVICIO_EMERGENCIA_TRIAGE_2("AND trim(tips.seripscod) IN ('127') "),
 	SERVICIO_EMERGENCIA_TRIAGE_3("AND trim(tips.seripscod) IN ('128') "),
 	SERVICIO_EMERGENCIA_TRIAGE_4("AND trim(tips.seripscod) IN ('129') "),
+	SERVICIO_NO_FARMACIA("AND trim(tips.seripscod) IN ('35') "),
 
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
+	PRESTADOR_NO_VIGENTE("AND Trim(ips.ipsestado) <> '1' "),
+	PRESTADOR_EXCLUSIVO ("AND Trim(ips.ipscodsup) = '00182' "),
+	PRESTADOR_LABORATORIO("AND ips.IPSNOM like '%LABORATORIO%' "),
+	
+	PROCEDIMIENTO_MATERNIDAD("AND TRIM(TATE.TIPORICOD) = '2' "),
 
 	// *******************
 	// Query to be execute

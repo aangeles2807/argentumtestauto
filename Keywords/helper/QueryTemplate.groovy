@@ -169,7 +169,7 @@ public class QueryTemplate {
 	"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
 	"	AND trim(ser.sercon) = 'S' \n" +
 	"	AND trim(SERIPS_SEXO) IN ('A', '<generoAfiliado>') \n" + // Parametro
-	"	AND trim(ips.ipsestado) = '<estadoPrestador>' \n" + // Parametro
+	"	<estadoPrestador> \n" + // Parametro
 	"	AND ips.tipovincod = '06' \n" +
 	"	<servicioConsulta> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
@@ -268,12 +268,14 @@ public class QueryTemplate {
 	"	JOIN tabtipate ate \n" +
 	"	ON ate.tipatecod = mpr.tipatecod \n" +
 	"	JOIN tabtippla tpl on tpl.tipplacod = mpl.mpltippla \n" +
+	"	JOIN Tabate TATE ON mpl.MPLCOD = TATE.MPLCOD \n" +
 	"	WHERE 1 = 1 \n" +
 	//"	AND REGEXP_LIKE(SUBSTR(PRE_PRE_TIPO, 1, 1), '^\\d+(\\.\\d+)?\$') \n" +
 	"	AND pre.pre_pre_quirurgico = 0 \n" +
 	"	AND Trim(pre_pre_sexo) in ('A', '<generoAfiliado>') \n" + // SEXO
 	"	AND trim(ips.ipscodsup) = '<codigoPrestadorSalud>' \n" + // CODIGO DE PRESTADOR
 	"	AND trim(mpl.mplcod) = '<codigoCobertura>' \n" + // CODIGO DE PLAN
+	"	<condicionProcedimiento> \n" + //CONDICION PROCEDIMIENTO
 	"	AND 1 = CASE WHEN EXISTS ( \n" +
 	"		SELECT 1 FROM \n" +
 	"			tabcontiphab tiphab \n" +
