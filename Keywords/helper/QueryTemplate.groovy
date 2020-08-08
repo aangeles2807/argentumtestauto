@@ -268,7 +268,7 @@ public class QueryTemplate {
 	"	JOIN tabtipate ate \n" +
 	"	ON ate.tipatecod = mpr.tipatecod \n" +
 	"	JOIN tabtippla tpl on tpl.tipplacod = mpl.mpltippla \n" +
-	"	JOIN Tabate TATE ON mpl.MPLCOD = TATE.MPLCOD \n" +
+	"	<joinProcedimiento> \n" +
 	"	WHERE 1 = 1 \n" +
 	//"	AND REGEXP_LIKE(SUBSTR(PRE_PRE_TIPO, 1, 1), '^\\d+(\\.\\d+)?\$') \n" +
 	"	AND pre.pre_pre_quirurgico = 0 \n" +

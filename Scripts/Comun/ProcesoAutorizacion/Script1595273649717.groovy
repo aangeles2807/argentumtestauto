@@ -622,6 +622,7 @@ try {
 		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
 		 QueryTemplate.procedimientoPorPrestador.add("fechaAutorizacion", fechaAutorizacion);
 		 QueryTemplate.procedimientoPorPrestador.add("condicionProcedimiento", condicionProcedimiento);
+		 QueryTemplate.procedimientoPorPrestador.add("joinProcedimiento", joinProcedimiento);
 		 
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
@@ -635,6 +636,7 @@ try {
 		 QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
 		 QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
 		 QueryTemplate.procedimientoPorPrestador.remove("condicionProcedimiento");
+		 QueryTemplate.procedimientoPorPrestador.remove("joinProcedimiento");
 		 
 		 // CODIGO_PRESTACION
 		 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
@@ -854,6 +856,40 @@ try {
 			  }
 		  }
 	  }
+	  
+	  
+	  //*************************************************************
+	   // Consulta del Web Service: /api/Autorizacion/Portal/Anular
+	   //*************************************************************
+	   
+	   String respuestaAnulacion = null;
+	   
+	   // Si deseamos consultar este Web Service
+	   if (consultarApiAutorizacionPortalAnular) {
+		   
+		   // Si es un caso positivo
+		   if (consultarApiAutorizacionPortalAnularCasoPositivo) {
+			   
+			   // Consultamos el Web Service
+			   responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAnular', [
+				   'codigoUsuario' : numeroAfiliado,
+				   'idInteraccion' : idInteraccion,
+				   'codigoMotivo' : '1',
+				   'observacion' : 'Prueba API Anulacion de Autorizacion Completada']));
+			   
+			   respuestaAnulacion = responseContentString;
+			   
+			   println "\n\n" + "Respuesta de Anulacion: " + respuestaAnulacion + "\n\n";
+		   }
+		   else{
+			   
+			   responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAnular', [
+				   'codigoUsuario' : numeroAfiliado,
+				   'idInteraccion' : idInteraccion,
+				   'codigoMotivo' : '1',
+				   'observacion' : 'Prueba API Anulacion de Autorizacion Completada']), true);
+		   }
+	   }
 	  
 	  /**
 	   * Agregamos todas las variables con sus valores de este Scrip,
