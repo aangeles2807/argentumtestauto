@@ -37,4 +37,5 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MASCULINO.value + Keyword.AFILIADO_CONTRATO_ACTIVO.value, 
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_MASCULINO.value + Keyword.AFILIADO_CONTRATO_ACTIVO_PBS.value,
-	'condicionProcedimiento': Keyword.PROCEDIMIENTO_MATERNIDAD.value], FailureHandling.STOP_ON_FAILURE);
+	'condicionProcedimiento': Keyword.PROCEDIMIENTO_MATERNIDAD.value,
+	'joinProcedimiento': Keyword.PROCEDIMIENTO_MATERNIDAD_JOIN.value], FailureHandling.STOP_ON_FAILURE);
