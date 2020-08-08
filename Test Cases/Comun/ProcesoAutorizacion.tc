@@ -369,4 +369,25 @@
       <masked>false</masked>
       <name>condicionProcedimiento</name>
    </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>7afe5297-cbc3-4f12-b0f0-60135b805758</id>
+      <masked>false</masked>
+      <name>consultarApiAutorizacionPortalAnular</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>4fadccbe-3959-4f7d-bf4f-365b5d32e896</id>
+      <masked>false</masked>
+      <name>consultarApiAutorizacionPortalAnularCasoPositivo</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>05630f51-adb6-4b1e-b364-495ad75feebb</id>
+      <masked>false</masked>
+      <name>joinProcedimiento</name>
+   </variable>
 </TestCaseEntity>
