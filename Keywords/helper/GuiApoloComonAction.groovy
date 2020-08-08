@@ -53,6 +53,12 @@ public class GuiApoloComonAction {
 		webElementPath = findTestObject('GUI/Comun/logoCargando').getProperties().get(0).getName();
 		testObject = findTestObject('GUI/Comun/logoCargando');
 		
+		while(commonAction.verifyTestObjectExistence(webElementPath, testObject, commonAction.getTimeout1Second(), commonAction.getTimeout1Second(), false, false) != null)
+		
+		WebUI.delay(commonAction.getTimeout1Second());
+		
+		return true;
+		/*
 		for(int i=0; i < commonAction.getTimeout5Seconds();){
 			
 			if (commonAction.verifyTestObjectExistence(webElementPath, testObject, commonAction.getTimeout1Second(), commonAction.getTimeout5Seconds(), false, false) == null) {
@@ -65,10 +71,11 @@ public class GuiApoloComonAction {
 			}
 		}
 		
-		//fileNameAndPathOfScreenshot = WebUI.takeScreenshot();
-		
 		message = "<b>El logo de carga del Portal de Autorizaciones se mostro por un lapso de tiempo de 5 segundos.</b>";
 		
+		message += String.valueOf("<img src=\"${WebUI.takeScreenshot(FailureHandling.OPTIONAL)}\" alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\"><br>");
+		
 		throw new RuntimeException(message);
+		*/
 	}
 }

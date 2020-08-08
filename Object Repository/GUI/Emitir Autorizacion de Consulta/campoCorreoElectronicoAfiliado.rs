@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>campoContrasena</name>
+   <name>campoCorreoElectronicoAfiliado</name>
    <tag></tag>
-   <elementGuidId>72963c0b-d9d6-4016-9a08-8ebe10d5f77c</elementGuidId>
+   <elementGuidId>c7411728-3411-4f95-881d-71ce3d1b428a</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>#Password</value>
+         <value>input[name='correo-afiliado']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>css</name>
       <type>Main</type>
-      <value>#Password</value>
+      <value>input[name='correo-afiliado']</value>
    </webElementProperties>
 </WebElementEntity>

@@ -497,7 +497,7 @@ public class CommonAction {
 
 				if (testObjectHighlight) {
 
-					highlightTestObject(testObject);
+					highlightTestObject(selectorName, testObject);
 				}
 
 				return testObject;
@@ -579,35 +579,42 @@ public class CommonAction {
 
 			// In case of highlighting
 			if (accionToExecute.equals(helper.Keyword.JAVASCRIPT_HIGHLIGHT.value)) {
-
-				if (WebUI.verifyElementHasAttribute(testObject, helper.Keyword.ATTRIBUTE_STYLE.value, TIMEOUT_5_SECONDS, FailureHandling.OPTIONAL)) {
-
-					style = WebUI.getAttribute(testObject, helper.Keyword.ATTRIBUTE_STYLE.value);
-
-					if (otherStyleInCaseOfHighlight != null && !otherStyleInCaseOfHighlight.isEmpty()) {
-
-						style += otherStyleInCaseOfHighlight;
-
+				
+				if (selectorName.equals(helper.Keyword.XPATH_SELECTOR.value)) {
+					
+					if (WebUI.verifyElementHasAttribute(testObject, helper.Keyword.ATTRIBUTE_STYLE.value, TIMEOUT_5_SECONDS, FailureHandling.OPTIONAL)) {
+						
+						style = WebUI.getAttribute(testObject, helper.Keyword.ATTRIBUTE_STYLE.value);
+						
+						if (otherStyleInCaseOfHighlight != null && !otherStyleInCaseOfHighlight.isEmpty()) {
+	
+							style += otherStyleInCaseOfHighlight;
+	
+						}else{
+	
+							style += "border: solid 1px red !important;"
+	
+						}
+	
 					}else{
-
-						style += "border: solid 1px red !important;"
-
+	
+						if (otherStyleInCaseOfHighlight != null && !otherStyleInCaseOfHighlight.isEmpty()) {
+	
+							style = otherStyleInCaseOfHighlight;
+						}
+	
+						else{
+	
+							style = "border: solid 1px red !important;"
+						}
 					}
-
-				}else{
-
-					if (otherStyleInCaseOfHighlight != null && !otherStyleInCaseOfHighlight.isEmpty()) {
-
-						style = otherStyleInCaseOfHighlight;
-					}
-
-					else{
-
-						style = "border: solid 1px red !important;"
-					}
+	
+					scriptToExecute = String.valueOf("arguments[0].setAttribute('${helper.Keyword.ATTRIBUTE_STYLE.value}', '${style}')");
 				}
-
-				scriptToExecute = String.valueOf("arguments[0].setAttribute('${helper.Keyword.ATTRIBUTE_STYLE.value}', '${style}')");
+				else if (selectorName.equals(helper.Keyword.CSS_SELECTOR.value)) {
+					
+					scriptToExecute = String.valueOf("var myElement = document.querySelector(\"${testObject.getProperties().get(0).getValue()}\"); myElement.style.border = 'solid 1px red';")
+				}
 			}
 
 			// In case of clicking
@@ -701,28 +708,34 @@ public class CommonAction {
 	 *
 	 * @param testObjectOrXpathh - elemento web que se le suplira el texto.
 	 * @param text - testo a ser suplido.
-	 * @param shortDescriptionInCaseOfFail - Breve descripcion en caso de falla.
+	 * @param webElementName - Nombre del elemento web para ser mostrado en el reporte.
 	 */
-	public void setTextToWebElement(String selectorName, Object testObjectOrXpathString, String textToSet, String shortDescriptionInCaseOfFail, boolean testObjectScroll, boolean testObjectHighlight, boolean isTakeScreenshot){
+	public void setTextToWebElement(String selectorName, Object testObjectOrXpathString, String textToSet, String webElementName, boolean testObjectScroll, boolean testObjectHighlight, boolean isTakeScreenshot){
 
 		defineVariableTestObject(selectorName, testObjectOrXpathString);
 
-		if (verifyTestObjectExistence(selectorName, testObject, TIMEOUT_1_SECOND, TIMEOUT_5_SECONDS, testObjectScroll, testObjectHighlight) != null) {
+		if (verifyTestObjectExistence(selectorName, testObject, TIMEOUT_3_SECONDS, TIMEOUT_5_SECONDS, testObjectScroll, testObjectHighlight) != null) {
 
 			WebUI.setText(testObject, textToSet);
 
-			message = String.valueOf("Fue suplido el texto <b>${textToSet}<b> <b>${shortDescriptionInCaseOfFail}<b>.<br>");
+			message = String.valueOf("Fue suplido el texto <b>${textToSet}</b> en el campo <b>${webElementName}</b>.<br>");
 
 			if (isTakeScreenshot) {
 
-				screenshotFileNameAndPath = WebUI.takeScreenshot();
-
-				message += String.valueOf("<img src=\"${screenshotFileNameAndPath}\" alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\"><br>");
+				message += String.valueOf("<a href=\"${WebUI.takeScreenshot()}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
 			}
 
 			reportGenerator = ReportGenerator.getUniqueIntance();
 			reportGenerator.setLogStatusPASS(message);
+			
+			return;
 		}
+		
+		message = String.valueOf("No fue posible suplir el texto <b>${textToSet}</b> en el campo <b>${webElementName}</b>.<br>");
+		
+		message += String.valueOf("<a href=\"${WebUI.takeScreenshot(FailureHandling.OPTIONAL)}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
+		
+		throw new RuntimeException(message);
 	}
 
 	/**
@@ -732,20 +745,30 @@ public class CommonAction {
 	 * click a la alerta cerrandola.
 	 *
 	 * @param testObjectOrXpathString - Web element sobre el cual se dara click.
-	 * @param shortDescriptionInCaseOfFail - Breve descripcion en caso de falla.
+	 * @param webElementName - Nombre del elemento web para ser mostrado en el reporte.
 	 */
-	public void clickToWebElement(String selectorName, Object testObjectOrXpathString, String shortDescriptionInCaseOfFail, boolean testObjectScroll, boolean testObjectHighlight) {
+	public void clickToWebElement(String selectorName, Object testObjectOrXpathString, String webElementName, boolean testObjectScroll, boolean testObjectHighlight, boolean isTakeScreenshot) {
 
 		defineVariableTestObject(selectorName, testObjectOrXpathString);
 
-		if (verifyTestObjectExistence(testObject, TIMEOUT_1_SECOND, TIMEOUT_5_SECONDS, testObjectScroll, testObjectHighlight) != null) {
+		if (verifyTestObjectExistence(selectorName, testObject, TIMEOUT_3_SECONDS, TIMEOUT_5_SECONDS, testObjectScroll, testObjectHighlight) != null) {
 
 			if (WebUI.waitForElementClickable(testObject, TIMEOUT_5_SECONDS, FailureHandling.OPTIONAL)) {
 
 				// Screenshot before click to be replace with alert screenshot
 				//fileNameAndPathOfScreenshot = WebUI.takeScreenshot();
+				
+				message = String.valueOf("Se presiono el boton/la opción <b>${webElementName}</b>.<br>");
+				
+				if (isTakeScreenshot) {
+	
+					message += String.valueOf("<a href=\"${WebUI.takeScreenshot()}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
+				}
 
 				WebUI.click(testObject);
+				
+				reportGenerator = ReportGenerator.getUniqueIntance();
+				reportGenerator.setLogStatusPASS(message);
 				/*
 				 if (WebUI.waitForAlert(TIMEOUT_1_SECOND, FailureHandling.OPTIONAL)) {
 				 x = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getMinX();
@@ -763,13 +786,17 @@ public class CommonAction {
 				 WebUI.acceptAlert();
 				 }
 				 fileNameAndPathOfScreenshot = null;
-				 //reportGenerator.screenVerification(String.valueOf("Fue presionado el boton ${shortDescriptionInCaseOfFail}."), true, true);
+				 //reportGenerator.screenVerification(String.valueOf("Fue presionado el boton ${webElementDescription}."), true, true);
 				 */
 				return;
 			}
 		}
-
-		//reportGenerator.screenVerification(String.valueOf("Luego de la espera de 30 segundos para dar click. ${shortDescriptionInCaseOfFail}"), false, true);
+		
+		message = String.valueOf("No fue posible presionar el boton/la opción <b>${webElementName}</b>.<br>");
+		
+		message += String.valueOf("<a href=\"${WebUI.takeScreenshot(FailureHandling.OPTIONAL)}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
+		
+		throw new RuntimeException(message);
 	}
 
 	// ****************

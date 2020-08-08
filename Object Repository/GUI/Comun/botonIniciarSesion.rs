@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//button[@value='login']</value>
+         <value>button[value='login']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>css</name>
       <type>Main</type>
-      <value>//button[@value='login']</value>
+      <value>button[value='login']</value>
    </webElementProperties>
 </WebElementEntity>

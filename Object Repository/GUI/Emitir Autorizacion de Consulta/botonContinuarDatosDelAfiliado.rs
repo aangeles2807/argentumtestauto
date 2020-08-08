@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>campoContrasena</name>
+   <name>botonContinuarDatosDelAfiliado</name>
    <tag></tag>
-   <elementGuidId>72963c0b-d9d6-4016-9a08-8ebe10d5f77c</elementGuidId>
+   <elementGuidId>11317e69-368d-4561-a3f9-9058d0ed8eee</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>#Password</value>
+         <value>form.ng-valid button</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>css</name>
       <type>Main</type>
-      <value>#Password</value>
+      <value>form.ng-valid button</value>
    </webElementProperties>
 </WebElementEntity>

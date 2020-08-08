@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>campoContrasena</name>
+   <name>campoDatosDelAfiliado</name>
    <tag></tag>
-   <elementGuidId>72963c0b-d9d6-4016-9a08-8ebe10d5f77c</elementGuidId>
+   <elementGuidId>be60d6be-a5a8-41c8-b476-2f4de944a80d</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>#Password</value>
+         <value>ng-select[name='identificacion-afiliado'] input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>css</name>
       <type>Main</type>
-      <value>#Password</value>
+      <value>ng-select[name='identificacion-afiliado'] input</value>
    </webElementProperties>
 </WebElementEntity>

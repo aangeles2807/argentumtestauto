@@ -24,26 +24,19 @@ CommonAction commonAction = CommonAction.getUniqueIntance();
 ReportGenerator reportGenerator = ReportGenerator.getUniqueIntance();
 GuiApoloComonAction guiApoloComonAction = GuiApoloComonAction.getUniqueIntance();
 
-// Desplegamos el navegador
-WebUI.openBrowser(null, FailureHandling.STOP_ON_FAILURE);
+// Click en el boton de usuario en sesion
+commonAction.clickToWebElement(Keyword.CSS_SELECTOR.value, "#button-animated", "Boton de Usuario en Sesión", false, true, false);
 
-// Maximizamos el nagevador
-WebUI.maximizeWindow(FailureHandling.STOP_ON_FAILURE);
-
-// Accedemos a la URL deseada
-WebUI.navigateToUrl(Keyword.PORTAL_AUTORIZACIONES_URL.value, FailureHandling.STOP_ON_FAILURE);
-
-// Suplimos el usuario
-commonAction.setTextToWebElement(findTestObject('GUI/Comun/campoUsuario').getProperties().get(0).getName(), findTestObject('GUI/Comun/campoUsuario'), Keyword.PORTAL_AUTORIZACIONES_USUARIO.value, "Usuario", false, true, false);
-
-// Suplimos la contraseña
-commonAction.setTextToWebElement(findTestObject('GUI/Comun/campoContrasena').getProperties().get(0).getName(), findTestObject('GUI/Comun/campoContrasena'), Keyword.PORTAL_AUTORIZACIONES_CONTRASENA.value, "Contraseña", false, true, false);
-
-// Click en el boton Creacion de Autorizaciones
-commonAction.clickToWebElement(findTestObject('GUI/Comun/botonIniciarSesion').getProperties().get(0).getName(), findTestObject('GUI/Comun/botonIniciarSesion'), "Iniciar Sesión", false, true, true);
+// Click en el boton Salir
+commonAction.clickToWebElement(Keyword.CSS_SELECTOR.value, "#dropdown-animated button", "Salir", false, true, true);
 
 // Espera que el logo de carga deje de presentarse
 if (guiApoloComonAction.waitLoadingLogoNotShowing()) {
 	
-	WebUI.delay(commonAction.getTimeout3Seconds())
+	message = String.valueOf("<b>Final de Sesión exitosa<b><br>");
+	
+	message += String.valueOf("<a href=\"${WebUI.takeScreenshot()}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
+
+	reportGenerator = ReportGenerator.getUniqueIntance();
+	reportGenerator.setLogStatusPASS(message);
 }

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//a[@href='/Autorizaciones/Nueva']</value>
+         <value>a[href='/Autorizaciones/Nueva']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>css</name>
       <type>Main</type>
-      <value>//a[@href='/Autorizaciones/Nueva']</value>
+      <value>a[href='/Autorizaciones/Nueva']</value>
    </webElementProperties>
 </WebElementEntity>
