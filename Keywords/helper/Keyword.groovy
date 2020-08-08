@@ -21,12 +21,6 @@ import internal.GlobalVariable
 
 public enum Keyword {
 
-	// ************
-	// HTTP Methods
-	// ************
-
-	METHOD_GET("GET"),
-
 	// *****************
 	// API Responses Key
 	// *****************
@@ -81,21 +75,27 @@ public enum Keyword {
 	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
-	
+
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
 
-	// *******************
-	// Query to be execute
-	// *******************
-
-	//AFILIADO_MPP("MPP"),
-	//AFILIADO_PBS("PBS"),
-	//AFILIADO("MPP o PBS"),
-	//PRESTADOR_SERVICIO("Prestador Servicio"),
-	//DIAGNOSTICO("Diagnostico"),
-	//PROCEDIMIENTO_POR_PRESTADOR("Procedimiento Por Prestador"),
-
+	// *********************
+	// Portal Autorizaciones
+	// *********************
+	
+	PORTAL_AUTORIZACIONES_URL("https://appenlinea-qa.azurewebsites.net/Autorizaciones"),
+	PORTAL_AUTORIZACIONES_USUARIO("PS18815"),
+	PORTAL_AUTORIZACIONES_CONTRASENA("arielDJ*123"),
+	ATTRIBUTE_STYLE("style"),
+	ATTRIBUTE_VALUE("value"),
+	ATTRIBUTE_HEIGHT("height"),
+	ATTRIBUTE_WIDTH("width"),
+	XPATH_SELECTOR("xpath"),
+	CSS_SELECTOR("css"),
+	JAVASCRIPT_CLICK("JavaScript Click"),
+	JAVASCRIPT_SCROLL("JavaScript Scroll"),
+	JAVASCRIPT_HIGHLIGHT("JavaScript Highlight"),
+	
 	// ******
 	// Report
 	// ******
