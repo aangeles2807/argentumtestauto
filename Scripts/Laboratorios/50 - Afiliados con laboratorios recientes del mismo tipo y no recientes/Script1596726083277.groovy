@@ -38,7 +38,7 @@ for(int i=1; i <= 2; i++){
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
-		mapaVariablesScript.put("fechaAutorizacion", Keyword.AFILIADO_AUTORIZACION_SYSDATE.value);
+		mapaVariablesScript.put("fechaAutorizacion", Keyword.AFILIADO_AUTORIZACION_5_DIAS.value);
 		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", true);
 		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
 		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
@@ -47,9 +47,9 @@ for(int i=1; i <= 2; i++){
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", true);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", true);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", true);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
 		
 		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
 	}

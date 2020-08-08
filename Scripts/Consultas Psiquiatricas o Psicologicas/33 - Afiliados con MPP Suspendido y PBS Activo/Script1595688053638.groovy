@@ -34,8 +34,9 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
+
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO_PBS.value,
 	'servicioConsulta' : Keyword.SERVICIO_PSIQUIATRIA.value], FailureHandling.STOP_ON_FAILURE);

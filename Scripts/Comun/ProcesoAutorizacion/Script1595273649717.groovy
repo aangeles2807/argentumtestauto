@@ -74,6 +74,7 @@ try {
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
+
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
@@ -220,6 +221,7 @@ try {
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
+		
 		queryResult = dbConnection.executeQueryAndGetResult("prestadorServicio", QueryTemplate.prestadorServicio.render().toString());
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
@@ -619,9 +621,11 @@ try {
 		 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
 		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
 		 QueryTemplate.procedimientoPorPrestador.add("fechaAutorizacion", fechaAutorizacion);
+		 QueryTemplate.procedimientoPorPrestador.add("condicionProcedimiento", condicionProcedimiento);
 		 
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
+		 
 		 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
 		 
 		 // Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
@@ -630,6 +634,7 @@ try {
 		 QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
 		 QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
 		 QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
+		 QueryTemplate.procedimientoPorPrestador.remove("condicionProcedimiento");
 		 
 		 // CODIGO_PRESTACION
 		 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
@@ -795,6 +800,13 @@ try {
 			  tarifaProcedimiento = responseContentString;
 			  
 			  println "\n\n" + "Monto Procedimiento: " + tarifaProcedimiento + "\n\n";
+		  }else{
+		  
+			  // Consultamos el Web Service
+			  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalTarifaProcedimiento', [
+				  'codigoUsuario' : numeroAfiliado,
+				  'idInteraccion' : idInteraccion,
+				  'codigoProcedimiento' : codigoPrestacion]), true);
 		  }
 	  }
 	  
