@@ -80,28 +80,24 @@ public enum Keyword {
 	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
 	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
 	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
-<<<<<<< HEAD
-=======
 	SERVICIO_EMERGENCIA("AND trim(tips.seripscod) IN ('49') "),
 	SERVICIO_EMERGENCIA_TRIAGE_1("AND trim(tips.seripscod) IN ('126') "),
 	SERVICIO_EMERGENCIA_TRIAGE_2("AND trim(tips.seripscod) IN ('127') "),
 	SERVICIO_EMERGENCIA_TRIAGE_3("AND trim(tips.seripscod) IN ('128') "),
 	SERVICIO_EMERGENCIA_TRIAGE_4("AND trim(tips.seripscod) IN ('129') "),
 	SERVICIO_NO_FARMACIA("AND trim(tips.seripscod) IN ('35') "),
->>>>>>> 7001365ffdfe25b6a3caef7e60003dd69e15b3bf
-
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
 	PRESTADOR_NO_VIGENTE("AND Trim(ips.ipsestado) <> '1' "),
 	PRESTADOR_EXCLUSIVO ("AND Trim(ips.ipscodsup) = '00182' "),
 	PRESTADOR_LABORATORIO("AND ips.IPSNOM like '%LABORATORIO%' "),
-	
+
 	PROCEDIMIENTO_MATERNIDAD("AND TRIM(TATE.TIPORICOD) = '2' "),
 
 	// *********************
 	// Portal Autorizaciones
 	// *********************
-	
+
 	PORTAL_AUTORIZACIONES_URL("https://appenlinea-qa.azurewebsites.net/Autorizaciones"),
 	PORTAL_AUTORIZACIONES_USUARIO("PS18815"),
 	PORTAL_AUTORIZACIONES_CONTRASENA("arielDJ*123"),
@@ -114,7 +110,7 @@ public enum Keyword {
 	JAVASCRIPT_CLICK("JavaScript Click"),
 	JAVASCRIPT_SCROLL("JavaScript Scroll"),
 	JAVASCRIPT_HIGHLIGHT("JavaScript Highlight"),
-	
+
 	// ******
 	// Report
 	// ******

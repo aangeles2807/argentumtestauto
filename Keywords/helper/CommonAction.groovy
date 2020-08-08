@@ -487,8 +487,8 @@ public class CommonAction {
 
 		for(int i=1; i <= loopHints; i++){
 
-			if (WebUI.waitForElementPresent(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL) && 
-				WebUI.waitForElementVisible(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL)) {
+			if (WebUI.waitForElementPresent(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL) &&
+			WebUI.waitForElementVisible(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL)) {
 
 				if (testObjectScroll) {
 
@@ -710,16 +710,16 @@ public class CommonAction {
 		if (verifyTestObjectExistence(selectorName, testObject, TIMEOUT_1_SECOND, TIMEOUT_5_SECONDS, testObjectScroll, testObjectHighlight) != null) {
 
 			WebUI.setText(testObject, textToSet);
-			
+
 			message = String.valueOf("Fue suplido el texto <b>${textToSet}<b> <b>${shortDescriptionInCaseOfFail}<b>.<br>");
-			
+
 			if (isTakeScreenshot) {
-				
+
 				screenshotFileNameAndPath = WebUI.takeScreenshot();
-				
+
 				message += String.valueOf("<img src=\"${screenshotFileNameAndPath}\" alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\"><br>");
 			}
-			
+
 			reportGenerator = ReportGenerator.getUniqueIntance();
 			reportGenerator.setLogStatusPASS(message);
 		}
