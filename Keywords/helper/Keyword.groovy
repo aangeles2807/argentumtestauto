@@ -85,31 +85,16 @@ public enum Keyword {
 	SERVICIO_EMERGENCIA_TRIAGE_2("AND trim(tips.seripscod) IN ('127') "),
 	SERVICIO_EMERGENCIA_TRIAGE_3("AND trim(tips.seripscod) IN ('128') "),
 	SERVICIO_EMERGENCIA_TRIAGE_4("AND trim(tips.seripscod) IN ('129') "),
-<<<<<<< HEAD
 	SERVICIO_NO_FARMACIA("AND trim(tips.seripscod) IN ('35') "),
-=======
 	SERVICIO_FARMACIA("AND trim(tips.seripscod) IN ('35') "),
-	SERVICIO_NO_FARMACIA("AND trim(tips.seripscod) NOT IN ('35') "),
-
->>>>>>> fmaster
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
 	PRESTADOR_NO_VIGENTE("AND Trim(ips.ipsestado) <> '1' "),
 	PRESTADOR_EXCLUSIVO ("AND Trim(ips.ipscodsup) = '00182' "),
 	PRESTADOR_LABORATORIO("AND ips.IPSNOM like '%LABORATORIO%' "),
-<<<<<<< HEAD
-
-	PROCEDIMIENTO_MATERNIDAD("AND TRIM(TATE.TIPORICOD) = '2' "),
-=======
-
 	PROCEDIMIENTO_MATERNIDAD("AND TRIM(TATE.TIPORICOD) = '2' "),
 	PROCEDIMIENTO_MATERNIDAD_JOIN("JOIN Tabate TATE ON mpl.MPLCOD = TATE.MPLCOD "),
 	PROCEDIMIENTO_MA("AND TRIM(PRE.pre_pre_codigo) like 'MA%' "),
-
-	// *******************
-	// Query to be execute 
-	// *******************
->>>>>>> fmaster
 
 	// *********************
 	// Portal Autorizaciones
