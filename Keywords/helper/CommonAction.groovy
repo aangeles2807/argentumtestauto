@@ -579,40 +579,40 @@ public class CommonAction {
 
 			// In case of highlighting
 			if (accionToExecute.equals(helper.Keyword.JAVASCRIPT_HIGHLIGHT.value)) {
-				
+
 				if (selectorName.equals(helper.Keyword.XPATH_SELECTOR.value)) {
-					
+
 					if (WebUI.verifyElementHasAttribute(testObject, helper.Keyword.ATTRIBUTE_STYLE.value, TIMEOUT_5_SECONDS, FailureHandling.OPTIONAL)) {
-						
+
 						style = WebUI.getAttribute(testObject, helper.Keyword.ATTRIBUTE_STYLE.value);
-						
+
 						if (otherStyleInCaseOfHighlight != null && !otherStyleInCaseOfHighlight.isEmpty()) {
-	
+
 							style += otherStyleInCaseOfHighlight;
-	
+
 						}else{
-	
+
 							style += "border: solid 1px red !important;"
-	
+
 						}
-	
+
 					}else{
-	
+
 						if (otherStyleInCaseOfHighlight != null && !otherStyleInCaseOfHighlight.isEmpty()) {
-	
+
 							style = otherStyleInCaseOfHighlight;
 						}
-	
+
 						else{
-	
+
 							style = "border: solid 1px red !important;"
 						}
 					}
-	
+
 					scriptToExecute = String.valueOf("arguments[0].setAttribute('${helper.Keyword.ATTRIBUTE_STYLE.value}', '${style}')");
 				}
 				else if (selectorName.equals(helper.Keyword.CSS_SELECTOR.value)) {
-					
+
 					scriptToExecute = String.valueOf("var myElement = document.querySelector(\"${testObject.getProperties().get(0).getValue()}\"); myElement.style.border = 'solid 1px red';")
 				}
 			}
@@ -727,14 +727,14 @@ public class CommonAction {
 
 			reportGenerator = ReportGenerator.getUniqueIntance();
 			reportGenerator.setLogStatusPASS(message);
-			
+
 			return;
 		}
-		
+
 		message = String.valueOf("No fue posible suplir el texto <b>${textToSet}</b> en el campo <b>${webElementName}</b>.<br>");
-		
+
 		message += String.valueOf("<a href=\"${WebUI.takeScreenshot(FailureHandling.OPTIONAL)}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
-		
+
 		throw new RuntimeException(message);
 	}
 
@@ -757,16 +757,16 @@ public class CommonAction {
 
 				// Screenshot before click to be replace with alert screenshot
 				//fileNameAndPathOfScreenshot = WebUI.takeScreenshot();
-				
+
 				message = String.valueOf("Se presiono el boton/la opción <b>${webElementName}</b>.<br>");
-				
+
 				if (isTakeScreenshot) {
-	
+
 					message += String.valueOf("<a href=\"${WebUI.takeScreenshot()}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
 				}
 
 				WebUI.click(testObject);
-				
+
 				reportGenerator = ReportGenerator.getUniqueIntance();
 				reportGenerator.setLogStatusPASS(message);
 				/*
@@ -791,11 +791,11 @@ public class CommonAction {
 				return;
 			}
 		}
-		
+
 		message = String.valueOf("No fue posible presionar el boton/la opción <b>${webElementName}</b>.<br>");
-		
+
 		message += String.valueOf("<a href=\"${WebUI.takeScreenshot(FailureHandling.OPTIONAL)}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
-		
+
 		throw new RuntimeException(message);
 	}
 

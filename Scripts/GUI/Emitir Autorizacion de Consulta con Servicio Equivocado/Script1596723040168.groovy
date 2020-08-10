@@ -128,6 +128,15 @@ try {
 					// Cerramos Sesion
 					WebUI.callTestCase(findTestCase('GUI/Logout'), null, FailureHandling.STOP_ON_FAILURE);
 				}
+				else{
+					
+					message = String.valueOf("<b>Existe información en el modelo.<br>El Procedimiento tiene asociado el servicio.<b><br>");
+					
+					message += String.valueOf("<a href=\"${WebUI.takeScreenshot()}\" target=\"_blank\"><img src=\"${WebUI.takeScreenshot()}\"  alt=\"Imagen de evidencia\" style=\"width: 100%; border: solid 1px blue;\">></a><br>");
+		
+					reportGenerator = ReportGenerator.getUniqueIntance();
+					reportGenerator.setLogStatusFAIL(message);
+				}
 			}
 		}
 	}
