@@ -485,7 +485,7 @@ public class CommonAction {
 
 		defineVariableTestObject(selectorName, testObjectOrXpathString);
 
-		for(int i=1; i <= loopHints; i++){
+		for(int i=0; i < loopHints; i++){
 
 			if (WebUI.waitForElementPresent(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL) &&
 			WebUI.waitForElementVisible(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL)) {
