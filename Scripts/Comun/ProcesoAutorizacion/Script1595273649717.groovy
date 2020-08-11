@@ -161,7 +161,11 @@ try {
 			codigoCobertura = queryResult.get("MPLCOD");
 		}
 		
-		generoAfiliado = queryResult.get("NATSEX");
+		if (generoAfiliado.toString().isEmpty()) {
+			
+			generoAfiliado = queryResult.get("NATSEX");
+		}
+		
 		tipoAfiliado = queryResult.get("PRONOM");
 		numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
 	}
@@ -231,7 +235,10 @@ try {
 		QueryTemplate.prestadorServicio.remove("servicioConsulta");
 		
 		//IPSCODSUP
-		codigoPrestadorSalud = queryResult.get("IPSCODSUP");
+		if (codigoPrestadorSalud.toString().isEmpty()) {
+			
+			codigoPrestadorSalud = queryResult.get("IPSCODSUP");
+		}
 		
 		//SERIPSCOD
 		codigoServicioPrestadorSalud = queryResult.get("SERIPSCOD");

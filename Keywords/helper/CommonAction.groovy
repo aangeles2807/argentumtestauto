@@ -175,7 +175,6 @@ public class CommonAction {
 		// ********************
 		// Verify response code
 		// ********************
-
 		if (responseObject.getStatusCode() == 200) {
 
 			// *******************************************************
@@ -185,7 +184,8 @@ public class CommonAction {
 			if (apiPath.equals("/api/Autorizacion/Portal/ValidarCobertura") ||
 			apiPath.equals("/api/Autorizacion/Portal/Ingresar") ||
 			apiPath.equals("/api/Autorizacion/Portal/TarifaProcedimiento") ||
-			apiPath.equals("/api/Autorizacion/Portal/Autorizar")) {
+			apiPath.equals("/api/Autorizacion/Portal/Autorizar") ||
+			apiPath.equals("/api/Autorizacion/Portal/Anular")) {
 
 				// *****************************************
 				// Continuation of Generate template message
@@ -485,7 +485,7 @@ public class CommonAction {
 
 		defineVariableTestObject(selectorName, testObjectOrXpathString);
 
-		for(int i=0; i < loopHints; i++){
+		for(int i=1; i <= loopHints; i++){
 
 			if (WebUI.waitForElementPresent(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL) &&
 			WebUI.waitForElementVisible(testObject, timeWaitingToVerifyAndVisualizedTestObject, FailureHandling.OPTIONAL)) {
