@@ -68,7 +68,7 @@ public enum Keyword {
 	AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO("AND hij.natide not in (SELECT ben.natide FROM tabcrt crt, tabsbc sbc, tabben ben WHERE 1=1 AND crt.crtcon = sbc.crtcon AND sbc.sbccon = ben.sbccon AND ben.natide = hij.natide AND  trim(crt.AFICRTESTCOD) in ('14','8')) "),
 	AFILIADO_AUTORIZACION_1_ANO("ADD_MONTHS(sysdate,-13)"),
 	AFILIADO_AUTORIZACION_6_MESES("ADD_MONTHS(sysdate,-6)"),
-	AFILIADO_AUTORIZACION_5_DIAS("(SYSDATE - 30)"),
+	AFILIADO_AUTORIZACION_5_DIAS("(SYSDATE - 5)"),
 	AFILIADO_AUTORIZACION_SYSDATE("sysdate"),
 	AFILIADO_EXCLUSIVO("AND mpl.mplcod like 'EX%' "),
 	AFILIADO_MASCULINO("AND nat.NATSEX = 'M' "),

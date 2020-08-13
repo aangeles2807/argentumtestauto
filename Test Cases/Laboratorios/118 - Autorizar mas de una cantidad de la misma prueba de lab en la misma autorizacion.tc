@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>118 - Autorizar mas de una cantidad de la misma prueba de lab en la misma autorizacion</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4a623590-7c95-47e7-bb1d-8d3264a46e10</testCaseGuid>
+</TestCaseEntity>
