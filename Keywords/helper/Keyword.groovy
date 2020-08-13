@@ -77,6 +77,7 @@ public enum Keyword {
 	AFILIADO_PBS_CODIGO_COBERTURA("EX%"),
 	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
 	SERVICIO_LABORATORIO("AND trim(tips.seripscod) IN ('31', '32', '33') "),
+	SERVICIO_NO_LABORATORIO("AND trim(tips.seripscod) NOT IN ('31', '32', '33') "),
 	SERVICIO_ESTUDIOS_ESPECIALES("AND trim(tips.seripscod) IN ('20') "),
 	SERVICIO_RAYOS_X("AND trim(tips.seripscod) IN ('46') "),
 	SERVICIO_PSIQUIATRIA("AND trim(tips.seripscod) IN ('43') "),

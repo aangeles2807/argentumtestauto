@@ -623,33 +623,51 @@ try {
 	if (ejecutarQueryProcedimientoPorPrestador) {
 		
 		 // Agregamos la(s) llave(s) y valor(es) al String Template
-		 QueryTemplate.procedimientoPorPrestador.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("generoAfiliado", generoAfiliado);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
-		 QueryTemplate.procedimientoPorPrestador.add("fechaAutorizacion", fechaAutorizacion);
-		 QueryTemplate.procedimientoPorPrestador.add("condicionProcedimiento", condicionProcedimiento);
-		 QueryTemplate.procedimientoPorPrestador.add("joinProcedimiento", joinProcedimiento);
+		 QueryTemplate.procedimientos.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
+		 QueryTemplate.procedimientos.add("generoAfiliado", generoAfiliado);
+		 QueryTemplate.procedimientos.add("codigoPrestadorSalud", codigoPrestadorSalud);
+		 QueryTemplate.procedimientos.add("codigoCobertura", codigoCobertura);
+		 QueryTemplate.procedimientos.add("fechaAutorizacion", fechaAutorizacion);
+		 QueryTemplate.procedimientos.add("condicionProcedimiento", condicionProcedimiento);
+		 QueryTemplate.procedimientos.add("joinProcedimiento", joinProcedimiento);
+		 
+		 QueryTemplate.procedimientoPorPrestador.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
 		 
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
-		 
 		 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
 		 
+		 if(ejecutarQueryPrestacionNoContratada){
+			 
+			 QueryTemplate.prestacionNoContratada.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
+			 
+			 println QueryTemplate.prestacionNoContratada.render().toString();
+			 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			 // Ejecutamos la consulta y obtenemos los resultados
+			 queryResult = dbConnection.executeQueryAndGetResult("prestacionNoContratada", QueryTemplate.prestacionNoContratada.render().toString());
+			 
+			 QueryTemplate.prestacionNoContratada.remove("procedimientos");
+		 
+		 }
 		 // Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoServicioPrestadorSalud");
-		 QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
-		 QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
-		 QueryTemplate.procedimientoPorPrestador.remove("condicionProcedimiento");
-		 QueryTemplate.procedimientoPorPrestador.remove("joinProcedimiento");
+		 QueryTemplate.procedimientos.remove("codigoServicioPrestadorSalud");
+		 QueryTemplate.procedimientos.remove("generoAfiliado");
+		 QueryTemplate.procedimientos.remove("codigoPrestadorSalud");
+		 QueryTemplate.procedimientos.remove("codigoCobertura");
+		 QueryTemplate.procedimientos.remove("fechaAutorizacion");
+		 QueryTemplate.procedimientos.remove("condicionProcedimiento");
+		 QueryTemplate.procedimientos.remove("joinProcedimiento");
+		 QueryTemplate.procedimientoPorPrestador.remove("procedimientos");
 		 
 		 // CODIGO_PRESTACION
-		 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
+		 if (codigoPrestacion.toString().isEmpty()) {
+			 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
+		 }
 		 
 		 // DESCRIPCION_PRESTACION
-		 descripcionPrestacion = queryResult.get("DESCRIPCION_PRESTACION");
+		 if (descripcionPrestacion.toString().isEmpty()) {
+			 descripcionPrestacion = queryResult.get("DESCRIPCION_PRESTACION");
+		 }
 	 }
 	
 	// ****************************

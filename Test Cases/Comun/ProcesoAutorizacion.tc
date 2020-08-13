@@ -390,4 +390,25 @@
       <masked>false</masked>
       <name>joinProcedimiento</name>
    </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>5dff4b41-0cc5-4977-8a8b-744351ce04c6</id>
+      <masked>false</masked>
+      <name>ejecutarQueryPrestacionNoContratada</name>
+   </variable>
+   <variable>
+      <defaultValue>', trim(pre.pre_pre_descripcio) descripcion_prestacion'</defaultValue>
+      <description></description>
+      <id>a1e59687-fb6a-47cc-a8dc-cd287fdce874</id>
+      <masked>false</masked>
+      <name>prePreDescripcio</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>8a59d5d2-bb6a-4da5-8a4c-30ed2bb8794d</id>
+      <masked>false</masked>
+      <name>orderByRandom</name>
+   </variable>
 </TestCaseEntity>
