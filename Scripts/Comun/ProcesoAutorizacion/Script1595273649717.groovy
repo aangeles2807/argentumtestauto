@@ -74,7 +74,6 @@ try {
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
-		println QueryTemplate.afiliadoMPP.render().toString();
 
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
 		
@@ -109,6 +108,7 @@ try {
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
+		
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", QueryTemplate.afiliadoMPPoPBS.render().toString());
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
@@ -630,11 +630,13 @@ try {
 		 QueryTemplate.procedimientos.add("codigoCobertura", codigoCobertura);
 		 QueryTemplate.procedimientos.add("fechaAutorizacion", fechaAutorizacion);
 		 QueryTemplate.procedimientos.add("prePreDescripcion", prePreDescripcion);
+		 QueryTemplate.procedimientos.add("orderByRandom", orderByRandom);
 		 QueryTemplate.procedimientos.add("condicionProcedimiento", condicionProcedimiento);
 		 QueryTemplate.procedimientos.add("joinProcedimiento", joinProcedimiento);
 		 
 		 QueryTemplate.procedimientoPorPrestador.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
 		 
+		 println QueryTemplate.procedimientoPorPrestador.render().toString();
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
 		 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
@@ -656,6 +658,7 @@ try {
 		 QueryTemplate.procedimientos.remove("codigoPrestadorSalud");
 		 QueryTemplate.procedimientos.remove("codigoCobertura");
 		 QueryTemplate.procedimientos.remove("fechaAutorizacion");
+		 QueryTemplate.procedimientos.remove("orderByRandom");
 		 QueryTemplate.procedimientos.remove("prePreDescripcion");
 		 QueryTemplate.procedimientos.remove("condicionProcedimiento");
 		 QueryTemplate.procedimientos.remove("joinProcedimiento");

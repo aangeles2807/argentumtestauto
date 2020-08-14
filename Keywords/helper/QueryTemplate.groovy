@@ -196,7 +196,7 @@ public class QueryTemplate {
 
 	"	SELECT \n" +
 	"		  trim(pre.pre_pre_codigo) codigo_prestacion \n" +
-	"		<prePreDescripcion> \n" +
+	"		  <prePreDescripcion> \n" +
 	"	FROM tabconips ips \n" +
 	"	JOIN pre_prestacion pre \n" +
 	"	ON 1 = 1 \n" +
