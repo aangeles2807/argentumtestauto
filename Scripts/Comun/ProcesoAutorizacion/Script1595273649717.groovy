@@ -74,7 +74,6 @@ try {
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
-
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
@@ -87,6 +86,7 @@ try {
 		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
 		QueryTemplate.afiliadoPBS.add("fechaAutorizacion", fechaAutorizacion);
 		
+		println QueryTemplate.afiliadoPBS.render().toString();
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
@@ -636,7 +636,6 @@ try {
 		 
 		 QueryTemplate.procedimientoPorPrestador.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
 		 
-		 println QueryTemplate.procedimientoPorPrestador.render().toString();
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
 		 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());

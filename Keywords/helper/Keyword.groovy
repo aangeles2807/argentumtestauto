@@ -75,6 +75,8 @@ public enum Keyword {
 	AFILIADO_FEMENINO("AND nat.NATSEX = 'F' "),
 	AFILIADO_RECIEN_NACIDO_PBS("AND hij.hijesrn = 1 "),
 	AFILIADO_RECIEN_NACIDO_MPP_CON_PBS("AND nat.natide IN (SELECT natide FROM tabhij pbs WHERE pbs.natide = nat.natide AND pbs.hijesrn = 1) "),
+	AFILIADO_MPP_COVERTURA_VENCIDA("AND EXISTS ( SELECT * FROM  tabben ben2, tabcrt crt2 WHERE 1 = 1 AND crt2.crtcon = ben2.crtcon AND ben2.natide = ben.natide AND SYSDATE not BETWEEN crt2.crtinivig and crt2.crtfinvig )"),
+	AFILIADO_PBS_COVERTURA_VENCIDA("AND EXISTS ( SELECT * FROM  tabhij hij2, tabcon con2 WHERE 1 = 1 AND con2.concon = hij2.concon AND hij2.natide = hij.natide AND SYSDATE NOT BETWEEN con2.coninivig AND con2.confinvig )"),
 	//AFILIADO_PBS_CODIGO_COBERTURA("EXCV2','E880', 'E886','E887', 'EHBA1','E879','EXP18','E881','E883', 'EXP17','EX873','EX877','EX878', 'E888','EX879','E889','E8538','E890','E878','EX876','E882','EX880','E891"),
 	AFILIADO_PBS_CODIGO_COBERTURA("EX%"),
 	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
