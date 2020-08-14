@@ -80,8 +80,12 @@ public enum Keyword {
 	//AFILIADO_PBS_CODIGO_COBERTURA("EXCV2','E880', 'E886','E887', 'EHBA1','E879','EXP18','E881','E883', 'EXP17','EX873','EX877','EX878', 'E888','EX879','E889','E8538','E890','E878','EX876','E882','EX880','E891"),
 	AFILIADO_PBS_CODIGO_COBERTURA("EX%"),
 	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
-	SERVICIO_NO_LABORATORIO("AND trim(tips.seripscod) NOT IN ('31', '32', '33') "),
+<<<<<<< HEAD
 	SERVICIO_LABORATORIO("AND trim(tips.seripscod) = '33' AND trim(IPS.SER_ESP_CODIGO) = '89' and trim(ips.tipinscod) = '16'"),
+=======
+	SERVICIO_LABORATORIO("AND trim(tips.seripscod) IN ('31', '32', '33') "),
+	SERVICIO_NO_LABORATORIO("AND trim(tips.seripscod) NOT IN ('31', '32', '33') "),
+>>>>>>> 6bed11d7c94c5aa386266204d208792ec18e117d
 	SERVICIO_ESTUDIOS_ESPECIALES("AND trim(tips.seripscod) IN ('20') "),
 	SERVICIO_RAYOS_X("AND trim(tips.seripscod) = '46' AND trim(IPS.SER_ESP_CODIGO) = '888' AND trim(ips.tipinscod) = '09'"),
 	SERVICIO_PSIQUIATRIA("AND trim(tips.seripscod) IN ('43') "),
@@ -101,11 +105,12 @@ public enum Keyword {
 	PRESTADOR_NO_VIGENTE("AND Trim(ips.ipsestado) <> '1' "),
 	PRESTADOR_EXCLUSIVO ("AND Trim(ips.ipscodsup) = '00182' "),
 	PRESTADOR_LABORATORIO("AND ips.IPSNOM like '%LABORATORIO%' "),
-	
-	
+<<<<<<< HEAD
+=======
 	PRESTADOR_DIFERENTE_AL_ULTIMO("AND ser.IPSCODSUP <> "),
 	
 	
+>>>>>>> 6bed11d7c94c5aa386266204d208792ec18e117d
 	PROCEDIMIENTO_MATERNIDAD("AND TRIM(TATE.TIPORICOD) = '2' "),
 	PROCEDIMIENTO_MATERNIDAD_JOIN("JOIN Tabate TATE ON mpl.MPLCOD = TATE.MPLCOD "),
 	PROCEDIMIENTO_MA("AND TRIM(PRE.pre_pre_codigo) like 'MA%' "),
