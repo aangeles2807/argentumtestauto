@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>119 - Autorizar una prueba de laboratorio dos veces con prestadores diferente el mismo dia a paciente solo con MPP</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>5c449074-29a7-49cd-8fbc-7d2e0cb7bd9f</testCaseGuid>
-</TestCaseEntity>

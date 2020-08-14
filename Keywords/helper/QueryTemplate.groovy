@@ -74,10 +74,9 @@ public class QueryTemplate {
 	"	AND sbc.sbccon = ben.sbccon \n" +
 	"	AND crt.crtcon = ben.crtcon \n" +
 	"	AND nat.natide = ben.natide \n" +
-	"	AND best.afibenestcod = ben.afibenestcod \n" +
 	"	AND par.plaparcod = ben.plaparcod \n" +
 	"	AND mpl.mplcod = ben.mplcod \n" +
-	"	AND <fechaAutorizacion> between crt.crtinivig AND crt.crtfinvig \n" + // Parametro
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionMPP> \n" + // Parametros
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -126,7 +125,7 @@ public class QueryTemplate {
 	"	AND hest.afihijestcod = hij.afihijestcod \n" +
 	"	AND par.plaparcod = hij.plaparcod \n" +
 	"	AND mpl.mplcod = hij.mplcod \n" +
-	"	AND <fechaAutorizacion> between con.coninivig AND con.confinvig \n" + // Parametro
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionPBS> \n" + // Parametros
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -163,8 +162,9 @@ public class QueryTemplate {
 	"	ON ips.IPSCODSUP = ser.IPSCODSUP \n" +
 	"	JOIN TABSERIPS tips \n" +
 	"	ON tips.SERIPSCOD = ser.SERIPSCOD \n" +
-	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
-	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP \n"+
+	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n" +
+	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP \n" +
+	"	AND trim(SUC.IPSSUCESTCOD) = '01' \n" +
 	"	WHERE 1 = 1 \n" +
 	"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
 	"	AND trim(ser.sercon) = 'S' \n" +
@@ -270,7 +270,7 @@ public class QueryTemplate {
 	"	JOIN tabtippla tpl on tpl.tipplacod = mpl.mpltippla \n" +
 	"	<joinProcedimiento> \n" +
 	"	WHERE 1 = 1 \n" +
-	//"	AND REGEXP_LIKE(SUBSTR(PRE_PRE_TIPO, 1, 1), '^\\d+(\\.\\d+)?\$') \n" +
+	"	AND pre.pre_pre_descripcio NOT LIKE '%NULL%' AND pre.pre_pre_codigo NOT LIKE '%S48306%' \n" +
 	"	AND pre.pre_pre_quirurgico = 0 \n" +
 	"	AND Trim(pre_pre_sexo) in ('A', '<generoAfiliado>') \n" + // SEXO
 	"	AND trim(ips.ipscodsup) = '<codigoPrestadorSalud>' \n" + // CODIGO DE PRESTADOR

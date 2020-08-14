@@ -36,6 +36,7 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
 	'consultarApiAutorizacionPortalAnular': true,
 	'consultarApiAutorizacionPortalAnularCasoPositivo': true,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO.value,
+	//'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO.value,
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
 	'servicioConsulta' : Keyword.SERVICIO_FARMACIA.value,
 	'condicionProcedimiento':  Keyword.PROCEDIMIENTO_MA.value], FailureHandling.STOP_ON_FAILURE);

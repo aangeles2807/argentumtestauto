@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>91 - Vac - Autorizar con No. de Afiliado activo menor de edad</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>6f6db12b-ab92-4fa4-bd54-f3f9d7559f0a</testCaseGuid>
+</TestCaseEntity>

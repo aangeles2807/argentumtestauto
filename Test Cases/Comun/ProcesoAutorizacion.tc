@@ -349,6 +349,20 @@
       <name>fechaAutorizacion</name>
    </variable>
    <variable>
+      <defaultValue>'BETWEEN crt.crtinivig AND crt.crtfinvig'</defaultValue>
+      <description></description>
+      <id>93b2c28d-ff6d-43d6-8c4d-6bf1cc8bfb35</id>
+      <masked>false</masked>
+      <name>condicionFechaAutorizacionMPP</name>
+   </variable>
+   <variable>
+      <defaultValue>'BETWEEN con.coninivig AND con.confinvig'</defaultValue>
+      <description></description>
+      <id>96c23bce-e463-4eda-b7e4-7b3e9434bf17</id>
+      <masked>false</masked>
+      <name>condicionFechaAutorizacionPBS</name>
+   </variable>
+   <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>b8bdd1b7-2e2e-480c-a846-e0279eba3c31</id>
@@ -389,5 +403,12 @@
       <id>05630f51-adb6-4b1e-b364-495ad75feebb</id>
       <masked>false</masked>
       <name>joinProcedimiento</name>
+   </variable>
+   <variable>
+      <defaultValue>1</defaultValue>
+      <description></description>
+      <id>6fc462ca-e287-480a-ad78-2dfe51970d9b</id>
+      <masked>false</masked>
+      <name>cantidad</name>
    </variable>
 </TestCaseEntity>

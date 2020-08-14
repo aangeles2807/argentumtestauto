@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>92 - Autorizar con No. de Contrato activo con menores de edad</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>558fd860-7186-4330-be6e-fea204a0186d</testCaseGuid>
-</TestCaseEntity>

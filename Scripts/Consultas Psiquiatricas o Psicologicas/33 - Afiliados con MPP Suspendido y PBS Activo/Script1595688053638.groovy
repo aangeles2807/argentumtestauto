@@ -38,5 +38,6 @@ import internal.GlobalVariable as GlobalVariable
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'condicionAfiliadoPBS' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO_PBS.value,
+	//'condicionAfiliadoPBS' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO_PBS.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value,
 	'servicioConsulta' : Keyword.SERVICIO_PSIQUIATRIA.value], FailureHandling.STOP_ON_FAILURE);

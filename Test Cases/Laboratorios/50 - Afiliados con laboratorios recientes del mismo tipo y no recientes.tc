@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>50 - Afiliados con laboratorios recientes del mismo tipo y no recientes</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>c0ad572f-9e91-465a-84d3-7a9099c3df8e</testCaseGuid>
-</TestCaseEntity>
