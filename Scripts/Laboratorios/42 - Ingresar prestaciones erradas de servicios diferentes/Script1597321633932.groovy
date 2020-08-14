@@ -27,4 +27,4 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'descripcionPrestacion': 'DETERMINACIÓN COVID19 POR PCR',
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value], FailureHandling.STOP_ON_FAILURE);
+	'servicioConsulta' : Keyword.SERVICIO_NO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);

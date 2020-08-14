@@ -192,12 +192,11 @@ public class QueryTemplate {
 	"WHERE rownum = 1"
 	);
 
-	public static ST procedimientoPorPrestador = new ST(
+	public static final ST procedimientos = new ST(
 
-	"SELECT * FROM ( \n" +
 	"	SELECT \n" +
 	"		  trim(pre.pre_pre_codigo) codigo_prestacion \n" +
-	"		, trim(pre.pre_pre_descripcio) descripcion_prestacion \n" +
+	"		  <prePreDescripcion> \n" +
 	"	FROM tabconips ips \n" +
 	"	JOIN pre_prestacion pre \n" +
 	"	ON 1 = 1 \n" +
@@ -287,9 +286,30 @@ public class QueryTemplate {
 	"		AND SUBSTR (pre.pre_pre_codigo, 1, 2) = 'S1' \n" +
 	"	) \n" +
 	"	THEN 0 ELSE 1 END \n" +
-	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
+	"	<orderByRandom>"
+	);
+
+	public static ST procedimientoPorPrestador = new ST(
+		
+	"SELECT * FROM ( \n" +
+	"		<procedimientos> \n" +
 	") \n" +
 	"WHERE rownum = 1"
+	);
+
+	public static ST prestacionNoContratada = new ST(
+		
+	"SELECT * FROM ( \n" +
+	"		Select  trim(pre2.pre_pre_codigo) codigo_prestacion , trim(pre2.pre_pre_descripcio) descripcion_prestacion \n" +
+	"		from pre_prestacion pre2 \n" +
+	"		where pre2.pre_pre_codigo not in \n" +
+	"		(" +
+	"			<procedimientos> \n" +
+	"		)" +
+	"		ORDER BY DBMS_RANDOM.RANDOM \n" +
+	") \n" +
+	"WHERE rownum = 1 \n"
+
 	);
 
 }
