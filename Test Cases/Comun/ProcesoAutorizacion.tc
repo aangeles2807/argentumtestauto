@@ -402,10 +402,10 @@
       <description></description>
       <id>a1e59687-fb6a-47cc-a8dc-cd287fdce874</id>
       <masked>false</masked>
-      <name>prePreDescripcio</name>
+      <name>prePreDescripcion</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'ORDER BY DBMS_RANDOM.RANDOM'</defaultValue>
       <description></description>
       <id>8a59d5d2-bb6a-4da5-8a4c-30ed2bb8794d</id>
       <masked>false</masked>

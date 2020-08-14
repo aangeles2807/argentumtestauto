@@ -74,6 +74,7 @@ try {
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
+		println QueryTemplate.afiliadoMPP.render().toString();
 
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
 		
@@ -622,12 +623,13 @@ try {
 	 
 	if (ejecutarQueryProcedimientoPorPrestador) {
 		
-		 // Agregamos la(s) llave(s) y valor(es) al String Template
+		 // Agregamos la(s) llave(s) y valor(es) al String Template 
 		 QueryTemplate.procedimientos.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
 		 QueryTemplate.procedimientos.add("generoAfiliado", generoAfiliado);
 		 QueryTemplate.procedimientos.add("codigoPrestadorSalud", codigoPrestadorSalud);
 		 QueryTemplate.procedimientos.add("codigoCobertura", codigoCobertura);
 		 QueryTemplate.procedimientos.add("fechaAutorizacion", fechaAutorizacion);
+		 QueryTemplate.procedimientos.add("prePreDescripcion", prePreDescripcion);
 		 QueryTemplate.procedimientos.add("condicionProcedimiento", condicionProcedimiento);
 		 QueryTemplate.procedimientos.add("joinProcedimiento", joinProcedimiento);
 		 
@@ -641,7 +643,6 @@ try {
 			 
 			 QueryTemplate.prestacionNoContratada.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
 			 
-			 println QueryTemplate.prestacionNoContratada.render().toString();
 			 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 			 // Ejecutamos la consulta y obtenemos los resultados
 			 queryResult = dbConnection.executeQueryAndGetResult("prestacionNoContratada", QueryTemplate.prestacionNoContratada.render().toString());
@@ -655,6 +656,7 @@ try {
 		 QueryTemplate.procedimientos.remove("codigoPrestadorSalud");
 		 QueryTemplate.procedimientos.remove("codigoCobertura");
 		 QueryTemplate.procedimientos.remove("fechaAutorizacion");
+		 QueryTemplate.procedimientos.remove("prePreDescripcion");
 		 QueryTemplate.procedimientos.remove("condicionProcedimiento");
 		 QueryTemplate.procedimientos.remove("joinProcedimiento");
 		 QueryTemplate.procedimientoPorPrestador.remove("procedimientos");

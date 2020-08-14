@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>126 - Generar autorizacion a recien nacido solo con plan PBS</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>c2a2b4e6-0325-42a7-9607-12cb31e8231f</testCaseGuid>
+</TestCaseEntity>

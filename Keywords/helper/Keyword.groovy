@@ -73,6 +73,8 @@ public enum Keyword {
 	AFILIADO_EXCLUSIVO("AND mpl.mplcod like 'EX%' "),
 	AFILIADO_MASCULINO("AND nat.NATSEX = 'M' "),
 	AFILIADO_FEMENINO("AND nat.NATSEX = 'F' "),
+	AFILIADO_RECIEN_NACIDO_PBS("AND hij.hijesrn = 1 "),
+	AFILIADO_RECIEN_NACIDO_MPP_CON_PBS("AND nat.natide IN (SELECT natide FROM tabhij pbs WHERE pbs.natide = nat.natide AND pbs.hijesrn = 1) "),
 	//AFILIADO_PBS_CODIGO_COBERTURA("EXCV2','E880', 'E886','E887', 'EHBA1','E879','EXP18','E881','E883', 'EXP17','EX873','EX877','EX878', 'E888','EX879','E889','E8538','E890','E878','EX876','E882','EX880','E891"),
 	AFILIADO_PBS_CODIGO_COBERTURA("EX%"),
 	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
@@ -97,6 +99,7 @@ public enum Keyword {
 	PRESTADOR_NO_VIGENTE("AND Trim(ips.ipsestado) <> '1' "),
 	PRESTADOR_EXCLUSIVO ("AND Trim(ips.ipscodsup) = '00182' "),
 	PRESTADOR_LABORATORIO("AND ips.IPSNOM like '%LABORATORIO%' "),
+	PRESTADOR_DIFERENTE_AL_ULTIMO("AND ser.IPSCODSUP <> "),
 	
 	
 	PROCEDIMIENTO_MATERNIDAD("AND TRIM(TATE.TIPORICOD) = '2' "),
