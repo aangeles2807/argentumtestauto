@@ -432,4 +432,39 @@
       <masked>false</masked>
       <name>orderByRandom</name>
    </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>0ed5e927-c259-4e4d-a266-6fa0a70d9600</id>
+      <masked>false</masked>
+      <name>consultarApiPrestadorSaludDoctores</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>c37d89ec-8383-464d-9b69-648f5f9cf1d1</id>
+      <masked>false</masked>
+      <name>consultarApiPrestadorSaludDoctoresCasoPositivo</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>a7435fc9-a99e-4c88-8aa8-68ffe5ddac1f</id>
+      <masked>false</masked>
+      <name>ejecutarQueryDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>6dee572b-1fbf-472a-9402-8ef8d5b3b266</id>
+      <masked>false</masked>
+      <name>codigoDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>7b464176-171c-4455-8769-3e4f5e74422e</id>
+      <masked>false</masked>
+      <name>nombreDoctor</name>
+   </variable>
 </TestCaseEntity>

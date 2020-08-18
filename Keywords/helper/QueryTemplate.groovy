@@ -177,6 +177,20 @@ public class QueryTemplate {
 	"WHERE rownum = 1"
 	);
 
+	public static final ST doctor = new ST(
+	
+		"SELECT * FROM ( \n" +
+		"	SELECT \n" +
+		"		  IPS.IPSCODSUP \n" +
+		"		, IPS.IPSNOM \n" +
+		"	from tabconips ips \n" +
+		"	where 1 = 1 \n" +
+		"	and ips.emptipemp = 'N' \n" +
+		"	and ips.ipsestado = '1' \n" +
+		"	Order by DBMS_RANDOM.RANDOM \n" +
+		") where rownum = 1"
+		);
+
 	public static final ST diagnostico = new ST(
 
 	"SELECT * FROM ( \n" +
