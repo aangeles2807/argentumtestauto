@@ -68,11 +68,6 @@ try {
 	 */
 	if (ejecutarQueryCapturaAfiliadoMPP) {
 		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.afiliadoMPP.remove("conditions");
-		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
-		QueryTemplate.afiliadoMPP.remove("condicionFechaAutorizacionMPP");
-		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
 		QueryTemplate.afiliadoMPP.add("fechaAutorizacion", fechaAutorizacion);
@@ -82,13 +77,14 @@ try {
 		// Ejecutamos la consulta y obtenemos los resultados
 
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
-	}
-	else if (ejecutarQueryCapturaAfiliadoPBS) {
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.afiliadoPBS.remove("conditions");
-		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
-		QueryTemplate.afiliadoPBS.remove("condicionFechaAutorizacionPBS");
+		QueryTemplate.afiliadoMPP.remove("conditions");
+		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
+		QueryTemplate.afiliadoMPP.remove("condicionFechaAutorizacionMPP");
+		
+	}
+	else if (ejecutarQueryCapturaAfiliadoPBS) {
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoMPP);
@@ -98,21 +94,14 @@ try {
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
-	
-	}
-	else if (ejecutarQueryCapturaAfiliadoMPPoPBS) {
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.afiliadoMPP.remove("conditions");
-		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
-		QueryTemplate.afiliadoMPP.remove("condicionFechaAutorizacionMPP");
-		
 		QueryTemplate.afiliadoPBS.remove("conditions");
 		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
 		QueryTemplate.afiliadoPBS.remove("condicionFechaAutorizacionPBS");
-				
-		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoMPP");
-		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoPBS");
+	
+	}
+	else if (ejecutarQueryCapturaAfiliadoMPPoPBS) {
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
@@ -129,6 +118,18 @@ try {
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", QueryTemplate.afiliadoMPPoPBS.render().toString());
+		
+		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+		QueryTemplate.afiliadoMPP.remove("conditions");
+		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
+		QueryTemplate.afiliadoMPP.remove("condicionFechaAutorizacionMPP");
+		
+		QueryTemplate.afiliadoPBS.remove("conditions");
+		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
+		QueryTemplate.afiliadoPBS.remove("condicionFechaAutorizacionPBS");
+				
+		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoMPP");
+		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoPBS");
 	}
 	
 	/**
@@ -229,12 +230,6 @@ try {
 	
 	if (ejecutarQueryPrestadorServicio) {
 		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.prestadorServicio.remove("codigoCobertura");
-		QueryTemplate.prestadorServicio.remove("generoAfiliado");
-		QueryTemplate.prestadorServicio.remove("estadoPrestador");
-		QueryTemplate.prestadorServicio.remove("servicioConsulta");
-		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.prestadorServicio.add("codigoCobertura", codigoCobertura);
 		QueryTemplate.prestadorServicio.add("generoAfiliado", generoAfiliado);
@@ -245,6 +240,12 @@ try {
 		// Ejecutamos la consulta y obtenemos los resultados
 		
 		queryResult = dbConnection.executeQueryAndGetResult("prestadorServicio", QueryTemplate.prestadorServicio.render().toString());
+		
+		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+		QueryTemplate.prestadorServicio.remove("codigoCobertura");
+		QueryTemplate.prestadorServicio.remove("generoAfiliado");
+		QueryTemplate.prestadorServicio.remove("estadoPrestador");
+		QueryTemplate.prestadorServicio.remove("servicioConsulta");
 		
 		//IPSCODSUP
 		if (codigoPrestadorSalud.toString().isEmpty()) {
@@ -634,28 +635,45 @@ try {
 	 
 	if (ejecutarQueryProcedimientoPorPrestador) {
 		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.procedimientoPorPrestador.remove("codigoServicioPrestadorSalud");
-		QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
-		QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
-		QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
-		QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
-		QueryTemplate.procedimientoPorPrestador.remove("condicionProcedimiento");
-		QueryTemplate.procedimientoPorPrestador.remove("joinProcedimiento");
-		
-		 // Agregamos la(s) llave(s) y valor(es) al String Template
-		 QueryTemplate.procedimientoPorPrestador.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("generoAfiliado", generoAfiliado);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
-		 QueryTemplate.procedimientoPorPrestador.add("fechaAutorizacion", fechaAutorizacion);
-		 QueryTemplate.procedimientoPorPrestador.add("condicionProcedimiento", condicionProcedimiento);
-		 QueryTemplate.procedimientoPorPrestador.add("joinProcedimiento", joinProcedimiento);
+		 // Agregamos la(s) llave(s) y valor(es) al String Template 
+		 QueryTemplate.procedimientos.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
+		 QueryTemplate.procedimientos.add("generoAfiliado", generoAfiliado);
+		 QueryTemplate.procedimientos.add("codigoPrestadorSalud", codigoPrestadorSalud);
+		 QueryTemplate.procedimientos.add("codigoCobertura", codigoCobertura);
+		 QueryTemplate.procedimientos.add("fechaAutorizacion", fechaAutorizacion);
+		 QueryTemplate.procedimientos.add("prePreDescripcion", prePreDescripcion);
+		 QueryTemplate.procedimientos.add("orderByRandom", orderByRandom);
+		 QueryTemplate.procedimientos.add("condicionProcedimiento", condicionProcedimiento);
+		 QueryTemplate.procedimientos.add("joinProcedimiento", joinProcedimiento);
+		 
+		 QueryTemplate.procedimientoPorPrestador.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
 		 
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
-		 
 		 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
+		 
+		 if(ejecutarQueryPrestacionNoContratada){
+			 
+			 QueryTemplate.prestacionNoContratada.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
+			 
+			 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			 // Ejecutamos la consulta y obtenemos los resultados
+			 queryResult = dbConnection.executeQueryAndGetResult("prestacionNoContratada", QueryTemplate.prestacionNoContratada.render().toString());
+			 
+			 QueryTemplate.prestacionNoContratada.remove("procedimientos");
+		 
+		 }
+		 // Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+		 QueryTemplate.procedimientos.remove("codigoServicioPrestadorSalud");
+		 QueryTemplate.procedimientos.remove("generoAfiliado");
+		 QueryTemplate.procedimientos.remove("codigoPrestadorSalud");
+		 QueryTemplate.procedimientos.remove("codigoCobertura");
+		 QueryTemplate.procedimientos.remove("fechaAutorizacion");
+		 QueryTemplate.procedimientos.remove("orderByRandom");
+		 QueryTemplate.procedimientos.remove("prePreDescripcion");
+		 QueryTemplate.procedimientos.remove("condicionProcedimiento");
+		 QueryTemplate.procedimientos.remove("joinProcedimiento");
+		 QueryTemplate.procedimientoPorPrestador.remove("procedimientos");
 		 
 		 // CODIGO_PRESTACION
 		 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");

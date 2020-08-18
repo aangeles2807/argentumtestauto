@@ -411,4 +411,25 @@
       <masked>false</masked>
       <name>cantidad</name>
    </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>bba0ec13-cf3a-41e3-8491-60b14215d725</id>
+      <masked>false</masked>
+      <name>ejecutarQueryPrestacionNoContratada</name>
+   </variable>
+   <variable>
+      <defaultValue>', trim(pre.pre_pre_descripcio) descripcion_prestacion'</defaultValue>
+      <description></description>
+      <id>fbd3572b-7cef-481d-b72b-b56b6850c95c</id>
+      <masked>false</masked>
+      <name>prePreDescripcion</name>
+   </variable>
+   <variable>
+      <defaultValue>'ORDER BY DBMS_RANDOM.RANDOM'</defaultValue>
+      <description></description>
+      <id>24e31b7e-79cb-413f-a61d-39312a137b97</id>
+      <masked>false</masked>
+      <name>orderByRandom</name>
+   </variable>
 </TestCaseEntity>
