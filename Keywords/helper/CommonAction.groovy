@@ -192,13 +192,13 @@ public class CommonAction {
 				// *****************************************
 
 				message += String.valueOf("<br>Obtuvo la respuesta: ${responseObject.getResponseText().trim()}.<br>");
-
-				if (addMoreInformationMessage != null) {
-
-					message += String.valueOf("<br>${addMoreInformationMessage}<br>");
-				}
-
+				
 				if (isInverseCase) {
+					
+					if (addMoreInformationMessage != null) {
+						
+						message += String.valueOf("<br>${addMoreInformationMessage}<br>");
+					}
 
 					throw new RuntimeException(message);
 				}
@@ -358,18 +358,18 @@ public class CommonAction {
 					}
 				}
 			}
-
+			/*
 			if (addMoreInformationMessage != null) {
 
 				message += String.valueOf("<br>${addMoreInformationMessage}<br>");
 			}
-
+			*/
 			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
 
 			// If response body is empty
 			if(mapResponseBody.isEmpty() && !apiPath.equals("/api/Autorizacion/Portal/CamposRequeridos")){
 
-				reportGenerator.setLogStatusWARNING(message);
+				reportGenerator.setLogStatusINFO("<font color=\"orange\">${message}</font>");
 			}
 			else{
 
@@ -384,16 +384,16 @@ public class CommonAction {
 
 			message += String.valueOf("<br>Mostrando el mensaje: <b>${responseObject.getResponseText()}</b>.");
 
-			if (addMoreInformationMessage != null) {
-
-				message += String.valueOf("<br>${addMoreInformationMessage}<br>");
-			}
-
 			if (isInverseCase) {
 
 				reportGenerator.setLogStatusPASS(message);
 			}
 			else{
+				
+				if (addMoreInformationMessage != null) {
+					
+					message += String.valueOf("<br>${addMoreInformationMessage}<br>");
+				}
 
 				throw new RuntimeException(message);
 			}

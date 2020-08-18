@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>58 - EE - Autorizar Afliado MPP con No. de Identificación inactivo o cancelado</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>5add3359-5735-4b62-a56a-89eb7071bf24</testCaseGuid>
+</TestCaseEntity>

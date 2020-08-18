@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>72 - RX - Autorizar Afliado MPP con contrato inactivo o cancelado</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>c2f77e9e-43ce-403e-9be9-ca463cffe8d0</testCaseGuid>
+</TestCaseEntity>

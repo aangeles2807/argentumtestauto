@@ -28,7 +28,8 @@ public class QueryTemplate {
 
 	"SELECT * FROM (\n" +
 	"	SELECT \n" +
-	"		  crt.crtnumcon contrato \n" +
+	"		TO_CHAR(<fechaAutorizacion>, 'MM-dd-yyyy') \"Fecha Autorizacion\" \n" +
+	"		,crt.crtnumcon contrato \n" +
 	"		, ben.natide \n" +
 	"		, pro.procod \n" +
 	"		, pro.pronom \n" +
@@ -77,7 +78,7 @@ public class QueryTemplate {
 	"	AND best.afibenestcod = ben.afibenestcod \n" +
 	"	AND par.plaparcod = ben.plaparcod \n" +
 	"	AND mpl.mplcod = ben.mplcod \n" +
-	"	AND <fechaAutorizacion> between crt.crtinivig AND crt.crtfinvig \n" + // Parametro
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionMPP> \n" + // Parametro
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -88,7 +89,8 @@ public class QueryTemplate {
 
 	"SELECT * FROM ( \n" +
 	"	SELECT \n" +
-	"		  con.connumcon contrato \n" +
+	"		TO_CHAR(<fechaAutorizacion>, 'MM-dd-yyyy') \"Fecha Autorizacion\" \n" +
+	"		, con.connumcon contrato \n" +
 	"		, hij.natide \n" +
 	"		, pro.procod \n" +
 	"		, pro.pronom \n" +
@@ -126,7 +128,7 @@ public class QueryTemplate {
 	"	AND hest.afihijestcod = hij.afihijestcod \n" +
 	"	AND par.plaparcod = hij.plaparcod \n" +
 	"	AND mpl.mplcod = hij.mplcod \n" +
-	"	AND <fechaAutorizacion> between con.coninivig AND con.confinvig \n" + // Parametro
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionPBS> \n" + // Parametro
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -164,7 +166,7 @@ public class QueryTemplate {
 	"	JOIN TABSERIPS tips \n" +
 	"	ON tips.SERIPSCOD = ser.SERIPSCOD \n" +
 	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
-	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP \n"+
+	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP AND trim(suc.IPSSUCESTCOD) = '01' \n"+
 	"	WHERE 1 = 1 \n" +
 	"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
 	"	AND trim(ser.sercon) = 'S' \n" +

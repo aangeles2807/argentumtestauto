@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>120 - Autorizar una prueba de laboratorio dos veces con prestadores diferente el mismo dia a paciente solo con PBS</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>b6098d17-1608-4a79-8cdb-a61e48aa9882</testCaseGuid>
-</TestCaseEntity>

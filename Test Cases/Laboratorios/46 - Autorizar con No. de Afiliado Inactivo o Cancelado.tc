@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>46 - Autorizar con No. de Afiliado Inactivo o Cancelado</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>60364b41-ecd0-401e-bbc5-448284c6ee57</testCaseGuid>
-</TestCaseEntity>

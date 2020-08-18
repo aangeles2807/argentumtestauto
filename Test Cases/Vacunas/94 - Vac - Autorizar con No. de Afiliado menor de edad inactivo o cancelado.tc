@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>94 - Vac - Autorizar con No. de Afiliado menor de edad inactivo o cancelado</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>b805c04e-35c5-4b0c-a03a-fa846d467462</testCaseGuid>
+</TestCaseEntity>

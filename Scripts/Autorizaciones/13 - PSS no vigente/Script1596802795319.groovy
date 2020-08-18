@@ -35,6 +35,6 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO.value, 
-	'condicionAfiliadoPBS': Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO_PBS.value,
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,// + Keyword.AFILIADO_CONTRATO_ACTIVO.value, 
+	'condicionAfiliadoPBS': Keyword.AFILIADO_PBS_ACTIVO.value,// + Keyword.AFILIADO_CONTRATO_ACTIVO_PBS.value,
 	'estadoPrestador': Keyword.PRESTADOR_NO_VIGENTE.value], FailureHandling.STOP_ON_FAILURE);

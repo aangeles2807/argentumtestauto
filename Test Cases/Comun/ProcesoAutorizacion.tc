@@ -349,6 +349,20 @@
       <name>fechaAutorizacion</name>
    </variable>
    <variable>
+      <defaultValue>'BETWEEN crt.crtinivig AND crt.crtfinvig'</defaultValue>
+      <description></description>
+      <id>ba52e946-d4e2-4011-b9d2-0efeb11fc89c</id>
+      <masked>false</masked>
+      <name>condicionFechaAutorizacionMPP</name>
+   </variable>
+   <variable>
+      <defaultValue>'BETWEEN con.coninivig AND con.confinvig'</defaultValue>
+      <description></description>
+      <id>c465b90b-5b73-49c1-89d0-621ae68fd873</id>
+      <masked>false</masked>
+      <name>condicionFechaAutorizacionPBS</name>
+   </variable>
+   <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>b8bdd1b7-2e2e-480c-a846-e0279eba3c31</id>
@@ -389,5 +403,26 @@
       <id>05630f51-adb6-4b1e-b364-495ad75feebb</id>
       <masked>false</masked>
       <name>joinProcedimiento</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>2a0e1248-c884-422b-b0f0-a20bc315ffdd</id>
+      <masked>false</masked>
+      <name>fecha</name>
+   </variable>
+   <variable>
+      <defaultValue>1</defaultValue>
+      <description></description>
+      <id>486e8ba0-5260-4d70-bd0d-8975006637e0</id>
+      <masked>false</masked>
+      <name>cantidad</name>
+   </variable>
+   <variable>
+      <defaultValue>[:]</defaultValue>
+      <description></description>
+      <id>dc149a8e-86bd-4fa4-ade7-dcfacb244cb8</id>
+      <masked>false</masked>
+      <name>mapaPrestacionesIngresadas</name>
    </variable>
 </TestCaseEntity>
