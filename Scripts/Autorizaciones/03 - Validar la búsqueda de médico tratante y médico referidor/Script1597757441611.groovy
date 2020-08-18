@@ -19,16 +19,17 @@ import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
-	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'ejecutarQueryDiagnostico' : false,
-	'ejecutarQueryProcedimientoPorPrestador' : false,
-	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
-	'consultarApiAutorizacionPortalCamposRequeridos' : false,
+	'ejecutarQueryCapturaAfiliadoMPP' : false,
+	'ejecutarQueryDoctor': true,
+	'consultarApiPrestadorSaludDoctores': true,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo': true,
+	'consultarApiAutorizacionPortalCamposRequeridos': false,
+	'consultarApiAutorizacionPortalValidarCobertura': false,
 	'consultarApiConsultarDiagnosticos' : false,
 	'consultarApiAutorizacionPortalIngresar' : false,
 	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
 	'consultarApiConsultarProcedimientos' : false,
 	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
 	'consultarApiAutorizacionPortalAutorizar' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_INACTIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value], FailureHandling.STOP_ON_FAILURE);
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value ], FailureHandling.STOP_ON_FAILURE);

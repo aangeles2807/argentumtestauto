@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>87 - Ingresar la misma vacuna varias veces</name>
+   <name>77 - Digitar la misma terapia dos veces el mismo día</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>4f92c666-7e7a-4b50-aa55-09f66b7cf0ad</testCaseGuid>
+   <testCaseGuid>639b7456-eb0f-4567-bedc-832f8a9bcc2b</testCaseGuid>
 </TestCaseEntity>

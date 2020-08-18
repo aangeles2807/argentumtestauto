@@ -18,7 +18,13 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
-	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	//'condicionAfiliadoMPP' : Keyword.AFILIADO_CONTRATO_ACTIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value], FailureHandling.STOP_ON_FAILURE);
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo': false,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo': false,
+	'consultarApiAutorizacionPortalAutorizar': false,
+	'codigoPrestacion': '906850',
+	'descripcionPrestacion': 'DETERMINACIÓN COVID19 POR PCR',
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
+	'servicioConsulta' : Keyword.SERVICIO_NO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);

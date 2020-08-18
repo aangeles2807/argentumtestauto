@@ -77,7 +77,11 @@ public class QueryTemplate {
 	"	AND nat.natide = ben.natide \n" +
 	"	AND par.plaparcod = ben.plaparcod \n" +
 	"	AND mpl.mplcod = ben.mplcod \n" +
+<<<<<<< HEAD
 	"	AND <fechaAutorizacion> <condicionFechaAutorizacionMPP> \n" + // Parametro
+=======
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionMPP> \n" + // Parametros
+>>>>>>> 542ab9156c0d29b617f081845c664c3d4217f06f
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -127,7 +131,11 @@ public class QueryTemplate {
 	"	AND hest.afihijestcod = hij.afihijestcod \n" +
 	"	AND par.plaparcod = hij.plaparcod \n" +
 	"	AND mpl.mplcod = hij.mplcod \n" +
+<<<<<<< HEAD
 	"	AND <fechaAutorizacion> <condicionFechaAutorizacionPBS> \n" + // Parametro
+=======
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionPBS> \n" + // Parametros
+>>>>>>> 542ab9156c0d29b617f081845c664c3d4217f06f
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -164,8 +172,14 @@ public class QueryTemplate {
 	"	ON ips.IPSCODSUP = ser.IPSCODSUP \n" +
 	"	JOIN TABSERIPS tips \n" +
 	"	ON tips.SERIPSCOD = ser.SERIPSCOD \n" +
+<<<<<<< HEAD
 	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
 	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP AND trim(suc.IPSSUCESTCOD) = '01' \n"+
+=======
+	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n" +
+	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP \n" +
+	"	AND trim(SUC.IPSSUCESTCOD) = '01' \n" +
+>>>>>>> 542ab9156c0d29b617f081845c664c3d4217f06f
 	"	WHERE 1 = 1 \n" +
 	"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
 	"	AND trim(ser.sercon) = 'S' \n" +

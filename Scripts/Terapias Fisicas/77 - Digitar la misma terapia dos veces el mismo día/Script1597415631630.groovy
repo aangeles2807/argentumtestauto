@@ -27,19 +27,23 @@ for(int i=1; i <= 2; i++){
 		
 		mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 			'ejecutarQueryCapturaAfiliadoPBS' : false,
-			'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
+			'ejecutarQueryCapturaAfiliadoMPP' : false,
 			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
-			'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value], FailureHandling.STOP_ON_FAILURE);
+			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
+			'servicioConsulta' : Keyword.SERVICIO_TERAPIAS_FISICAS.value ], FailureHandling.STOP_ON_FAILURE);
 	}
 	else if (i == 2) {
+		
 		
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
 		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
-		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
+		mapaVariablesScript.put("servicioConsulta", Keyword.SERVICIO_TERAPIAS_FISICAS.value + Keyword.PRESTADOR_DIFERENTE_AL_ULTIMO.value + mapaVariablesScript.get("codigoPrestadorSalud").toString())
+		mapaVariablesScript.put("codigoPrestadorSalud", "");
+		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", true);
 		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
 		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", false);
+		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
 		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);

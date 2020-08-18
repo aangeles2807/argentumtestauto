@@ -18,17 +18,6 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'ejecutarQueryDiagnostico' : false,
-	'ejecutarQueryProcedimientoPorPrestador' : false,
-	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
-	'consultarApiAutorizacionPortalCamposRequeridos' : false,
-	'consultarApiConsultarDiagnosticos' : false,
-	'consultarApiAutorizacionPortalIngresar' : false,
-	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
-	'consultarApiConsultarProcedimientos' : false,
-	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
-	'consultarApiAutorizacionPortalAutorizar' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_INACTIVO.value + Keyword.AFILIADO_MENOR_EDAD.value,
-	'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value], FailureHandling.STOP_ON_FAILURE);
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value  + Keyword.AFILIADO_RECIEN_NACIDO_PBS.value], FailureHandling.STOP_ON_FAILURE);

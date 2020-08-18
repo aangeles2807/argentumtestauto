@@ -20,15 +20,7 @@ import internal.GlobalVariable as GlobalVariable
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'ejecutarQueryDiagnostico' : false,
-	'ejecutarQueryProcedimientoPorPrestador' : false,
-	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
-	'consultarApiAutorizacionPortalCamposRequeridos' : false,
-	'consultarApiConsultarDiagnosticos' : false,
-	'consultarApiAutorizacionPortalIngresar' : false,
-	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
-	'consultarApiConsultarProcedimientos' : false,
-	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
-	'consultarApiAutorizacionPortalAutorizar' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_CONTRATO_INACTIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value], FailureHandling.STOP_ON_FAILURE);
+	'consultarApiAutorizacionPortalAnular': true,
+	'consultarApiAutorizacionPortalAnularCasoPositivo': true,
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_CON_PBS.value, 
+	'servicioConsulta' : Keyword.SERVICIO_PSIQUIATRIA.value], FailureHandling.STOP_ON_FAILURE);
