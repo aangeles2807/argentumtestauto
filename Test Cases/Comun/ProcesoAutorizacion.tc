@@ -425,4 +425,60 @@
       <masked>false</masked>
       <name>mapaPrestacionesIngresadas</name>
    </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>c07f87f3-2b9b-460d-ac9e-8b0fae5734d6</id>
+      <masked>false</masked>
+      <name>ejecutarQueryPrestacionNoContratada</name>
+   </variable>
+   <variable>
+      <defaultValue>', trim(pre.pre_pre_descripcio) descripcion_prestacion'</defaultValue>
+      <description></description>
+      <id>e6c64463-2133-4ce2-9fa8-131ddc92709c</id>
+      <masked>false</masked>
+      <name>prePreDescripcion</name>
+   </variable>
+   <variable>
+      <defaultValue>'ORDER BY DBMS_RANDOM.RANDOM'</defaultValue>
+      <description></description>
+      <id>aa357f44-7117-4101-9fdc-aac41db08049</id>
+      <masked>false</masked>
+      <name>orderByRandom</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>9eb6f97f-99f3-475b-938d-36546f2e0724</id>
+      <masked>false</masked>
+      <name>consultarApiPrestadorSaludDoctores</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>783f2e1b-34e8-4da8-bf59-a50b342ceebc</id>
+      <masked>false</masked>
+      <name>consultarApiPrestadorSaludDoctoresCasoPositivo</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>43a65b92-0c6f-4095-894b-76d6b3b4ea86</id>
+      <masked>false</masked>
+      <name>ejecutarQueryDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>de57951a-9226-46bc-9116-3b0c9febc6b2</id>
+      <masked>false</masked>
+      <name>codigoDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>b583b343-0965-45f9-83c9-e708a2babb5b</id>
+      <masked>false</masked>
+      <name>nombreDoctor</name>
+   </variable>
 </TestCaseEntity>

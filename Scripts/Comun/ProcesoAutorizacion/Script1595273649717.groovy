@@ -455,6 +455,93 @@ try {
 	}
 	
 	
+	/*
+		 *
+		 * Consulta Doctor
+		 *
+		 * IPSCODSUP, --Codigo de Doctor
+		 * IPSNOM, -- Nombre del Doctor
+		 *
+	 * */
+	
+		if (ejecutarQueryDoctor) {
+			
+			queryResult = dbConnection.executeQueryAndGetResult("doctor", QueryTemplate.doctor.render().toString());
+			
+			//IPSCODSUP
+			codigoDoctor = queryResult.get("IPSCODSUP");
+			
+			//IPSNOM
+			nombreDoctor = queryResult.get("IPSNOM");
+			
+		}
+		
+		// ****************************
+		// Imprimir estado de variables
+		// ****************************
+		
+		message = "\n\n";
+		
+		if (!codigoDoctor.toString().isEmpty()) {
+			
+			message += String.valueOf("Codigo Doctor: ${codigoDoctor}" + "\n");
+		}
+		
+		if (!nombreDoctor.toString().isEmpty()) {
+			
+			message += String.valueOf("Nombre Doctor ${nombreDoctor}" + "\n");
+		}
+		
+		
+		
+		message += "\n\n";
+		
+		println message;
+	
+	
+	
+	 //********************************************************
+	 // Consulta del Web Service: /api/PrestadorSalud/Doctores
+	 //********************************************************
+	 
+	 // Si deseamos consultar este Web Service
+	 if (consultarApiPrestadorSaludDoctores) {
+		 
+		 // Si es un caso positivo
+		 if (consultarApiPrestadorSaludDoctoresCasoPositivo) {
+			 
+			 // Consultamos el Web Service
+			 responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('HealthProvider/PrestadorSaludDoctores', ['descripcion' : nombreDoctor]));
+			 
+			 // Mensaje reporte/consola
+			 message = String.valueOf("En la consulta al servicio web: <b>${commonAction.getApiPath()}</b>:<br>");
+			 
+			 verifyCodeAndService:
+			 for(int i = 0; responseContentMap.size(); i++){
+				 
+				 if (responseContentMap.get(i).get(Keyword.KEY_CODIGO.value).equals(codigoDoctor)
+					 && responseContentMap.get(i).get(Keyword.KEY_NOMBRE.value).equals(nombreDoctor)) {
+					 
+					 message += String.valueOf("<br>El doctor con el codigo <b>${codigoDoctor}</b> tiene el nombre <b>${nombreDoctor}</b>.");
+					 
+					 //KeywordUtil.markPassed(message);
+					 reportGenerator.setLogStatusPASS(message);
+					 
+					 break verifyCodeAndService;
+				 }
+					 
+				 if ( i == (responseContentMap.size() - 1) ) {
+					 
+					 message += String.valueOf("<br>El doctor con el codigo <b>${codigoDoctor}</b> no tiene el nombre <b>${nombreDoctor}</b>.");
+					 
+					 KeywordUtil.markFailed(message);
+					 reportGenerator.setLogStatusFAIL(message);
+				 }
+			 }
+		 }
+	 }
+
+
 	//********************************************************************
 	// Consulta del Web Service: /api/Autorizacion/Portal/ValidarCobertura
 	//********************************************************************
@@ -697,6 +784,18 @@ try {
 				
 				break buclePrestaciones;
 			 }
+		 }
+
+		 if(ejecutarQueryPrestacionNoContratada){
+			 
+			 QueryTemplate.prestacionNoContratada.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
+			 
+			 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			 // Ejecutamos la consulta y obtenemos los resultados
+			 queryResult = dbConnection.executeQueryAndGetResult("prestacionNoContratada", QueryTemplate.prestacionNoContratada.render().toString());
+			 
+			 QueryTemplate.prestacionNoContratada.remove("procedimientos");
+		 
 		 }
 		 
 		 // CODIGO_PRESTACION
