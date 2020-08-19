@@ -97,7 +97,7 @@
       <name>ejecutarQueryPrestadorServicio</name>
    </variable>
    <variable>
-      <defaultValue>'1'</defaultValue>
+      <defaultValue>'AND trim(ips.ipsestado) = \'1\''</defaultValue>
       <description></description>
       <id>cd731f01-ef08-463a-acf3-e3ad5ce7c98a</id>
       <masked>false</masked>
@@ -349,6 +349,20 @@
       <name>fechaAutorizacion</name>
    </variable>
    <variable>
+      <defaultValue>'BETWEEN crt.crtinivig AND crt.crtfinvig'</defaultValue>
+      <description></description>
+      <id>ba52e946-d4e2-4011-b9d2-0efeb11fc89c</id>
+      <masked>false</masked>
+      <name>condicionFechaAutorizacionMPP</name>
+   </variable>
+   <variable>
+      <defaultValue>'BETWEEN con.coninivig AND con.confinvig'</defaultValue>
+      <description></description>
+      <id>c465b90b-5b73-49c1-89d0-621ae68fd873</id>
+      <masked>false</masked>
+      <name>condicionFechaAutorizacionPBS</name>
+   </variable>
+   <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>b8bdd1b7-2e2e-480c-a846-e0279eba3c31</id>
@@ -361,5 +375,110 @@
       <id>a6b11583-5181-4f8d-a74b-769190a62b78</id>
       <masked>false</masked>
       <name>idInteraccion</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ca0f2622-a864-4718-9a23-b7bb9f7dbfc4</id>
+      <masked>false</masked>
+      <name>condicionProcedimiento</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>7afe5297-cbc3-4f12-b0f0-60135b805758</id>
+      <masked>false</masked>
+      <name>consultarApiAutorizacionPortalAnular</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>4fadccbe-3959-4f7d-bf4f-365b5d32e896</id>
+      <masked>false</masked>
+      <name>consultarApiAutorizacionPortalAnularCasoPositivo</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>05630f51-adb6-4b1e-b364-495ad75feebb</id>
+      <masked>false</masked>
+      <name>joinProcedimiento</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>2a0e1248-c884-422b-b0f0-a20bc315ffdd</id>
+      <masked>false</masked>
+      <name>fecha</name>
+   </variable>
+   <variable>
+      <defaultValue>1</defaultValue>
+      <description></description>
+      <id>486e8ba0-5260-4d70-bd0d-8975006637e0</id>
+      <masked>false</masked>
+      <name>cantidad</name>
+   </variable>
+   <variable>
+      <defaultValue>[:]</defaultValue>
+      <description></description>
+      <id>dc149a8e-86bd-4fa4-ade7-dcfacb244cb8</id>
+      <masked>false</masked>
+      <name>mapaPrestacionesIngresadas</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>c07f87f3-2b9b-460d-ac9e-8b0fae5734d6</id>
+      <masked>false</masked>
+      <name>ejecutarQueryPrestacionNoContratada</name>
+   </variable>
+   <variable>
+      <defaultValue>', trim(pre.pre_pre_descripcio) descripcion_prestacion'</defaultValue>
+      <description></description>
+      <id>e6c64463-2133-4ce2-9fa8-131ddc92709c</id>
+      <masked>false</masked>
+      <name>prePreDescripcion</name>
+   </variable>
+   <variable>
+      <defaultValue>'ORDER BY DBMS_RANDOM.RANDOM'</defaultValue>
+      <description></description>
+      <id>aa357f44-7117-4101-9fdc-aac41db08049</id>
+      <masked>false</masked>
+      <name>orderByRandom</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>9eb6f97f-99f3-475b-938d-36546f2e0724</id>
+      <masked>false</masked>
+      <name>consultarApiPrestadorSaludDoctores</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>783f2e1b-34e8-4da8-bf59-a50b342ceebc</id>
+      <masked>false</masked>
+      <name>consultarApiPrestadorSaludDoctoresCasoPositivo</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>43a65b92-0c6f-4095-894b-76d6b3b4ea86</id>
+      <masked>false</masked>
+      <name>ejecutarQueryDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>de57951a-9226-46bc-9116-3b0c9febc6b2</id>
+      <masked>false</masked>
+      <name>codigoDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>b583b343-0965-45f9-83c9-e708a2babb5b</id>
+      <masked>false</masked>
+      <name>nombreDoctor</name>
    </variable>
 </TestCaseEntity>

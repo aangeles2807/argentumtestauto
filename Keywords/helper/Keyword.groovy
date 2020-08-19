@@ -21,12 +21,6 @@ import internal.GlobalVariable
 
 public enum Keyword {
 
-	// ************
-	// HTTP Methods
-	// ************
-
-	METHOD_GET("GET"),
-
 	// *****************
 	// API Responses Key
 	// *****************
@@ -50,54 +44,85 @@ public enum Keyword {
 	KEY_SEXO("Sexo"),
 	KEY_VIENEDETRASPASO("VieneDeTraspaso"),
 	KEY_TIENEPBS("TienePBS"),
+	KEY_FEMENINO("F"),
+	KEY_MASCULINO("M"),
 
 	// ****************
 	// Query Conditions
 	// ****************
 
-	AFILIADO_MPP_ACTIVO("AND Trim(ben.afibenestcod) IN ('A') "),
-	AFILIADO_MPP_INACTIVO("AND Trim(ben.afibenestcod) <> ('A') "),
-	AFILIADO_PBS_ACTIVO("AND trim(hij.afihijestcod) IN ('A') "),
+	AFILIADO_MPP_ACTIVO("AND trim(ben.afibenestcod) = ('A') "),
+	AFILIADO_MPP_INACTIVO("AND trim(ben.afibenestcod) <> ('A') AND NOT EXISTS (select hij2.afihijestcod from TABHIJ hij2 where trim(hij2.afihijestcod) = ('A') AND ben.natide = hij2.natide) "),
+	AFILIADO_PBS_ACTIVO("AND trim(hij.afihijestcod) = 'A' "),
 	AFILIADO_PBS_INACTIVO("AND trim(hij.afihijestcod) <> ('A') "),
 	AFILIADO_MPP_CON_PBS("AND nat.natide IN (SELECT natide FROM tabhij pbs WHERE pbs.natide = nat.natide) "),
 	AFILIADO_MENOR_EDAD("AND round(( sysdate - nat.natfecnac) /365.242199,0) < 18 "),
 	AFILIADO_MENOR_7("AND round(( sysdate - nat.natfecnac) /365.242199,0) < 18 "),
 	AFILIADO_MAYOR_EDAD("AND round(( sysdate - nat.natfecnac) /365.242199,0) >= 18 "),
-	AFILIADO_CONTRATO_ACTIVO_PBS("AND trim(con.AFICONESTCOD) not in ('14', '8') "),
-	AFILIADO_CONTRATO_INACTIVO_PBS("AND trim(con.AFICONESTCOD) in ('14', '8') "),
-	AFILIADO_CONTRATO_ACTIVO("AND trim(crt.AFICRTESTCOD) not in ('14', '8') "),
-	AFILIADO_CONTRATO_INACTIVO("AND trim(crt.AFICRTESTCOD) in ('14', '8') "),
 	AFILIADO_MPP_CON_COBERTURA_INMEDIATA("AND crt.crtcobinm = 1 "),
 	AFILIADO_MPP_SIN_COBERTURA_INMEDIATA("AND crt.crtcobinm <> 1 "),
-	AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO("AND hij.natide not in (SELECT ben.natide FROM tabcrt crt, tabsbc sbc, tabben ben WHERE 1=1 AND crt.crtcon = sbc.crtcon AND sbc.sbccon = ben.sbccon AND ben.natide = hij.natide AND  trim(crt.AFICRTESTCOD) in ('14','8')) "),
+	AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO("AND hij.natide not in (SELECT ben.natide FROM tabcrt crt, tabsbc sbc, tabben ben WHERE 1=1 AND crt.crtcon = sbc.crtcon AND sbc.sbccon = ben.sbccon AND ben.natide = hij.natide AND trim(crt.AFICRTESTCOD) in ('14', '8') ) "),
 	AFILIADO_AUTORIZACION_1_ANO("ADD_MONTHS(sysdate,-13)"),
 	AFILIADO_AUTORIZACION_6_MESES("ADD_MONTHS(sysdate,-6)"),
 	AFILIADO_AUTORIZACION_5_DIAS("(SYSDATE - 30)"),
 	AFILIADO_AUTORIZACION_SYSDATE("sysdate"),
-	//AFILIADO_PBS_CODIGO_COBERTURA("EXCV2','E880', 'E886','E887', 'EHBA1','E879','EXP18','E881','E883', 'EXP17','EX873','EX877','EX878', 'E888','EX879','E889','E8538','E890','E878','EX876','E882','EX880','E891"),
-	AFILIADO_PBS_CODIGO_COBERTURA("EX%"),
-	SERVICIO_CONSULTA("AND trim(tips.seripscod) IN ('08', '09', '10', '11', '12', '40') "),
-	SERVICIO_LABORATORIO("AND trim(tips.seripscod) IN ('31', '32', '33') "),
-	SERVICIO_ESTUDIOS_ESPECIALES("AND trim(tips.seripscod) IN ('20') "),
-	SERVICIO_RAYOS_X("AND trim(tips.seripscod) IN ('46') "),
-	SERVICIO_PSIQUIATRIA("AND trim(tips.seripscod) IN ('43') "),
-	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) IN ('65') "),
-	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) IN ('72') "),
-	SERVICIO_VACUNAS("AND trim(tips.seripscod) IN ('71') "),
-
+	AFILIADO_EXCLUSIVO("AND mpl.mplcod like 'EX%' "),
+	AFILIADO_MASCULINO("AND nat.NATSEX = 'M' "),
+	AFILIADO_FEMENINO("AND nat.NATSEX = 'F' "),
+	AFILIADO_RECIEN_NACIDO_PBS("AND hij.hijesrn = 1 "),
+	AFILIADO_RECIEN_NACIDO_MPP_CON_PBS("AND nat.natide IN (SELECT natide FROM tabhij pbs WHERE pbs.natide = nat.natide AND pbs.hijesrn = 1) "),
+	AFILIADO_MPP_COVERTURA_VENCIDA("AND EXISTS ( SELECT * FROM  tabben ben2, tabcrt crt2 WHERE 1 = 1 AND crt2.crtcon = ben2.crtcon AND ben2.natide = ben.natide AND SYSDATE not BETWEEN crt2.crtinivig and crt2.crtfinvig )"),
+	AFILIADO_PBS_COVERTURA_VENCIDA("AND EXISTS ( SELECT * FROM  tabhij hij2, tabcon con2 WHERE 1 = 1 AND con2.concon = hij2.concon AND hij2.natide = hij.natide AND SYSDATE NOT BETWEEN con2.coninivig AND con2.confinvig )"),
+	SERVICIO_CONSULTA("AND trim(tips.seripscod) = '11' AND trim(IPS.SER_ESP_CODIGO) = '13' AND trim(IPS.tipinscod) = '18'"),
+	SERVICIO_NO_LABORATORIO("AND trim(tips.seripscod) NOT IN ('31', '32', '33') "),
+	SERVICIO_LABORATORIO("AND trim(tips.seripscod) = '33' AND trim(IPS.SER_ESP_CODIGO) = '89' and trim(ips.tipinscod) = '16'"),
+	SERVICIO_ESTUDIOS_ESPECIALES("AND trim(tips.seripscod) = '20' AND trim(IPS.SER_ESP_CODIGO) = '888' AND trim(ips.tipinscod) = '02'"),
+	SERVICIO_RAYOS_X("AND trim(tips.seripscod) = '46' AND trim(IPS.SER_ESP_CODIGO) = '888' AND trim(ips.tipinscod) = '09'"),
+	SERVICIO_PSIQUIATRIA("AND trim(tips.seripscod) = '11' AND trim(IPS.SER_ESP_CODIGO) IN ('146', '951') AND trim(ips.tipinscod) IN ('18')"),
+	SERVICIO_ODONTOLOGIA("AND trim(tips.seripscod) = '65' AND trim(IPS.SER_ESP_CODIGO) IN ('111','112','113','114') AND trim(ips.tipinscod) = '05'"),
+	SERVICIO_TERAPIAS_FISICAS("AND trim(tips.seripscod) = '72' AND trim(IPS.SER_ESP_CODIGO) IN ('03','96') AND ips.tipinscod in('18','02')"),
+	SERVICIO_VACUNAS("AND trim(tips.seripscod) = '108' AND trim(ips.tipinscod) = '25'"),
+	SERVICIO_EMERGENCIA("AND trim(tips.seripscod) IN ('49') "),
+	SERVICIO_EMERGENCIA_TRIAGE_1("AND trim(tips.seripscod) IN ('126') "),
+	SERVICIO_EMERGENCIA_TRIAGE_2("AND trim(tips.seripscod) IN ('127') "),
+	SERVICIO_EMERGENCIA_TRIAGE_3("AND trim(tips.seripscod) IN ('128') "),
+	SERVICIO_EMERGENCIA_TRIAGE_4("AND trim(tips.seripscod) IN ('129') "),
+	SERVICIO_NO_FARMACIA("AND trim(tips.seripscod) NOT IN ('35') "),
+	SERVICIO_FARMACIA("AND trim(tips.seripscod) IN ('35') "),
+	SERVICIO_PATOLOGIA("AND trim(tips.seripscod) IN ('32') "),
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
+	PRESTADOR_NO_VIGENTE("AND Trim(ips.ipsestado) <> '1' "),
+	PRESTADOR_EXCLUSIVO ("AND trim(ips.ipsnomcor)  = 'EXC'"),
+	PRESTADOR_LABORATORIO("AND ips.IPSNOM like '%LABORATORIO%' "),
 
-	// *******************
-	// Query to be execute
-	// *******************
 
-	//AFILIADO_MPP("MPP"),
-	//AFILIADO_PBS("PBS"),
-	//AFILIADO("MPP o PBS"),
-	//PRESTADOR_SERVICIO("Prestador Servicio"),
-	//DIAGNOSTICO("Diagnostico"),
-	//PROCEDIMIENTO_POR_PRESTADOR("Procedimiento Por Prestador"),
+	PRESTADOR_DIFERENTE_AL_ULTIMO("AND ser.IPSCODSUP <> "),
+
+
+	PROCEDIMIENTO_MATERNIDAD("AND TRIM(TATE.TIPORICOD) = '2' "),
+	PROCEDIMIENTO_MATERNIDAD_JOIN("JOIN Tabate TATE ON mpl.MPLCOD = TATE.MPLCOD "),
+	PROCEDIMIENTO_MA("AND TRIM(PRE.pre_pre_codigo) like 'MA%' "),
+	PROCEDIMIENTO_CODIGO("AND TRIM(PRE.pre_pre_codigo) = "),
+	CONDICION_FECHA_AUTORIZACION_CONTRATO_INACTIVO_MPP("NOT BETWEEN crt.crtinivig AND crt.crtfinvig"),
+	CONDICION_FECHA_AUTORIZACION_CONTRATO_INACTIVO_PBS("NOT BETWEEN con.coninivig AND con.confinvig"),
+
+	// *********************
+	// Portal Autorizaciones
+	// *********************
+
+	PORTAL_AUTORIZACIONES_URL("https://appenlinea-qa.azurewebsites.net/Autorizaciones"),
+	PORTAL_AUTORIZACIONES_USUARIO("PS18815"),
+	PORTAL_AUTORIZACIONES_CONTRASENA("arielDJ*123"),
+	ATTRIBUTE_STYLE("style"),
+	ATTRIBUTE_VALUE("value"),
+	ATTRIBUTE_HEIGHT("height"),
+	ATTRIBUTE_WIDTH("width"),
+	XPATH_SELECTOR("xpath"),
+	CSS_SELECTOR("css"),
+	JAVASCRIPT_CLICK("JavaScript Click"),
+	JAVASCRIPT_SCROLL("JavaScript Scroll"),
+	JAVASCRIPT_HIGHLIGHT("JavaScript Highlight"),
 
 	// ******
 	// Report

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>24 - CA - Autorizar Afiliado 2 veces para Centro No Institucion</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>270b7d53-4964-499c-9463-b587b00d115e</testCaseGuid>
+</TestCaseEntity>

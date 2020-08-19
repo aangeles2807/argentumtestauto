@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>84 - Autorizar Afliado MPP con No. de Identificación inactivo o cancelado</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>198a1a5c-d267-45e5-9875-8bf03496eb6a</testCaseGuid>
-</TestCaseEntity>

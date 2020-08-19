@@ -68,54 +68,64 @@ try {
 	 */
 	if (ejecutarQueryCapturaAfiliadoMPP) {
 		
-		// Agregamos la(s) llave(s) y valor(es) al String Template
-		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
-		QueryTemplate.afiliadoMPP.add("fechaAutorizacion", fechaAutorizacion);
-		
-		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
-		// Ejecutamos la consulta y obtenemos los resultados
-		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
-		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 		QueryTemplate.afiliadoMPP.remove("conditions");
 		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
-	}
-	else if (ejecutarQueryCapturaAfiliadoPBS) {
+		QueryTemplate.afiliadoMPP.remove("condicionFechaAutorizacionMPP");
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
-		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
-		QueryTemplate.afiliadoPBS.add("fechaAutorizacion", fechaAutorizacion);
+		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
+		QueryTemplate.afiliadoMPP.add("fechaAutorizacion", fechaAutorizacion);
+		QueryTemplate.afiliadoMPP.add("condicionFechaAutorizacionMPP", condicionFechaAutorizacionMPP);
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
-		queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
+
+		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
+	}
+	else if (ejecutarQueryCapturaAfiliadoPBS) {
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
 		QueryTemplate.afiliadoPBS.remove("conditions");
 		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
-	
+		QueryTemplate.afiliadoPBS.remove("condicionFechaAutorizacionPBS");
+		
+		// Agregamos la(s) llave(s) y valor(es) al String Template
+		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
+		QueryTemplate.afiliadoPBS.add("fechaAutorizacion", fechaAutorizacion);
+		QueryTemplate.afiliadoPBS.add("condicionFechaAutorizacionPBS", condicionFechaAutorizacionPBS);
+		
+		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+		// Ejecutamos la consulta y obtenemos los resultados
+		queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());	
 	}
 	else if (ejecutarQueryCapturaAfiliadoMPPoPBS) {
 		
+		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+		QueryTemplate.afiliadoMPP.remove("conditions");
+		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
+		QueryTemplate.afiliadoMPP.remove("condicionFechaAutorizacionMPP");		
+		QueryTemplate.afiliadoPBS.remove("conditions");
+		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
+		QueryTemplate.afiliadoPBS.remove("condicionFechaAutorizacionPBS");		
+		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoMPP");
+		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoPBS");
+		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.afiliadoMPP.add("conditions", condicionAfiliadoMPP);
-		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS);
 		QueryTemplate.afiliadoMPP.add("fechaAutorizacion", fechaAutorizacion);
+		QueryTemplate.afiliadoMPP.add("condicionFechaAutorizacionMPP", condicionFechaAutorizacionMPP);
+		QueryTemplate.afiliadoPBS.add("conditions", condicionAfiliadoPBS)
 		QueryTemplate.afiliadoPBS.add("fechaAutorizacion", fechaAutorizacion);
+		QueryTemplate.afiliadoPBS.add("condicionFechaAutorizacionPBS", condicionFechaAutorizacionPBS);
+		
+		
 		QueryTemplate.afiliadoMPPoPBS.add("afiliadoMPP", QueryTemplate.afiliadoMPP.render().toString());
 		QueryTemplate.afiliadoMPPoPBS.add("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoMPPoPBS", QueryTemplate.afiliadoMPPoPBS.render().toString());
-		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
-		QueryTemplate.afiliadoPBS.remove("fechaAutorizacion");
-		QueryTemplate.afiliadoPBS.remove("conditions");
-		QueryTemplate.afiliadoMPP.remove("fechaAutorizacion");
-		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoMPP");
-		QueryTemplate.afiliadoMPPoPBS.remove("afiliadoPBS");
 	}
 	
 	/**
@@ -160,9 +170,14 @@ try {
 			codigoCobertura = queryResult.get("MPLCOD");
 		}
 		
-		generoAfiliado = queryResult.get("NATSEX");
+		if (generoAfiliado.toString().isEmpty()) {
+			
+			generoAfiliado = queryResult.get("NATSEX");
+		}
+		
 		tipoAfiliado = queryResult.get("PRONOM");
 		numeroDocumentoAfiliado = queryResult.get("NATNUMIDE");
+		fecha = queryResult.get("Fecha Autorizacion"); 
 	}
 	
 	// ****************************
@@ -196,6 +211,11 @@ try {
 		message += String.valueOf("Numero Documento Afiliado: ${numeroDocumentoAfiliado}" + "\n");
 	}
 	
+	if (!fecha.toString().isEmpty()) {
+		
+		message += String.valueOf("Fecha: ${fecha}" + "\n");
+	}
+	
 	message += "\n\n";
 	
 	println message;
@@ -212,6 +232,12 @@ try {
 	
 	if (ejecutarQueryPrestadorServicio) {
 		
+		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+		QueryTemplate.prestadorServicio.remove("codigoCobertura");
+		QueryTemplate.prestadorServicio.remove("generoAfiliado");
+		QueryTemplate.prestadorServicio.remove("estadoPrestador");
+		QueryTemplate.prestadorServicio.remove("servicioConsulta");
+		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.prestadorServicio.add("codigoCobertura", codigoCobertura);
 		QueryTemplate.prestadorServicio.add("generoAfiliado", generoAfiliado);
@@ -220,16 +246,14 @@ try {
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
+		
 		queryResult = dbConnection.executeQueryAndGetResult("prestadorServicio", QueryTemplate.prestadorServicio.render().toString());
 		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.prestadorServicio.remove("codigoCobertura");
-		QueryTemplate.prestadorServicio.remove("generoAfiliado");
-		QueryTemplate.prestadorServicio.remove("estadoPrestador");
-		QueryTemplate.prestadorServicio.remove("servicioConsulta");
-		
 		//IPSCODSUP
-		codigoPrestadorSalud = queryResult.get("IPSCODSUP");
+		if (codigoPrestadorSalud.toString().isEmpty()) {
+			
+			codigoPrestadorSalud = queryResult.get("IPSCODSUP");
+		}
 		
 		//SERIPSCOD
 		codigoServicioPrestadorSalud = queryResult.get("SERIPSCOD");
@@ -241,7 +265,14 @@ try {
 		nombreServicio = queryResult.get("SERIPSNOM");
 	
 		//IPSSUCCOD
-		codigoSucursal = queryResult.get("IPSSUCCOD");
+		if (!queryResult.get("IPSSUCCOD").equals("null")) {
+			
+			codigoSucursal = queryResult.get("IPSSUCCOD");
+		}
+		else{
+			
+			codigoSucursal = "";
+		}
 		
 		// MPLCOD
 		codigoCobertura = queryResult.get("MPLCOD");
@@ -278,7 +309,7 @@ try {
 		message += String.valueOf("Nombre Servicio: ${nombreServicio}" + "\n");
 	}
 	
-	if (!codigoSucursal.toString().isEmpty()) {
+	if (!codigoSucursal.toString().isEmpty() &&  !codigoSucursal.toString().equals("null")) {
 		
 		message += String.valueOf("Codigo Sucursal: ${codigoSucursal}" + "\n");
 	}
@@ -424,6 +455,93 @@ try {
 	}
 	
 	
+	/*
+		 *
+		 * Consulta Doctor
+		 *
+		 * IPSCODSUP, --Codigo de Doctor
+		 * IPSNOM, -- Nombre del Doctor
+		 *
+	 * */
+	
+		if (ejecutarQueryDoctor) {
+			
+			queryResult = dbConnection.executeQueryAndGetResult("doctor", QueryTemplate.doctor.render().toString());
+			
+			//IPSCODSUP
+			codigoDoctor = queryResult.get("IPSCODSUP");
+			
+			//IPSNOM
+			nombreDoctor = queryResult.get("IPSNOM");
+			
+		}
+		
+		// ****************************
+		// Imprimir estado de variables
+		// ****************************
+		
+		message = "\n\n";
+		
+		if (!codigoDoctor.toString().isEmpty()) {
+			
+			message += String.valueOf("Codigo Doctor: ${codigoDoctor}" + "\n");
+		}
+		
+		if (!nombreDoctor.toString().isEmpty()) {
+			
+			message += String.valueOf("Nombre Doctor ${nombreDoctor}" + "\n");
+		}
+		
+		
+		
+		message += "\n\n";
+		
+		println message;
+	
+	
+	
+	 //********************************************************
+	 // Consulta del Web Service: /api/PrestadorSalud/Doctores
+	 //********************************************************
+	 
+	 // Si deseamos consultar este Web Service
+	 if (consultarApiPrestadorSaludDoctores) {
+		 
+		 // Si es un caso positivo
+		 if (consultarApiPrestadorSaludDoctoresCasoPositivo) {
+			 
+			 // Consultamos el Web Service
+			 responseContentMap = commonAction.getResponseContentIntoMapOrString(findTestObject('HealthProvider/PrestadorSaludDoctores', ['descripcion' : nombreDoctor]));
+			 
+			 // Mensaje reporte/consola
+			 message = String.valueOf("En la consulta al servicio web: <b>${commonAction.getApiPath()}</b>:<br>");
+			 
+			 verifyCodeAndService:
+			 for(int i = 0; responseContentMap.size(); i++){
+				 
+				 if (responseContentMap.get(i).get(Keyword.KEY_CODIGO.value).equals(codigoDoctor)
+					 && responseContentMap.get(i).get(Keyword.KEY_NOMBRE.value).equals(nombreDoctor)) {
+					 
+					 message += String.valueOf("<br>El doctor con el codigo <b>${codigoDoctor}</b> tiene el nombre <b>${nombreDoctor}</b>.");
+					 
+					 //KeywordUtil.markPassed(message);
+					 reportGenerator.setLogStatusPASS(message);
+					 
+					 break verifyCodeAndService;
+				 }
+					 
+				 if ( i == (responseContentMap.size() - 1) ) {
+					 
+					 message += String.valueOf("<br>El doctor con el codigo <b>${codigoDoctor}</b> no tiene el nombre <b>${nombreDoctor}</b>.");
+					 
+					 KeywordUtil.markFailed(message);
+					 reportGenerator.setLogStatusFAIL(message);
+				 }
+			 }
+		 }
+	 }
+
+
 	//********************************************************************
 	// Consulta del Web Service: /api/Autorizacion/Portal/ValidarCobertura
 	//********************************************************************
@@ -485,15 +603,15 @@ try {
 	
 	if (ejecutarQueryDiagnostico) {
 		
+		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+		QueryTemplate.diagnostico.remove("generoAfiliado");
+		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
 		QueryTemplate.diagnostico.add("generoAfiliado", generoAfiliado);
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
 		queryResult = dbConnection.executeQueryAndGetResult("diagnostico", QueryTemplate.diagnostico.render().toString());
-		
-		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.diagnostico.remove("generoAfiliado");
 		
 		// DIA_DIA_CODIGO
 		codigoDiagnostico = queryResult.get("DIA_DIA_CODIGO");
@@ -569,8 +687,8 @@ try {
 	// Consulta del Web Service: /api/Autorizacion/Portal/Ingresar
 	//************************************************************
 	
-	SimpleDateFormat formatoFecha = new SimpleDateFormat("MM-dd-yyyy");
-	Date fecha = new Date();
+	//SimpleDateFormat formatoFecha = new SimpleDateFormat("MM-dd-yyyy");
+	//Date fecha = new Date();
 	
 	// Si deseamos consultar este Web Service
 	if (consultarApiAutorizacionPortalIngresar) {
@@ -582,7 +700,7 @@ try {
 			responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalIngresar', [
 				'codigoUsuario' : numeroAfiliado,
 				'idInteraccion' : idInteraccion,
-				'fecha' : formatoFecha.format(fecha),
+				'fecha' : fecha,
 				'idDoctor' : '0',
 				'telefono' : '8091112222',
 				'email' : 'prueba@prueba.com',
@@ -598,7 +716,7 @@ try {
 			responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalIngresar', [
 				'codigoUsuario' : numeroAfiliado,
 				'idInteraccion' : idInteraccion,
-				'fecha' : formatoFecha.format(fecha),
+				'fecha' : fecha,
 				'idDoctor' : '0',
 				'telefono' : '8091112222',
 				'email' : 'prueba@prueba.com',
@@ -613,23 +731,72 @@ try {
 	 
 	if (ejecutarQueryProcedimientoPorPrestador) {
 		
+		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
+		QueryTemplate.procedimientoPorPrestador.remove("codigoServicioPrestadorSalud");
+		QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
+		QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
+		QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
+		QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
+		QueryTemplate.procedimientoPorPrestador.remove("condicionProcedimiento");
+		QueryTemplate.procedimientoPorPrestador.remove("joinProcedimiento");
+		
 		 // Agregamos la(s) llave(s) y valor(es) al String Template
 		 QueryTemplate.procedimientoPorPrestador.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
 		 QueryTemplate.procedimientoPorPrestador.add("generoAfiliado", generoAfiliado);
 		 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
 		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
 		 QueryTemplate.procedimientoPorPrestador.add("fechaAutorizacion", fechaAutorizacion);
+		 QueryTemplate.procedimientoPorPrestador.add("condicionProcedimiento", condicionProcedimiento);
+		 QueryTemplate.procedimientoPorPrestador.add("joinProcedimiento", joinProcedimiento);
 		 
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
-		 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
+		 buclePrestaciones:
+		 for(;;){
+			 
+			 queryResult = dbConnection.executeQueryAndGetResult("procedimientoPorPrestador", QueryTemplate.procedimientoPorPrestador.render().toString());
+			 
+			 /*
+			  * Verifica si este mapa contiene prestaciones, de modo que las obtenidas mediante esta consulta
+			  * debe ser diferente a las contenidas en este mapa.
+			  * */
+			 if ( !mapaPrestacionesIngresadas.isEmpty() ) {
+				 
+				 println "\n\nEstas son los procedimientos ingresados\n"
+				 
+				 for(String key : mapaPrestacionesIngresadas.keySet()){					 
+					 
+					 println mapaPrestacionesIngresadas.get(key);
+				 }
+				 
+				 println "\n" + "Procedimiento a ingresar: " + queryResult.get("DESCRIPCION_PRESTACION");
+				 
+				if (!mapaPrestacionesIngresadas.containsKey(queryResult.get("DESCRIPCION_PRESTACION"))) {
+					
+					break buclePrestaciones;
+				}
+				else{
+					
+					continue buclePrestaciones;
+				}
+			}
+			else{
+				
+				break buclePrestaciones;
+			 }
+		 }
+
+		 if(ejecutarQueryPrestacionNoContratada){
+			 
+			 QueryTemplate.prestacionNoContratada.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
+			 
+			 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			 // Ejecutamos la consulta y obtenemos los resultados
+			 queryResult = dbConnection.executeQueryAndGetResult("prestacionNoContratada", QueryTemplate.prestacionNoContratada.render().toString());
+			 
+			 QueryTemplate.prestacionNoContratada.remove("procedimientos");
 		 
-		 // Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoServicioPrestadorSalud");
-		 QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
-		 QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
-		 QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
+		 }
 		 
 		 // CODIGO_PRESTACION
 		 codigoPrestacion = queryResult.get("CODIGO_PRESTACION");
@@ -795,6 +962,13 @@ try {
 			  tarifaProcedimiento = responseContentString;
 			  
 			  println "\n\n" + "Monto Procedimiento: " + tarifaProcedimiento + "\n\n";
+		  }else{
+		  
+			  // Consultamos el Web Service
+			  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalTarifaProcedimiento', [
+				  'codigoUsuario' : numeroAfiliado,
+				  'idInteraccion' : idInteraccion,
+				  'codigoProcedimiento' : codigoPrestacion]), true);
 		  }
 	  }
 	  
@@ -815,7 +989,9 @@ try {
 				  'codigoUsuario' : numeroAfiliado,
 				  'idInteraccion' : idInteraccion,
 				  'Codigo' : codigoPrestacion,
-				  'Valor' : tarifaProcedimiento]));
+				  //'Valor' : String.format("%,.2f", ( cantidad * Double.parseDouble(tarifaProcedimiento) ) ),
+				  'Valor' : ( cantidad * Double.parseDouble(tarifaProcedimiento) ),
+				  'Cantidad': cantidad]));
 			  
 			  codigoAutorizacion = responseContentString;
 			  
@@ -827,21 +1003,59 @@ try {
 			  if (!consultarApiAutorizacionPortalAutorizarMensajeError.toString().isEmpty()) {
 				  
 				  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAutorizar', [
-					  'codigoUsuario' : numeroAfiliado,
-					  'idInteraccion' : idInteraccion,
-					  'Codigo' : codigoPrestacion,
-					  'Valor' : tarifaProcedimiento]), true, consultarApiAutorizacionPortalAutorizarMensajeError.toString());
+				  'codigoUsuario' : numeroAfiliado,
+				  'idInteraccion' : idInteraccion,
+				  'Codigo' : codigoPrestacion,
+				  //'Valor' : String.format("%,.2f", ( cantidad * Double.parseDouble(tarifaProcedimiento) ) ),
+				  'Valor' : ( cantidad * Double.parseDouble(tarifaProcedimiento) ),
+				  'Cantidad': cantidad]), true, consultarApiAutorizacionPortalAutorizarMensajeError.toString());
 			  }
 			  else{
 				  
 				  responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAutorizar', [
-					  'codigoUsuario' : numeroAfiliado,
-					  'idInteraccion' : idInteraccion,
-					  'Codigo' : codigoPrestacion,
-					  'Valor' : tarifaProcedimiento]), true);
+				  'codigoUsuario' : numeroAfiliado,
+				  'idInteraccion' : idInteraccion,
+				  'Codigo' : codigoPrestacion,
+				  //'Valor' : String.format("%,.2f", ( cantidad * Double.parseDouble(tarifaProcedimiento) ) ),
+				  'Valor' : ( cantidad * Double.parseDouble(tarifaProcedimiento) ),
+				  'Cantidad': cantidad]), true);
 			  }
 		  }
 	  }
+	  
+	  
+	  //*************************************************************
+	   // Consulta del Web Service: /api/Autorizacion/Portal/Anular
+	   //*************************************************************
+	   
+	   String respuestaAnulacion = null;
+	   
+	   // Si deseamos consultar este Web Service
+	   if (consultarApiAutorizacionPortalAnular) {
+		   
+		   // Si es un caso positivo
+		   if (consultarApiAutorizacionPortalAnularCasoPositivo) {
+			   
+			   // Consultamos el Web Service
+			   responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAnular', [
+				   'codigoUsuario' : numeroAfiliado,
+				   'idInteraccion' : idInteraccion,
+				   'codigoMotivo' : '1',
+				   'observacion' : 'Prueba API Anulacion de Autorizacion Completada']));
+			   
+			   respuestaAnulacion = responseContentString;
+			   
+			   println "\n\n" + "Respuesta de Anulacion: " + respuestaAnulacion + "\n\n";
+		   }
+		   else{
+			   
+			   responseContentString = commonAction.getResponseContentIntoMapOrString(findTestObject('Authorization/AutorizacionPortalAnular', [
+				   'codigoUsuario' : numeroAfiliado,
+				   'idInteraccion' : idInteraccion,
+				   'codigoMotivo' : '1',
+				   'observacion' : 'Prueba API Anulacion de Autorizacion Completada']), true);
+		   }
+	   }
 	  
 	  /**
 	   * Agregamos todas las variables con sus valores de este Scrip,
@@ -898,6 +1112,9 @@ try {
 	  commonAction.getMapStringObject().put("fechaAutorizacion", fechaAutorizacion);
 	  commonAction.getMapStringObject().put("tarifaProcedimiento", tarifaProcedimiento);
 	  commonAction.getMapStringObject().put("idInteraccion", idInteraccion);
+	  commonAction.getMapStringObject().put("fecha", fecha);
+	  commonAction.getMapStringObject().put("cantidad", cantidad);
+	  commonAction.getMapStringObject().put("mapaPrestacionesIngresadas", mapaPrestacionesIngresadas);
 	  
 	   return commonAction.getMapStringObject();
 	  

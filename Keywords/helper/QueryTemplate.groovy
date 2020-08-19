@@ -28,7 +28,8 @@ public class QueryTemplate {
 
 	"SELECT * FROM (\n" +
 	"	SELECT \n" +
-	"		  crt.crtnumcon contrato \n" +
+	"		TO_CHAR(<fechaAutorizacion>, 'MM-dd-yyyy') \"Fecha Autorizacion\" \n" +
+	"		,crt.crtnumcon contrato \n" +
 	"		, ben.natide \n" +
 	"		, pro.procod \n" +
 	"		, pro.pronom \n" +
@@ -74,10 +75,9 @@ public class QueryTemplate {
 	"	AND sbc.sbccon = ben.sbccon \n" +
 	"	AND crt.crtcon = ben.crtcon \n" +
 	"	AND nat.natide = ben.natide \n" +
-	"	AND best.afibenestcod = ben.afibenestcod \n" +
 	"	AND par.plaparcod = ben.plaparcod \n" +
 	"	AND mpl.mplcod = ben.mplcod \n" +
-	"	AND <fechaAutorizacion> between crt.crtinivig AND crt.crtfinvig \n" + // Parametro
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionMPP> \n" + // Parametro
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -88,7 +88,8 @@ public class QueryTemplate {
 
 	"SELECT * FROM ( \n" +
 	"	SELECT \n" +
-	"		  con.connumcon contrato \n" +
+	"		TO_CHAR(<fechaAutorizacion>, 'MM-dd-yyyy') \"Fecha Autorizacion\" \n" +
+	"		, con.connumcon contrato \n" +
 	"		, hij.natide \n" +
 	"		, pro.procod \n" +
 	"		, pro.pronom \n" +
@@ -126,7 +127,7 @@ public class QueryTemplate {
 	"	AND hest.afihijestcod = hij.afihijestcod \n" +
 	"	AND par.plaparcod = hij.plaparcod \n" +
 	"	AND mpl.mplcod = hij.mplcod \n" +
-	"	AND <fechaAutorizacion> between con.coninivig AND con.confinvig \n" + // Parametro
+	"	AND <fechaAutorizacion> <condicionFechaAutorizacionPBS> \n" + // Parametro
 	"	<conditions> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
@@ -164,18 +165,32 @@ public class QueryTemplate {
 	"	JOIN TABSERIPS tips \n" +
 	"	ON tips.SERIPSCOD = ser.SERIPSCOD \n" +
 	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
-	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP \n"+
+	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP AND trim(suc.IPSSUCESTCOD) = '01' \n"+
 	"	WHERE 1 = 1 \n" +
 	"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
 	"	AND trim(ser.sercon) = 'S' \n" +
 	"	AND trim(SERIPS_SEXO) IN ('A', '<generoAfiliado>') \n" + // Parametro
-	"	AND trim(ips.ipsestado) = '<estadoPrestador>' \n" + // Parametro
+	"	<estadoPrestador> \n" + // Parametro
 	"	AND ips.tipovincod = '06' \n" +
 	"	<servicioConsulta> \n" + // Parametro
 	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
 	") \n" +
 	"WHERE rownum = 1"
 	);
+
+	public static final ST doctor = new ST(
+	
+		"SELECT * FROM ( \n" +
+		"	SELECT \n" +
+		"		  IPS.IPSCODSUP \n" +
+		"		, IPS.IPSNOM \n" +
+		"	from tabconips ips \n" +
+		"	where 1 = 1 \n" +
+		"	and ips.emptipemp = 'N' \n" +
+		"	and ips.ipsestado = '1' \n" +
+		"	Order by DBMS_RANDOM.RANDOM \n" +
+		") where rownum = 1"
+		);
 
 	public static final ST diagnostico = new ST(
 
@@ -192,12 +207,11 @@ public class QueryTemplate {
 	"WHERE rownum = 1"
 	);
 
-	public static ST procedimientoPorPrestador = new ST(
+	public static final ST procedimientos = new ST(
 
-	"SELECT * FROM ( \n" +
 	"	SELECT \n" +
 	"		  trim(pre.pre_pre_codigo) codigo_prestacion \n" +
-	"		, trim(pre.pre_pre_descripcio) descripcion_prestacion \n" +
+	"		  <prePreDescripcion> \n" +
 	"	FROM tabconips ips \n" +
 	"	JOIN pre_prestacion pre \n" +
 	"	ON 1 = 1 \n" +
@@ -268,12 +282,14 @@ public class QueryTemplate {
 	"	JOIN tabtipate ate \n" +
 	"	ON ate.tipatecod = mpr.tipatecod \n" +
 	"	JOIN tabtippla tpl on tpl.tipplacod = mpl.mpltippla \n" +
+	"	<joinProcedimiento> \n" +
 	"	WHERE 1 = 1 \n" +
-	//"	AND REGEXP_LIKE(SUBSTR(PRE_PRE_TIPO, 1, 1), '^\\d+(\\.\\d+)?\$') \n" +
+	"	AND pre.pre_pre_descripcio NOT LIKE '%NULL%' AND pre.pre_pre_codigo NOT LIKE '%S48306%' \n" +
 	"	AND pre.pre_pre_quirurgico = 0 \n" +
 	"	AND Trim(pre_pre_sexo) in ('A', '<generoAfiliado>') \n" + // SEXO
 	"	AND trim(ips.ipscodsup) = '<codigoPrestadorSalud>' \n" + // CODIGO DE PRESTADOR
 	"	AND trim(mpl.mplcod) = '<codigoCobertura>' \n" + // CODIGO DE PLAN
+	"	<condicionProcedimiento> \n" + //CONDICION PROCEDIMIENTO
 	"	AND 1 = CASE WHEN EXISTS ( \n" +
 	"		SELECT 1 FROM \n" +
 	"			tabcontiphab tiphab \n" +
@@ -285,9 +301,30 @@ public class QueryTemplate {
 	"		AND SUBSTR (pre.pre_pre_codigo, 1, 2) = 'S1' \n" +
 	"	) \n" +
 	"	THEN 0 ELSE 1 END \n" +
-	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
+	"	<orderByRandom>"
+	);
+
+	public static ST procedimientoPorPrestador = new ST(
+		
+	"SELECT * FROM ( \n" +
+	"		<procedimientos> \n" +
 	") \n" +
 	"WHERE rownum = 1"
+	);
+
+	public static ST prestacionNoContratada = new ST(
+		
+	"SELECT * FROM ( \n" +
+	"		Select  trim(pre2.pre_pre_codigo) codigo_prestacion , trim(pre2.pre_pre_descripcio) descripcion_prestacion \n" +
+	"		from pre_prestacion pre2 \n" +
+	"		where pre2.pre_pre_codigo not in \n" +
+	"		(" +
+	"			<procedimientos> \n" +
+	"		)" +
+	"		ORDER BY DBMS_RANDOM.RANDOM \n" +
+	") \n" +
+	"WHERE rownum = 1 \n"
+
 	);
 
 }

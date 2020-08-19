@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>95 - Autorizar Afliafo MPP con No. de Identificación inactivo o cancelado</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>d660ae41-9f5c-4ead-b121-6a2d6f0318c4</testCaseGuid>
-</TestCaseEntity>

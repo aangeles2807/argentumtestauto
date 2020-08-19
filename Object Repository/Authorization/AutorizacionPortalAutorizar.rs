@@ -9,7 +9,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;[\n  {\n    \&quot;Codigo\&quot;: \&quot;${Codigo}\&quot;,\n    \&quot;Habitacion\&quot;: \&quot;\&quot;,\n    \&quot;Cantidad\&quot;: 1,\n    \&quot;Valor\&quot;: ${Valor},\n    \&quot;ValorConcesion\&quot;: 0,\n    \&quot;ValorExcepcion\&quot;: 0\n  }\n]&quot;,
+  &quot;text&quot;: &quot;[\n  {\n    \&quot;Codigo\&quot;: \&quot;${Codigo}\&quot;,\n    \&quot;Habitacion\&quot;: \&quot;\&quot;,\n    \&quot;Cantidad\&quot;: ${Cantidad},\n    \&quot;Valor\&quot;: ${Valor},\n    \&quot;ValorConcesion\&quot;: 0,\n    \&quot;ValorExcepcion\&quot;: 0\n  }\n]&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -59,6 +59,13 @@
       <id>589835da-2605-4ee3-a403-0c349056c60d</id>
       <masked>false</masked>
       <name>Valor</name>
+   </variables>
+   <variables>
+      <defaultValue>1</defaultValue>
+      <description></description>
+      <id>8ca2c06d-4683-4d0b-b77d-471cff21811d</id>
+      <masked>false</masked>
+      <name>Cantidad</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

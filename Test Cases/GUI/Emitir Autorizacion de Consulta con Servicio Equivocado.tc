@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Emitir Autorizacion de Consulta con Servicio Equivocado</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>fb89ff91-12be-48da-813c-57dd536a9b9a</testCaseGuid>
+</TestCaseEntity>

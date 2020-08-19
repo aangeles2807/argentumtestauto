@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>35 - Varias consultas el mismo dia con el mismo prestador</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>c0f571e4-4b9d-45d6-810d-e41cb2a701b9</testCaseGuid>
-</TestCaseEntity>
