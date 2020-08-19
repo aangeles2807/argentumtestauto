@@ -23,6 +23,8 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable
 
 public class QueryTemplate {
+	
+	public static ST test1 = new ST("test");
 
 	public static final ST afiliadoMPP = new ST(
 
@@ -182,7 +184,7 @@ public class QueryTemplate {
 	
 		"SELECT * FROM ( \n" +
 		"	SELECT \n" +
-		"		  IPS.IPSCODSUP \n" +
+		"		  IPS.EMPIDE \n" +
 		"		, IPS.IPSNOM \n" +
 		"	from tabconips ips \n" +
 		"	where 1 = 1 \n" +
@@ -190,7 +192,7 @@ public class QueryTemplate {
 		"	and ips.ipsestado = '1' \n" +
 		"	Order by DBMS_RANDOM.RANDOM \n" +
 		") where rownum = 1"
-		);
+	);
 
 	public static final ST diagnostico = new ST(
 
