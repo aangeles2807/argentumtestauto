@@ -468,8 +468,8 @@ try {
 			
 			queryResult = dbConnection.executeQueryAndGetResult("doctor", QueryTemplate.doctor.render().toString());
 			
-			//IPSCODSUP
-			codigoDoctor = queryResult.get("IPSCODSUP");
+			//EMPIDE
+			codigoDoctor = queryResult.get("EMPIDE");
 			
 			//IPSNOM
 			nombreDoctor = queryResult.get("IPSNOM");
@@ -701,7 +701,8 @@ try {
 				'codigoUsuario' : numeroAfiliado,
 				'idInteraccion' : idInteraccion,
 				'fecha' : fecha,
-				'idDoctor' : '0',
+				'codigoRemitente': medicoTratante,
+				'idDoctor' : codigoDoctor,
 				'telefono' : '8091112222',
 				'email' : 'prueba@prueba.com',
 				'codigoDiagnostico' : codigoDiagnostico,
@@ -709,7 +710,7 @@ try {
 			
 			println "\n\n" + "API de Autorizacion Portal Ingresar: " + responseContentString + "\n\n";
 		}
-		// Si es un caso positivo
+		// Si es un caso nagativo
 		else{
 			
 			// Consultamos el Web Service
@@ -717,7 +718,8 @@ try {
 				'codigoUsuario' : numeroAfiliado,
 				'idInteraccion' : idInteraccion,
 				'fecha' : fecha,
-				'idDoctor' : '0',
+				'codigoRemitente': medicoTratante,
+				'idDoctor' : codigoDoctor,
 				'telefono' : '8091112222',
 				'email' : 'prueba@prueba.com',
 				'codigoDiagnostico' : codigoDiagnostico,
@@ -732,25 +734,31 @@ try {
 	if (ejecutarQueryProcedimientoPorPrestador) {
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.procedimientoPorPrestador.remove("codigoServicioPrestadorSalud");
-		QueryTemplate.procedimientoPorPrestador.remove("generoAfiliado");
-		QueryTemplate.procedimientoPorPrestador.remove("codigoPrestadorSalud");
-		QueryTemplate.procedimientoPorPrestador.remove("codigoCobertura");
-		QueryTemplate.procedimientoPorPrestador.remove("fechaAutorizacion");
-		QueryTemplate.procedimientoPorPrestador.remove("condicionProcedimiento");
-		QueryTemplate.procedimientoPorPrestador.remove("joinProcedimiento");
+		QueryTemplate.procedimientos.remove("codigoServicioPrestadorSalud");
+		QueryTemplate.procedimientos.remove("generoAfiliado");
+		QueryTemplate.procedimientos.remove("codigoPrestadorSalud");
+		QueryTemplate.procedimientos.remove("codigoCobertura");
+		QueryTemplate.procedimientos.remove("fechaAutorizacion");
+		QueryTemplate.procedimientos.remove("condicionProcedimiento");
+		QueryTemplate.procedimientos.remove("joinProcedimiento");
+		QueryTemplate.procedimientos.remove("prePreDescripcion");
+		QueryTemplate.procedimientos.remove("orderByRandom");
 		
 		 // Agregamos la(s) llave(s) y valor(es) al String Template
-		 QueryTemplate.procedimientoPorPrestador.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("generoAfiliado", generoAfiliado);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoPrestadorSalud", codigoPrestadorSalud);
-		 QueryTemplate.procedimientoPorPrestador.add("codigoCobertura", codigoCobertura);
-		 QueryTemplate.procedimientoPorPrestador.add("fechaAutorizacion", fechaAutorizacion);
-		 QueryTemplate.procedimientoPorPrestador.add("condicionProcedimiento", condicionProcedimiento);
-		 QueryTemplate.procedimientoPorPrestador.add("joinProcedimiento", joinProcedimiento);
+		 QueryTemplate.procedimientos.add("codigoServicioPrestadorSalud", codigoServicioPrestadorSalud);
+		 QueryTemplate.procedimientos.add("generoAfiliado", generoAfiliado);
+		 QueryTemplate.procedimientos.add("codigoPrestadorSalud", codigoPrestadorSalud);
+		 QueryTemplate.procedimientos.add("codigoCobertura", codigoCobertura);
+		 QueryTemplate.procedimientos.add("fechaAutorizacion", fechaAutorizacion);
+		 QueryTemplate.procedimientos.add("condicionProcedimiento", condicionProcedimiento);
+		 QueryTemplate.procedimientos.add("joinProcedimiento", joinProcedimiento);
+		 QueryTemplate.procedimientos.add("prePreDescripcion", prePreDescripcion);
+		 QueryTemplate.procedimientos.add("orderByRandom", orderByRandom);
 		 
 		 // Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		 // Ejecutamos la consulta y obtenemos los resultados
+		 QueryTemplate.procedimientoPorPrestador.add("procedimientos", QueryTemplate.procedimientos.render().toString());
+		 
 		 buclePrestaciones:
 		 for(;;){
 			 
@@ -1115,6 +1123,8 @@ try {
 	  commonAction.getMapStringObject().put("fecha", fecha);
 	  commonAction.getMapStringObject().put("cantidad", cantidad);
 	  commonAction.getMapStringObject().put("mapaPrestacionesIngresadas", mapaPrestacionesIngresadas);
+	  commonAction.getMapStringObject().put("codigoDoctor", codigoDoctor);
+	  commonAction.getMapStringObject().put("nombreDoctor", nombreDoctor);
 	  
 	   return commonAction.getMapStringObject();
 	  

@@ -468,7 +468,7 @@
       <name>ejecutarQueryDoctor</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'0'</defaultValue>
       <description></description>
       <id>de57951a-9226-46bc-9116-3b0c9febc6b2</id>
       <masked>false</masked>
@@ -480,5 +480,12 @@
       <id>b583b343-0965-45f9-83c9-e708a2babb5b</id>
       <masked>false</masked>
       <name>nombreDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>'0'</defaultValue>
+      <description></description>
+      <id>c758962a-299c-4268-bada-717c07927a23</id>
+      <masked>false</masked>
+      <name>medicoTratante</name>
    </variable>
 </TestCaseEntity>
