@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>78 - Afiliado con MPP cancelado y PBS activo (prestaciones no incluidas en el catálogo)</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>ba50766a-171d-4ff2-9ad1-ff77419523d6</testCaseGuid>
+</TestCaseEntity>

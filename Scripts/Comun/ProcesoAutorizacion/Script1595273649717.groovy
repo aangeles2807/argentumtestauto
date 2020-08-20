@@ -233,21 +233,43 @@ try {
 	if (ejecutarQueryPrestadorServicio) {
 		
 		// Eliminamos la(s) llave(s) y valor(es) para dejar el template en su estado original
-		QueryTemplate.prestadorServicio.remove("codigoCobertura");
-		QueryTemplate.prestadorServicio.remove("generoAfiliado");
-		QueryTemplate.prestadorServicio.remove("estadoPrestador");
-		QueryTemplate.prestadorServicio.remove("servicioConsulta");
+		QueryTemplate.tablaPrestador.remove("codigoCobertura");
+		QueryTemplate.tablaPrestador.remove("generoAfiliado");
+		QueryTemplate.tablaPrestador.remove("estadoPrestador");
+		QueryTemplate.tablaPrestador.remove("servicioConsulta");
+		QueryTemplate.tablaPrestador.remove("camposTablaPrestador");
+		QueryTemplate.tablaPrestador.remove("orderByRandom");
 		
 		// Agregamos la(s) llave(s) y valor(es) al String Template
-		QueryTemplate.prestadorServicio.add("codigoCobertura", codigoCobertura);
-		QueryTemplate.prestadorServicio.add("generoAfiliado", generoAfiliado);
-		QueryTemplate.prestadorServicio.add("estadoPrestador", estadoPrestador);
-		QueryTemplate.prestadorServicio.add("servicioConsulta", servicioConsulta);
+		QueryTemplate.tablaPrestador.add("codigoCobertura", codigoCobertura);
+		QueryTemplate.tablaPrestador.add("generoAfiliado", generoAfiliado);
+		QueryTemplate.tablaPrestador.add("estadoPrestador", estadoPrestador);
+		QueryTemplate.tablaPrestador.add("servicioConsulta", servicioConsulta);
+		QueryTemplate.tablaPrestador.add("camposTablaPrestador", camposTablaPrestador);
+		QueryTemplate.tablaPrestador.add("orderByRandom", orderByRandom);
+		
+		QueryTemplate.prestadorServicio.add("tablaPrestador", QueryTemplate.tablaPrestador.render().toString());
 		
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
 		
 		queryResult = dbConnection.executeQueryAndGetResult("prestadorServicio", QueryTemplate.prestadorServicio.render().toString());
+		
+		if(ejecutarQueryPrestadorFueradeRed){
+			
+			QueryTemplate.tablaPrestador.remove("camposTablaPrestador");
+			QueryTemplate.tablaPrestador.remove("orderByRandom");
+			
+			QueryTemplate.prestadorFueraDeRed.add("top10000Lineas", top10000Lineas);
+			QueryTemplate.prestadorFueraDeRed.add("tablaPrestador",  QueryTemplate.tablaPrestador.render().toString());
+			
+			// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
+			// Ejecutamos la consulta y obtenemos los resultados
+			println QueryTemplate.prestadorFueraDeRed.render().toString();
+			queryResult = dbConnection.executeQueryAndGetResult("prestadorFueraDeRed", QueryTemplate.prestadorFueraDeRed.render().toString());
+			
+			QueryTemplate.prestadorFueraDeRed.remove("tablaPrestador");
+		}
 		
 		//IPSCODSUP
 		if (codigoPrestadorSalud.toString().isEmpty()) {
@@ -795,6 +817,9 @@ try {
 		 }
 
 		 if(ejecutarQueryPrestacionNoContratada){
+			 
+			 QueryTemplate.procedimientos.remove("prePreDescripcion");
+			 QueryTemplate.procedimientos.remove("orderByRandom");
 			 
 			 QueryTemplate.prestacionNoContratada.add("procedimientos",  QueryTemplate.procedimientos.render().toString());
 			 

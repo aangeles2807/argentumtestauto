@@ -488,4 +488,25 @@
       <masked>false</masked>
       <name>medicoTratante</name>
    </variable>
+   <variable>
+      <defaultValue>', ser.MPLCOD, ser.SERIPSCOD, ips.IPSNOM, tips.SERIPSNOM, SUC.IPSSUCCOD'</defaultValue>
+      <description></description>
+      <id>4243e01e-6fcf-4f1d-a516-31920750b85f</id>
+      <masked>false</masked>
+      <name>camposTablaPrestador</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>71c34058-2366-46e2-839b-c622e1604706</id>
+      <masked>false</masked>
+      <name>ejecutarQueryPrestadorFueradeRed</name>
+   </variable>
+   <variable>
+      <defaultValue>'AND rownum &lt;= 10000'</defaultValue>
+      <description></description>
+      <id>6d7f025a-e532-453a-9006-7a13b47b2f73</id>
+      <masked>false</masked>
+      <name>top10000Lineas</name>
+   </variable>
 </TestCaseEntity>

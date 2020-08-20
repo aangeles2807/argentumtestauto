@@ -151,33 +151,54 @@ public class QueryTemplate {
 	"	ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum = 1"
 	);
 
+	public static final ST tablaPrestador = new ST(
+		
+		"	SELECT \n" +
+		"		  ser.IPSCODSUP \n" + 
+		"		  <camposTablaPrestador> \n"+
+		"	FROM tabconser ser \n" +
+		"	JOIN TABCONIPS ips \n" +
+		"	ON ips.IPSCODSUP = ser.IPSCODSUP \n" +
+		"	JOIN TABSERIPS tips \n" +
+		"	ON tips.SERIPSCOD = ser.SERIPSCOD \n" +
+		"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
+		" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP AND trim(suc.IPSSUCESTCOD) = '01' \n"+
+		"	WHERE 1 = 1 \n" +
+		"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
+		"	AND trim(ser.sercon) = 'S' \n" +
+		"	AND trim(SERIPS_SEXO) IN ('A', '<generoAfiliado>') \n" + // Parametro
+		"	<estadoPrestador> \n" + // Parametro
+		"	AND ips.tipovincod = '06' \n" +
+		"	<servicioConsulta> \n" + // Parametro
+		"	<orderByRandom>"
+	);
+
 	public static final ST prestadorServicio = new ST(
 
 	"SELECT * FROM ( \n" +
-	"	SELECT \n" +
-	"		  ser.IPSCODSUP \n" +
-	"		, ser.MPLCOD \n" +
-	"		, ser.SERIPSCOD \n" +
-	"		, ips.IPSNOM \n" +
-	"		, tips.SERIPSNOM \n" +
-	"  		, SUC.IPSSUCCOD \n"+
-	"	FROM tabconser ser \n" +
-	"	JOIN TABCONIPS ips \n" +
-	"	ON ips.IPSCODSUP = ser.IPSCODSUP \n" +
-	"	JOIN TABSERIPS tips \n" +
-	"	ON tips.SERIPSCOD = ser.SERIPSCOD \n" +
-	"	LEFT OUTER JOIN TABCONIPSSUC SUC \n"+
-	" 	ON IPS.IPSCODSUP = SUC.IPSCODSUP AND trim(suc.IPSSUCESTCOD) = '01' \n"+
-	"	WHERE 1 = 1 \n" +
-	"	AND trim(mplcod) LIKE ('<codigoCobertura>') \n" + // Parametro
-	"	AND trim(ser.sercon) = 'S' \n" +
-	"	AND trim(SERIPS_SEXO) IN ('A', '<generoAfiliado>') \n" + // Parametro
-	"	<estadoPrestador> \n" + // Parametro
-	"	AND ips.tipovincod = '06' \n" +
-	"	<servicioConsulta> \n" + // Parametro
-	"	ORDER BY DBMS_RANDOM.RANDOM \n" +
+	"	<tablaPrestador> \n" +
 	") \n" +
 	"WHERE rownum = 1"
+	);
+
+	public static final ST prestadorFueraDeRed = new ST(
+
+		"SELECT * FROM ( \n" +
+		"	SELECT ser.IPSCODSUP , ser.MPLCOD , ser.SERIPSCOD , ips.IPSNOM , tips.SERIPSNOM , SUC.IPSSUCCOD \n" +
+		"	FROM tabconser ser  \n" +
+		"	JOIN TABCONIPS ips ON ips.IPSCODSUP = ser.IPSCODSUP	\n" +
+		"	JOIN TABSERIPS tips ON tips.SERIPSCOD = ser.SERIPSCOD	\n" +
+		"	LEFT OUTER JOIN TABCONIPSSUC SUC ON IPS.IPSCODSUP = SUC.IPSCODSUP AND trim(suc.IPSSUCESTCOD) = '01'	\n" +
+		"	WHERE 1 = 1	\n" +
+		//"	AND trim(ser.sercon) = 'S' \n" +
+		"	AND ser.IPSCODSUP not in \n" + 
+		"	( 	\n" +
+		"		<tablaPrestador> \n" +
+		"	)	\n" +
+		"	<top10000Lineas>	\n" +	
+		"	ORDER BY DBMS_RANDOM.RANDOM	\n" +
+		"	)	\n" +
+		"WHERE rownum = 1	\n"
 	);
 
 	public static final ST doctor = new ST(
