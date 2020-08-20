@@ -95,6 +95,7 @@ try {
 		QueryTemplate.afiliadoPBS.add("fechaAutorizacion", fechaAutorizacion);
 		QueryTemplate.afiliadoPBS.add("condicionFechaAutorizacionPBS", condicionFechaAutorizacionPBS);
 		
+		println QueryTemplate.afiliadoPBS.render().toString();
 		// Obtenemos el String Template con la(s) llave(s) y valor(es) agregado(s)
 		// Ejecutamos la consulta y obtenemos los resultados
 		queryResult = dbConnection.executeQueryAndGetResult("afiliadoPBS", QueryTemplate.afiliadoPBS.render().toString());	
