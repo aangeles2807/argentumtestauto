@@ -53,6 +53,8 @@ public enum Keyword {
 
 	AFILIADO_MPP_ACTIVO("AND trim(ben.afibenestcod) = ('A') "),
 	AFILIADO_MPP_INACTIVO("AND trim(ben.afibenestcod) <> ('A') AND NOT EXISTS (select hij2.afihijestcod from TABHIJ hij2 where trim(hij2.afihijestcod) = ('A') AND ben.natide = hij2.natide) "),
+	AFILIADO_MPP_CON_MAS_DE_2_COBERTURAS("AND EXISTS( SELECT COUNT(ben2.natide), ben2.natide FROM tabben ben2, tabcrt crt2 WHERE 1 = 1 AND ben2.crtcon = crt2.crtcon AND ben2.natide = ben.natide GROUP BY ben2.natide HAVING COUNT(*) > 1 )"),
+	AFILIADO_PBS_CON_MAS_DE_2_COBERTURAS("AND EXISTS ( SELECT COUNT(hij2.natide), hij2.natide FROM tabhij hij2, tabcon con2 WHERE 1 = 1 AND hij2.concon = con2.concon AND hij2.natide = hij.natide GROUP BY hij2.natide HAVING COUNT(*) > 1 )"),
 	AFILIADO_PBS_ACTIVO("AND trim(hij.afihijestcod) = 'A' "),
 	AFILIADO_PBS_INACTIVO("AND trim(hij.afihijestcod) <> ('A') "),
 	AFILIADO_MPP_CON_PBS("AND nat.natide IN (SELECT natide FROM tabhij pbs WHERE pbs.natide = nat.natide) "),
@@ -93,7 +95,7 @@ public enum Keyword {
 	PRESTADOR_CENTRO_NO_INST("AND Trim(ips.EMPTIPEMP) = 'N' "),
 	PRESTADOR_CENTRO_INST("AND Trim(ips.EMPTIPEMP) = 'J' "),
 	PRESTADOR_NO_VIGENTE("AND Trim(ips.ipsestado) <> '1' "),
-	PRESTADOR_EXCLUSIVO ("AND trim(ips.ipsnomcor)  = 'EXC'"),
+	PRESTADOR_EXCLUSIVO("AND trim(ips.ipsnomcor)  = 'EXC'"),
 	PRESTADOR_LABORATORIO("AND ips.IPSNOM like '%LABORATORIO%' "),
 
 
