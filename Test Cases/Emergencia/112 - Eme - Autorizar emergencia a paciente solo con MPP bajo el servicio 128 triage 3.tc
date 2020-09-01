@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>112 - Eme - Autorizar emergencia a paciente solo con MPP bajo el servicio 128 triage 3</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>cb41f308-60ac-43ef-9f21-f8b20797a090</testCaseGuid>
+</TestCaseEntity>

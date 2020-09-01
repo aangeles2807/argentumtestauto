@@ -27,21 +27,70 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
 import groovy.json.JsonSlurper
+import helper.CommonAction
 import helper.DBConnection
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
+// Condiciones de servicios
+List<String> servicios = Arrays.asList(
+	Keyword.SERVICIO_TERAPIAS_FISICAS.value,
+	Keyword.SERVICIO_SONOGRAFIA.value,
+	Keyword.SERVICIO_RAYOS_X.value,
+	Keyword.SERVICIO_PATOLOGIA.value,
+	Keyword.SERVICIO_ODONTOLOGIA.value,
+	Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value,
+	Keyword.SERVICIO_PSIQUIATRIA.value
+);
+
+// Valor aleatorio
+int valorAleatorio = CommonAction.getUniqueIntance().getRandomNumber( servicios.size() );
+
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	// Querys
+	'ejecutarQueryCapturaAfiliadoMPP' : true,
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'ejecutarQueryDiagnostico' : false,
+	'ejecutarQueryPrestadorServicio' : true,
+	'ejecutarQueryPrestadorFueradeRed' : false,
+	'ejecutarQueryServicioConPrestacion' : false,
+	// APIs
+	'consultarApiAfiliado' : true,
+	'consultarApiAfiliadoCasoPositivo' : true,
+	'consultarApiPrestadorSalud' : true,
+	'consultarApiPrestadorSaludCasoPositivo' : true,
+	'consultarApiPrestadorSaludServicios' : true,
+	'consultarApiPrestadorSaludServiciosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDoctor' : false,
+	// APIs
+	'consultarApiPrestadorSaludDoctores' : false,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
+	'consultarApiAutorizacionPortalValidarCobertura' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : true,
+	'consultarApiAutorizacionPortalCamposRequeridos' : true,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDiagnostico' : true,
+	// APIs
+	'consultarApiConsultarDiagnosticos' : true,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalIngresar' : true,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : false,
+	// Querys
 	'ejecutarQueryProcedimientoPorPrestador' : false,
-	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
-	'consultarApiAutorizacionPortalCamposRequeridos' : false,
-	'consultarApiConsultarDiagnosticos' : false,
-	'consultarApiAutorizacionPortalIngresar' : false,
+	'ejecutarQueryPrestacionNoContratada' : false,
+	// APIs
 	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : false,
 	'consultarApiConsultarProcedimientos' : false,
+	'consultarApiConsultarProcedimientosCasoPositivo' : false,
 	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : false,
 	'consultarApiAutorizacionPortalAutorizar' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_SIN_COBERTURA_INMEDIATA.value], FailureHandling.STOP_ON_FAILURE);
+	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
+	'consultarApiAutorizacionPortalAnular' : false,
+	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+	// Condiciones de los Querys
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_SIN_COBERTURA_INMEDIATA.value,
+	'servicioConsulta' : servicios.get(valorAleatorio)], FailureHandling.STOP_ON_FAILURE);

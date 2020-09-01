@@ -64,17 +64,16 @@ while(continuarIteracion){
 			'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
 			'consultarApiAutorizacionPortalAnular' : false,
 			'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+			'validarProcedimientosSuperanMonto' : true,
+			'obtenerTodasLasPrestaciones' : true,
 			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
 			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
-			'servicioConsulta' : Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value + Keyword.PRESTADOR_CENTRO_INST.value], FailureHandling.STOP_ON_FAILURE);
-		
-		// Obtenemos la prestacion
-		mapaPrestacionesIngresadas.put(commonAction.getMapStringObject().get("descripcionPrestacion"), commonAction.getMapStringObject().get("descripcionPrestacion"));
+			'servicioConsulta' : Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value + Keyword.PRESTADOR_CENTRO_INSTITUCION.value], FailureHandling.STOP_ON_FAILURE);
 		
 		// Obtenemos el monto de la prestacion
 		monto += Double.parseDouble(commonAction.getMapStringObject().get("tarifaProcedimiento"));
 	}
-	else if (monto > 0.00 && monto < 15000) {
+	else if (monto > 0.00 && monto < 18000) {
 		
 		// Querys
 		commonAction.getMapStringObject().put("ejecutarQueryCapturaAfiliadoMPP", false);
@@ -112,18 +111,15 @@ while(continuarIteracion){
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAnular", false);
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAnularCasoPositivo", false);
-		// Prestaciones Ingresadas
-		commonAction.getMapStringObject().put("mapaPrestacionesIngresadas", mapaPrestacionesIngresadas);
+		commonAction.getMapStringObject().put("validarProcedimientosSuperanMonto", false);
+		commonAction.getMapStringObject().put("obtenerTodasLasPrestaciones", false);
 		
 		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), commonAction.getMapStringObject(), FailureHandling.STOP_ON_FAILURE);
-		
-		// Obtenemos la prestacion
-		mapaPrestacionesIngresadas.put(commonAction.getMapStringObject().get("descripcionPrestacion"), commonAction.getMapStringObject().get("descripcionPrestacion"));
 		
 		// Obtenemos el monto de la prestacion
 		monto += Double.parseDouble(commonAction.getMapStringObject().get("tarifaProcedimiento"));
 	}
-	else if (monto >= 15000) {
+	else if (monto >= 18000) {
 		
 		// Querys
 		commonAction.getMapStringObject().put("ejecutarQueryCapturaAfiliadoMPP", false);
@@ -159,12 +155,11 @@ while(continuarIteracion){
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", false);
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAutorizar", true);
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
-		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAutorizarMensajeError", String.valueOf("<b>Permitio autorizar varios estudios que superaron los 15000 pesos, siendo el monto actual ${monto}</b>"));
+		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAutorizarMensajeError", String.valueOf("<b>Permitio autorizar varios estudios que superaron los 15000 pesos, siendo el monto actual RD\$${String.format("%,.2f", monto)}</b>"));
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAnular", false);
 		commonAction.getMapStringObject().put("consultarApiAutorizacionPortalAnularCasoPositivo", false);
-		// Prestaciones Ingresadas
-		commonAction.getMapStringObject().put("mapaPrestacionesIngresadas", mapaPrestacionesIngresadas);
-		commonAction.getMapStringObject().put("tarifaProcedimiento", String.valueOf(monto));
+		commonAction.getMapStringObject().put("validarProcedimientosSuperanMonto", false);
+		commonAction.getMapStringObject().put("obtenerTodasLasPrestaciones", false);
 		
 		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), commonAction.getMapStringObject(), FailureHandling.STOP_ON_FAILURE);
 		

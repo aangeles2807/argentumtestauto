@@ -39,6 +39,7 @@ public class ReportGenerator {
 	private String htmlContent;
 	private FileWriter fileWriter;
 	private File fileReportPatnAndName;
+	private String testScriptName;
 
 	public ReportGenerator(){
 
@@ -132,7 +133,7 @@ public class ReportGenerator {
 
 			actualTime = commonAction.getActualTimeInSpecificFormat("HH:mm:ss:SSS").replace(":", "");
 			actualDate = commonAction.getActualDateInSpecificFormat("dd-MM-yyyy");
-			stringReportPatnAndName = String.valueOf(commonAction.getProjectpath() + "\\Reports\\${actualTime}_${actualDate}.html");
+			stringReportPatnAndName = String.valueOf(commonAction.getProjectpath() + "\\Reports\\${testScriptName}_${actualTime}_${actualDate}.html");
 
 			extentReports = new ExtentReports(stringReportPatnAndName);
 
@@ -258,6 +259,11 @@ public class ReportGenerator {
 
 			System.out.println("Class ReportGenerator: " + e.getMessage());
 		}
+	}
+
+	public void setTestScriptName(String testScriptName) {
+		
+		this.testScriptName = testScriptName;
 	}
 
 	public static void main(String[] args){

@@ -26,7 +26,7 @@ mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'),
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
 	'servicioConsulta' : Keyword.SERVICIO_LABORATORIO.value,
 	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
-	//'consultarApiAutorizacionPortalAutorizarMensajeError' : 'Permitio autorizar mas de una cantidad de la misma prueba de lab en la misma autorizacion',
+	'consultarApiAutorizacionPortalAutorizarMensajeError' : 'Permitio autorizar mas de una cantidad de la misma prueba de lab en la misma autorizacion',
 	'cantidad' : 2], FailureHandling.STOP_ON_FAILURE);
 
 /*

@@ -27,14 +27,91 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
 import groovy.json.JsonSlurper
+import helper.CommonAction
 import helper.DBConnection
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
+// Condiciones de servicios
+List<String> servicios = Arrays.asList(
+	Keyword.SERVICIO_TERAPIAS_FISICAS.value,
+	Keyword.SERVICIO_SONOGRAFIA.value,
+	Keyword.SERVICIO_RAYOS_X.value,
+	Keyword.SERVICIO_PATOLOGIA.value,
+	Keyword.SERVICIO_ODONTOLOGIA.value,
+	Keyword.SERVICIO_LABORATORIO.value,
+	Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value,
+	Keyword.SERVICIO_EMERGENCIA_49.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_1.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_2.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_3.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_4.value,
+	Keyword.SERVICIO_PSIQUIATRIA.value
+);
+
+// Valor aleatorio
+int valorAleatorio = CommonAction.getUniqueIntance().getRandomNumber( servicios.size() );
+
+/*
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,// + Keyword.AFILIADO_CONTRATO_ACTIVO.value, 
 	'condicionAfiliadoPBS': Keyword.AFILIADO_PBS_ACTIVO.value,// + Keyword.AFILIADO_CONTRATO_ACTIVO_PBS.value,
-	'estadoPrestador': Keyword.PRESTADOR_NO_VIGENTE.value], FailureHandling.STOP_ON_FAILURE);
+	'estadoPrestador': Keyword.PRESTADOR_NO_VIGENTE.value,
+	'servicioConsulta' : servicios.get(valorAleatorio)], FailureHandling.STOP_ON_FAILURE);
+*/
+
+WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	// Querys
+	'ejecutarQueryCapturaAfiliadoMPP' : false,
+	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : true,
+	'ejecutarQueryPrestadorServicio' : false,
+	'ejecutarQueryPrestadorFueradeRed' : true,
+	'ejecutarQueryServicioConPrestacion' : false,
+	// APIs
+	'consultarApiAfiliado' : true,
+	'consultarApiAfiliadoCasoPositivo' : true,
+	'consultarApiPrestadorSalud' : true,
+	'consultarApiPrestadorSaludCasoPositivo' : true,
+	'consultarApiPrestadorSaludServicios' : true,
+	'consultarApiPrestadorSaludServiciosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDoctor' : false,
+	// APIs
+	'consultarApiPrestadorSaludDoctores' : false,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
+	'consultarApiAutorizacionPortalValidarCobertura' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
+	'consultarApiAutorizacionPortalCamposRequeridos' : false,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : false,
+	// Querys
+	'ejecutarQueryDiagnostico' : false,
+	// APIs
+	'consultarApiConsultarDiagnosticos' : false,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : false,
+	'consultarApiAutorizacionPortalIngresar' : false,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : false,
+	// Querys
+	'ejecutarQueryProcedimientoPorPrestador' : false,
+	'ejecutarQueryPrestacionNoContratada' : false,
+	// APIs
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : false,
+	'consultarApiConsultarProcedimientos' : false,
+	'consultarApiConsultarProcedimientosCasoPositivo' : false,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : false,
+	'consultarApiAutorizacionPortalAutorizar' : false,
+	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
+	'consultarApiAutorizacionPortalAnular' : false,
+	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+	// Condiciones de los Querys
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
+	'servicioConsulta' : servicios.get(valorAleatorio),
+	// Parametros Caso Modelo
+	'camposTablaPrestador': "",
+	'orderByRandom': ""], FailureHandling.STOP_ON_FAILURE);

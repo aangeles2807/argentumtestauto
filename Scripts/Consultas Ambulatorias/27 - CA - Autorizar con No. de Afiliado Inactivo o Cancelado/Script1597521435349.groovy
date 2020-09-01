@@ -47,6 +47,6 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiConsultarProcedimientos' : false,
 	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
 	'consultarApiAutorizacionPortalAutorizar' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_INACTIVO.value,
-	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_INACTIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value], FailureHandling.STOP_ON_FAILURE);
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_INACTIVO_SIN_PBS.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_INACTIVO_SIN_MPP.value,
+	'servicioConsulta' : Keyword.SERVICIO_CONSULTA_AMBULATORIA.value], FailureHandling.STOP_ON_FAILURE);

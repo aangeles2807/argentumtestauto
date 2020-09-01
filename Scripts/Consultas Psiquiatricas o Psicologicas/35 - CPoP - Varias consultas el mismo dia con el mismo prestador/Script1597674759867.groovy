@@ -30,7 +30,7 @@ for(int i=1; i <= 2; i++){
 			'ejecutarQueryCapturaAfiliadoPBS' : false,
 			'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
 			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
-			'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value], FailureHandling.STOP_ON_FAILURE);
+			'servicioConsulta' : Keyword.SERVICIO_CONSULTA_AMBULATORIA.value], FailureHandling.STOP_ON_FAILURE);
 	}
 	else if (i == 2) {
 		

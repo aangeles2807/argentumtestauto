@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>114 - autorizar emergencia a paciente con MPP mas PBS bajo el servicio 127 triage 2</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>45105575-8bd2-44fe-8cb8-0043afdc8e7b</testCaseGuid>
-</TestCaseEntity>

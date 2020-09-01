@@ -27,12 +27,33 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
 import groovy.json.JsonSlurper
+import helper.CommonAction
 import helper.DBConnection
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
+
+// Condiciones de servicios
+List<String> servicios = Arrays.asList(
+	Keyword.SERVICIO_TERAPIAS_FISICAS.value,
+	Keyword.SERVICIO_SONOGRAFIA.value,
+	Keyword.SERVICIO_RAYOS_X.value,
+	Keyword.SERVICIO_PATOLOGIA.value,
+	Keyword.SERVICIO_ODONTOLOGIA.value,
+	Keyword.SERVICIO_LABORATORIO.value,
+	Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value,
+	Keyword.SERVICIO_EMERGENCIA_49.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_1.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_2.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_3.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_4.value,
+	Keyword.SERVICIO_PSIQUIATRIA.value
+);
+
+// Valor aleatorio
+int valorAleatorio = CommonAction.getUniqueIntance().getRandomNumber( servicios.size() );
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value+ Keyword.AFILIADO_EXCLUSIVO.value,// + Keyword.AFILIADO_CONTRATO_ACTIVO.value, 
-	'servicioConsulta': Keyword.PRESTADOR_EXCLUSIVO.value], FailureHandling.STOP_ON_FAILURE);
+	'servicioConsulta': servicios.get(valorAleatorio) + Keyword.PRESTADOR_EXCLUSIVO.value], FailureHandling.STOP_ON_FAILURE);

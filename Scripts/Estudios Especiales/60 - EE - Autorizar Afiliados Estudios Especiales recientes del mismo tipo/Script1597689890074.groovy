@@ -48,6 +48,7 @@ for(int i=1; i <= 2; i++){
 		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", true);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", true);
 		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
+		mapaVariablesScript.put("authorizationListHttpBodyContent", new ArrayList<>());
 		
 		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
 	}

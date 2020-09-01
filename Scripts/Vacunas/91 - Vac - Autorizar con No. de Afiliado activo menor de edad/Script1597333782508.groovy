@@ -18,8 +18,49 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	// Querys
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : true,
+	'ejecutarQueryPrestadorServicio' : true,
+	// APIs
+	'consultarApiAfiliado' : true,
+	'consultarApiAfiliadoCasoPositivo' : true,
+	'consultarApiPrestadorSalud' : true,
+	'consultarApiPrestadorSaludCasoPositivo' : true,
+	'consultarApiPrestadorSaludServicios' : true,
+	'consultarApiPrestadorSaludServiciosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDoctor' : false,
+	// APIs
+	'consultarApiPrestadorSaludDoctores' : false,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
+	'consultarApiAutorizacionPortalValidarCobertura' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : true,
+	'consultarApiAutorizacionPortalCamposRequeridos' : true,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDiagnostico' : true,
+	// APIs
+	'consultarApiConsultarDiagnosticos' : true,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalIngresar' : true,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryProcedimientoPorPrestador' : true,
+	'ejecutarQueryPrestacionNoContratada' : false,
+	// APIs
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : true,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : true,
+	'consultarApiConsultarProcedimientos' : true,
+	'consultarApiConsultarProcedimientosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : true,
+	'consultarApiAutorizacionPortalAutorizar' : true,
+	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : true,
+	'consultarApiAutorizacionPortalAnular' : false,
+	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+	// Condiciones de los Querys
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MENOR_EDAD.value,
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_MENOR_EDAD.value,
 	'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value], FailureHandling.STOP_ON_FAILURE);

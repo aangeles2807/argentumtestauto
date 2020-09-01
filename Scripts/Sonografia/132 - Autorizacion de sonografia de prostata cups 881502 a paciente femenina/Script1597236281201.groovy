@@ -18,12 +18,53 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-	'ejecutarQueryCapturaAfiliadoMPP' : false,
+	// Querys
+	'ejecutarQueryCapturaAfiliadoMPP' : true,
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
-	'consultarApiAutorizacionPortalAutorizarCasoPositivo': false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
+	'ejecutarQueryPrestadorServicio' : false,
+	'ejecutarQueryServicioConPrestacion' : true,
+	// APIs
+	'consultarApiAfiliado' : true,
+	'consultarApiAfiliadoCasoPositivo' : true,
+	'consultarApiPrestadorSalud' : true,
+	'consultarApiPrestadorSaludCasoPositivo' : true,
+	'consultarApiPrestadorSaludServicios' : true,
+	'consultarApiPrestadorSaludServiciosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDoctor' : false,
+	// APIs
+	'consultarApiPrestadorSaludDoctores' : false,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
+	'consultarApiAutorizacionPortalValidarCobertura' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : true,
+	'consultarApiAutorizacionPortalCamposRequeridos' : true,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDiagnostico' : true,
+	// APIs
+	'consultarApiConsultarDiagnosticos' : true,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalIngresar' : true,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryProcedimientoPorPrestador' : false,
+	'ejecutarQueryPrestacionNoContratada' : false,
+	// APIs
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : true,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : true,
+	'consultarApiConsultarProcedimientos' : true,
+	'consultarApiConsultarProcedimientosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : true,
+	'consultarApiAutorizacionPortalAutorizar' : true,
+	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
+	'consultarApiAutorizacionPortalAnular' : false,
+	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+	// Condiciones de los Querys
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_FEMENINO.value,
-	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_FEMENINO.value,
-	'generoAfiliado' : Keyword.KEY_MASCULINO.value,
-	'codigoPrestadorSalud': '04739',
-	//'servicioConsulta' : Keyword.SERVICIO_PATOLOGIA.value,
-	'condicionProcedimiento': Keyword.PROCEDIMIENTO_CODIGO.value + "'881502'"], FailureHandling.STOP_ON_FAILURE);
+	//'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_FEMENINO.value,
+	'servicioConsulta' : Keyword.SERVICIO_SONOGRAFIA.value,
+	// Parametros Caso Modelo
+	'codigoProcedimiento': "881502",
+	'codigoServicioPrestadorSalud' : '20'], FailureHandling.STOP_ON_FAILURE);

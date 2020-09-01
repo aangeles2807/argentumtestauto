@@ -82,6 +82,8 @@ class TestListener {
 				dbConnection.getConnection().close()
 			}
 			
+			reportGenerator.setTestScriptName(testCaseName);
+			
 			reportGenerator.generateReport();
 		}
 	}
@@ -125,6 +127,8 @@ class TestListener {
 			
 			dbConnection.getConnection().close()
 		}
+		
+		reportGenerator.setTestScriptName(testSuiteName);
 		
 		reportGenerator.generateReport();
 	}

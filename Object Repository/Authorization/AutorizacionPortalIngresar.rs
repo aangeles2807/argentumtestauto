@@ -24,7 +24,7 @@
    <katalonVersion>7.5.5</katalonVersion>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>https://app-ars-autorizaciones-qa-eastus.azurewebsites.net/api/Autorizacion/Portal/Ingresar?codigoUsuario=${codigoUsuario}&amp;idInteraccion=${idInteraccion}&amp;fecha=${fecha}&amp;idDoctor=${idDoctor}&amp;telefono=${telefono}&amp;email=${email}&amp;codigoDiagnostico=${codigoDiagnostico}&amp;observacion=${observacion}</restUrl>
+   <restUrl>https://app-ars-autorizaciones-qa-eastus.azurewebsites.net/api/Autorizacion/Portal/Ingresar?codigoUsuario=${codigoUsuario}&amp;idInteraccion=${idInteraccion}&amp;fecha=${fecha}&amp;codigoRemitente=${codigoRemitente}&amp;idDoctor=${idDoctor}&amp;telefono=${telefono}&amp;email=${email}&amp;codigoDiagnostico=${codigoDiagnostico}&amp;observacion=${observacion}</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -52,6 +52,13 @@
       <id>ea60e2b4-f165-4749-a208-a4186c1c3f2d</id>
       <masked>false</masked>
       <name>fecha</name>
+   </variables>
+   <variables>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>7a21d266-778c-488c-a5c8-5b943a2210b1</id>
+      <masked>false</masked>
+      <name>codigoRemitente</name>
    </variables>
    <variables>
       <defaultValue>''</defaultValue>

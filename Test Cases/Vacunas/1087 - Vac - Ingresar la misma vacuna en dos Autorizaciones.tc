@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>1087 - Vac - Ingresar la misma vacuna en dos Autorizaciones</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>b05b5ad7-7d58-414f-8b06-6eda4e64f8de</testCaseGuid>
+</TestCaseEntity>

@@ -32,4 +32,4 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiAutorizacionPortalAutorizar' : false,
 	//'condicionAfiliadoMPP' : Keyword.AFILIADO_CONTRATO_INACTIVO.value,
 	'condicionFechaAutorizacionMPP' : Keyword.CONDICION_FECHA_AUTORIZACION_CONTRATO_INACTIVO_MPP.value,
-	'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value], FailureHandling.STOP_ON_FAILURE);
+	'servicioConsulta' : Keyword.SERVICIO_CONSULTA_AMBULATORIA.value], FailureHandling.STOP_ON_FAILURE);

@@ -18,11 +18,51 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	// Querys
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
+	'ejecutarQueryCapturaAfiliadoPBS' : true,
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'consultarApiAutorizacionPortalAutorizarCasoPositivo': false,
-	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_FEMENINO.value,
-	'generoAfiliado' : Keyword.KEY_MASCULINO.value,
-	'codigoPrestadorSalud': '04739',
+	'ejecutarQueryPrestadorServicio' : false,
+	'ejecutarQueryServicioConPrestacion' : true,
+	// APIs
+	'consultarApiAfiliado' : true,
+	'consultarApiAfiliadoCasoPositivo' : true,
+	'consultarApiPrestadorSalud' : true,
+	'consultarApiPrestadorSaludCasoPositivo' : true,
+	'consultarApiPrestadorSaludServicios' : true,
+	'consultarApiPrestadorSaludServiciosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDoctor' : false,
+	// APIs
+	'consultarApiPrestadorSaludDoctores' : false,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
+	'consultarApiAutorizacionPortalValidarCobertura' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : true,
+	'consultarApiAutorizacionPortalCamposRequeridos' : true,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDiagnostico' : true,
+	// APIs
+	'consultarApiConsultarDiagnosticos' : true,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalIngresar' : true,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryProcedimientoPorPrestador' : false,
+	'ejecutarQueryPrestacionNoContratada' : false,
+	// APIs
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : true,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : true,
+	'consultarApiConsultarProcedimientos' : true,
+	'consultarApiConsultarProcedimientosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : true,
+	'consultarApiAutorizacionPortalAutorizar' : true,
+	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
+	'consultarApiAutorizacionPortalAnular' : false,
+	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+	// Condiciones de los Querys
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO_SIN_MPP.value + Keyword.AFILIADO_FEMENINO.value,
 	'servicioConsulta' : Keyword.SERVICIO_PATOLOGIA.value,
-	'condicionProcedimiento': Keyword.PROCEDIMIENTO_CODIGO.value + "'898003'"], FailureHandling.STOP_ON_FAILURE);
+	// Parametros Caso Modelo
+	'codigoProcedimiento': "898003"], FailureHandling.STOP_ON_FAILURE);

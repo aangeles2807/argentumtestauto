@@ -31,4 +31,4 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
 	'consultarApiAutorizacionPortalAutorizar' : false,
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value + Keyword.PRESTADOR_EXCLUSIVO.value], FailureHandling.STOP_ON_FAILURE);
+	'servicioConsulta' : Keyword.SERVICIO_CONSULTA_AMBULATORIA.value + Keyword.PRESTADOR_EXCLUSIVO.value], FailureHandling.STOP_ON_FAILURE);

@@ -20,45 +20,52 @@ import internal.GlobalVariable as GlobalVariable
 Map<String, String> mapaVariablesScript = null;
 
 mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	// Querys
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : true,
+	'ejecutarQueryPrestadorServicio' : true,
+	// APIs
+	'consultarApiAfiliado' : true,
+	'consultarApiAfiliadoCasoPositivo' : true,
+	'consultarApiPrestadorSalud' : true,
+	'consultarApiPrestadorSaludCasoPositivo' : true,
+	'consultarApiPrestadorSaludServicios' : true,
+	'consultarApiPrestadorSaludServiciosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDoctor' : false,
+	// APIs
+	'consultarApiPrestadorSaludDoctores' : false,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
+	'consultarApiAutorizacionPortalValidarCobertura' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : true,
+	'consultarApiAutorizacionPortalCamposRequeridos' : true,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDiagnostico' : true,
+	// APIs
+	'consultarApiConsultarDiagnosticos' : true,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalIngresar' : true,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryProcedimientoPorPrestador' : true,
+	'ejecutarQueryPrestacionNoContratada' : false,
+	// APIs
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : true,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : true,
+	'consultarApiConsultarProcedimientos' : true,
+	'consultarApiConsultarProcedimientosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : true,
+	'consultarApiAutorizacionPortalAutorizar' : true,
+	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
+	'consultarApiAutorizacionPortalAutorizarMensajeError' : 'Permitio ingresar la misma vacuna varias veces',
+	'consultarApiAutorizacionPortalAnular' : false,
+	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+	// Condiciones de los Querys
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MENOR_EDAD.value,
 	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value + Keyword.AFILIADO_MENOR_EDAD.value,
 	'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value,
-	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : false,
-	'consultarApiAutorizacionPortalAutorizarMensajeError' : 'Permitio ingresar la misma vacuna varias veces',
+	// Parametros Caso Modelo
 	'cantidad' : 2], FailureHandling.STOP_ON_FAILURE);
-/*
-// Iteraciones de autorizaciones
-for(int i=1; i <= 2; i++){
-	
-	// Se aprueba la autorizacion
-	if (i == 1) {
-		
-		mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-			'ejecutarQueryCapturaAfiliadoPBS' : false,
-			'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
-			'servicioConsulta' : Keyword.SERVICIO_VACUNAS.value], FailureHandling.STOP_ON_FAILURE);
-	}
-	else if (i == 2) {
-		
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
-		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
-		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
-		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
-		mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
-		
-		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
-	}
-}
-*/

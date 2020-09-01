@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>109 - Autorizar emergencia a paciente solo con MPP bajo el servicio 49</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>7a25bafd-908c-4915-b76f-de83611318e6</testCaseGuid>
-</TestCaseEntity>

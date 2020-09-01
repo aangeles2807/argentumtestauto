@@ -47,7 +47,9 @@ public class DBConnection {
 	private Instant start = null;
 	private Instant end = null;
 	private Duration interval = null;
-	private Map<String, String> queryResult = null;
+	private Map<String, String> queryResultInMap = null;
+	private List<Map<String, String>> queryResultInArrayListOfMap;
+	private Map<String, String> mapStringStringTemp;
 	private String message;
 	private ReportGenerator reportGenerator;
 
@@ -74,6 +76,8 @@ public class DBConnection {
 	/**
 	 * Execute the specific query and return its results in a Map.
 	 * 
+	 * Note: for result of one row.
+	 * 
 	 * @param queryToExecute
 	 * @return - A Map of String (Key or Column) and String (Value or Cell). 
 	 */
@@ -85,13 +89,13 @@ public class DBConnection {
 
 		//println "\n\n" + queryToExecute + "\n\n";
 
-		if(queryResult == null){
+		if(queryResultInMap == null){
 
-			queryResult = new HashMap<String, String>();
+			queryResultInMap = new HashMap<String, String>();
 		}
 		else{
 
-			queryResult.clear();
+			queryResultInMap.clear();
 		}
 
 		// Nos conectamos a la Base de Datos
@@ -131,35 +135,173 @@ public class DBConnection {
 
 			for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
 
-				queryResult.put(resultSetMetaData.getColumnName(i).trim(), resultSet.getObject(i).toString().trim());
+				queryResultInMap.put(resultSetMetaData.getColumnName(i).trim(), resultSet.getObject(i).toString().trim());
 			}
 		}
 
 		resultSetMetaData = null;
-
+		
 		// **************
 		// Report message
 		// **************
-
-		message = String.valueOf("El query <b>${queryName}</b>, el cual ejecuta la siguiente sentencia en la Base de Datos:<br>");
-
-		message += String.valueOf("<br>${queryToExecute}<br>");
-
-		message += String.valueOf("<br>Obtuvo la siguiente información:<br><br>");
-
-		for(String key : queryResult.keySet()){
-
-			message += key + " : " + queryResult.get(key) + "<br>";
+		
+		if (queryResultInMap.isEmpty()) {
+			
+			message = String.valueOf("El query <b>${queryName}</b>, el cual ejecuta la siguiente sentencia en la Base de Datos:<br>");
+			
+			message += String.valueOf("<br>${queryToExecute}<br>");
+	
+			message += String.valueOf("<br><b>No obtuvo información</b><br>");
+			
+			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se ejecuta la consulta/query hasta que se recibe la respuesta.</b>");
+	
+			throw new RuntimeException(message);
+		}
+		else{
+			
+			message = String.valueOf("El query <b>${queryName}</b>, el cual ejecuta la siguiente sentencia en la Base de Datos:<br>");
+			
+			message += String.valueOf("<br>${queryToExecute}<br>");
+	
+			message += String.valueOf("<br>Obtuvo la siguiente información:<br><br>");
+	
+			for(String key : queryResultInMap.keySet()){
+	
+				message += key + " : " + queryResultInMap.get(key) + "<br>";
+			}
+	
+			message += String.valueOf("<br>En un lapso de tiempo de <b>${interval.getSeconds()} segundo(s)</b>.<br><br>");
+	
+			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se ejecuta la consulta/query hasta que se recibe la respuesta.</b>");
+	
+			reportGenerator.setLogStatusINFO(message);
 		}
 
-		message += String.valueOf("<br>En un lapso de tiempo de <b>${interval.getSeconds()} segundo(s)</b>.<br><br>");
-
-		//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se ejecuta la consulta/query hasta que se recibe la respuesta.</b>");
-
-		reportGenerator.setLogStatusINFO(message);
-
-		return queryResult;
+		return queryResultInMap;
 	}
+	
+	/**
+	 * Execute the specific query and return its results in a Map.
+	 * 
+	 * Note: for result of multiple rows.
+	 * 
+	 * @param queryToExecute
+	 * @return - A Map of String (Key or Column) and String (Value or Cell). 
+	 */
+	public List<Map<String, String>> executeQueryAndGetResultWithMultipleRows(String queryName, String queryToExecute){
+		
+		reportGenerator = ReportGenerator.getUniqueIntance();
+		
+		System.out.println(String.valueOf("\n\nEjecucion de query ${queryName}\n\n"));
+
+		//println "\n\n" + queryToExecute + "\n\n";
+
+		if(queryResultInArrayListOfMap == null){
+
+			queryResultInArrayListOfMap = new ArrayList<Map<String, String>>();
+		}
+		else{
+
+			queryResultInArrayListOfMap.clear();
+		}
+
+		// Nos conectamos a la Base de Datos
+		if(connection == null){
+
+			connection = getConnectionDB();
+		}
+
+		// Creamos la sentencia
+		if(statement == null){
+
+			statement = connection.createStatement();
+		}
+
+		// Inicio de tiempo
+		//****************************
+		start = Instant.now();
+		//****************************
+
+		// Ejecutamos la consulta y obtenemos los resultados
+		resultSet = statement.executeQuery(queryToExecute);
+		
+		//***************************************************************************************************************
+		// Fin de tiempo
+		end = Instant.now();
+ 
+		// Calculo de tiempo
+		interval = Duration.between(start, end);
+ 
+		// Impresion de duracion del query en ejecutarse
+		System.out.println(String.valueOf("\n\nEl query ${queryName} ejecutandose se demoro: " + interval.getSeconds() + " segundo(s) \n\n"));
+		//***************************************************************************************************************
+
+		resultSetMetaData = resultSet.getMetaData();
+		
+		whileQueryResult:
+		while (resultSet.next()) {
+			
+			mapStringStringTemp = new HashMap<String, String>();
+
+			for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++){
+
+				mapStringStringTemp.put(resultSetMetaData.getColumnName(i).trim(), resultSet.getObject(i).toString().trim());
+			}
+			
+			queryResultInArrayListOfMap.add(mapStringStringTemp);
+			
+			if (queryResultInArrayListOfMap.size() == 50) {
+				
+				break whileQueryResult;
+			}
+		}
+
+		resultSetMetaData = null;
+		
+		// **************
+		// Report message
+		// **************
+		
+		if (queryResultInArrayListOfMap.isEmpty()) {
+			
+			message = String.valueOf("El query <b>${queryName}</b>, el cual ejecuta la siguiente sentencia en la Base de Datos:<br>");
+			
+			message += String.valueOf("<br>${queryToExecute}<br>");
+	
+			message += String.valueOf("<br><b>No obtuvo información</b><br>");
+			
+			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se ejecuta la consulta/query hasta que se recibe la respuesta.</b>");
+	
+			throw new RuntimeException(message);
+		}
+		else{
+			
+			message = String.valueOf("El query <b>${queryName}</b>, el cual ejecuta la siguiente sentencia en la Base de Datos:<br>");
+			
+			message += String.valueOf("<br>${queryToExecute}<br>");
+	
+			message += String.valueOf("<br>Obtuvo la siguiente información:<br><br>");
+			
+			for(int i = 0; i < queryResultInArrayListOfMap.size(); i++){
+				
+				for(String key : queryResultInArrayListOfMap.get(i).keySet()){
+					
+					message += key + " : " + queryResultInArrayListOfMap.get(i).get(key) + "<br>";
+				}
+				
+				message += "<br>";
+			}
+	
+			message += String.valueOf("<br>En un lapso de tiempo de <b>${interval.getSeconds()} segundo(s)</b>.<br><br>");
+	
+			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se ejecuta la consulta/query hasta que se recibe la respuesta.</b>");
+	
+			reportGenerator.setLogStatusINFO(message);
+		}
+
+		return queryResultInArrayListOfMap;
+	}
+	
 
 	public Statement getStatement(){
 

@@ -412,6 +412,13 @@
       <name>fecha</name>
    </variable>
    <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>a90dbbb5-7f7a-4e57-83a5-521e68110e6e</id>
+      <masked>false</masked>
+      <name>codigoRemitente</name>
+   </variable>
+   <variable>
       <defaultValue>1</defaultValue>
       <description></description>
       <id>486e8ba0-5260-4d70-bd0d-8975006637e0</id>
@@ -468,11 +475,11 @@
       <name>ejecutarQueryDoctor</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'0'</defaultValue>
       <description></description>
       <id>de57951a-9226-46bc-9116-3b0c9febc6b2</id>
       <masked>false</masked>
-      <name>codigoDoctor</name>
+      <name>idDoctor</name>
    </variable>
    <variable>
       <defaultValue>''</defaultValue>
@@ -480,5 +487,117 @@
       <id>b583b343-0965-45f9-83c9-e708a2babb5b</id>
       <masked>false</masked>
       <name>nombreDoctor</name>
+   </variable>
+   <variable>
+      <defaultValue>'0'</defaultValue>
+      <description></description>
+      <id>69bc53c6-5f73-46df-b549-99495b25efcb</id>
+      <masked>false</masked>
+      <name>medicoTratante</name>
+   </variable>
+   <variable>
+      <defaultValue>', ser.MPLCOD, ser.SERIPSCOD, ips.IPSNOM, tips.SERIPSNOM, SUC.IPSSUCCOD'</defaultValue>
+      <description></description>
+      <id>5ee08ad3-3dbb-4681-9ba9-60c51b8251d3</id>
+      <masked>false</masked>
+      <name>camposTablaPrestador</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>961b8b19-e64e-4170-8d22-3c242b8cf9a4</id>
+      <masked>false</masked>
+      <name>ejecutarQueryPrestadorFueradeRed</name>
+   </variable>
+   <variable>
+      <defaultValue>'AND rownum &lt;= 10000'</defaultValue>
+      <description></description>
+      <id>d9a66285-f5c9-40ba-b8ab-b0506d583be3</id>
+      <masked>false</masked>
+      <name>top10000Lineas</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>72470eca-9b69-4b4a-baa5-746eca682f4a</id>
+      <masked>false</masked>
+      <name>validarProcedimientosSuperanMonto</name>
+   </variable>
+   <variable>
+      <defaultValue>[]</defaultValue>
+      <description></description>
+      <id>0b1c2b3d-3263-4c0f-9e3e-b10d28b309ba</id>
+      <masked>false</masked>
+      <name>queryResultMultipleRows</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>7133506c-8713-4044-ad69-0e1099f22b32</id>
+      <masked>false</masked>
+      <name>obtenerTodasLasPrestaciones</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>78014124-aaaf-4da8-a9b1-76382bff8c84</id>
+      <masked>false</masked>
+      <name>habitacion</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>493fbd60-1c76-4108-9f6b-8857447b8d74</id>
+      <masked>false</masked>
+      <name>valorConcesion</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>61a1b274-b0f9-449a-91b1-dd3fd51d9a00</id>
+      <masked>false</masked>
+      <name>valorExcepcion</name>
+   </variable>
+   <variable>
+      <defaultValue>[]</defaultValue>
+      <description></description>
+      <id>e2bd5886-8c36-4877-82fa-9c2b889e7905</id>
+      <masked>false</masked>
+      <name>authorizationListHttpBodyContent</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>fa03f25e-bfd6-44d8-b8c1-1ce46471afb9</id>
+      <masked>false</masked>
+      <name>ejecutarQueryServicioConPrestacion</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ade6f59c-c4ce-4a4a-8b6f-cd60c6cc2e96</id>
+      <masked>false</masked>
+      <name>codigoProcedimiento</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>9324eea3-8886-41ad-a44d-ce6dd8605e67</id>
+      <masked>false</masked>
+      <name>generoAfiliadoProcedimiento</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>2f597875-361c-49aa-bcf3-fcb690454cf3</id>
+      <masked>false</masked>
+      <name>generoAfiliadoServicio</name>
+   </variable>
+   <variable>
+      <defaultValue>[:]</defaultValue>
+      <description></description>
+      <id>7930b03d-fd1b-4380-b27e-e448ee722219</id>
+      <masked>false</masked>
+      <name>mapaPrestadorServicio</name>
    </variable>
 </TestCaseEntity>

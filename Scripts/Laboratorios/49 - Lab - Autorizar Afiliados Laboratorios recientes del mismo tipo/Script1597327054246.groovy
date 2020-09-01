@@ -19,36 +19,98 @@ import internal.GlobalVariable as GlobalVariable
 
 Map<String, String> mapaVariablesScript = null;
 
-// Iteraciones de autorizaciones
-for(int i=1; i <= 2; i++){
-	
-	//Se aprueba la autorizacion
-	if (i == 1) {
-		
-		mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
-			'ejecutarQueryCapturaAfiliadoMPP' : false,
-			'ejecutarQueryCapturaAfiliadoPBS' : false,
-			'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
-			'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
-			'servicioConsulta' : Keyword.SERVICIO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);
-	}
-	else if (i == 2) {
-		
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
-		mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
-		mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
-		mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
-		mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
-		mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", true);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", true);
-		mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
-		
-		WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);
-	}
-}
+mapaVariablesScript = WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+	// Querys
+	'ejecutarQueryCapturaAfiliadoMPP' : false,
+	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : true,
+	'ejecutarQueryPrestadorServicio' : true,
+	// APIs
+	'consultarApiAfiliado' : true,
+	'consultarApiAfiliadoCasoPositivo' : true,
+	'consultarApiPrestadorSalud' : true,
+	'consultarApiPrestadorSaludCasoPositivo' : true,
+	'consultarApiPrestadorSaludServicios' : true,
+	'consultarApiPrestadorSaludServiciosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDoctor' : false,
+	// APIs
+	'consultarApiPrestadorSaludDoctores' : false,
+	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
+	'consultarApiAutorizacionPortalValidarCobertura' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : true,
+	'consultarApiAutorizacionPortalCamposRequeridos' : true,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryDiagnostico' : true,
+	// APIs
+	'consultarApiConsultarDiagnosticos' : true,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalIngresar' : true,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : true,
+	// Querys
+	'ejecutarQueryProcedimientoPorPrestador' : true,
+	'ejecutarQueryPrestacionNoContratada' : false,
+	// APIs
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : true,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : true,
+	'consultarApiConsultarProcedimientos' : true,
+	'consultarApiConsultarProcedimientosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : true,
+	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : true,
+	'consultarApiAutorizacionPortalAutorizar' : true,
+	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : true,
+	'consultarApiAutorizacionPortalAnular' : false,
+	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
+	// Condiciones de los Querys
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
+	'servicioConsulta' : Keyword.SERVICIO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);
+
+// Querys
+mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPP", false);
+mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoPBS", false);
+mapaVariablesScript.put("ejecutarQueryCapturaAfiliadoMPPoPBS", false);
+mapaVariablesScript.put("ejecutarQueryPrestadorServicio", false);
+// APIs
+mapaVariablesScript.put("consultarApiAfiliado", false);
+mapaVariablesScript.put("consultarApiAfiliadoCasoPositivo", false);
+mapaVariablesScript.put("consultarApiPrestadorSalud", false);
+mapaVariablesScript.put("consultarApiPrestadorSaludCasoPositivo", false);
+mapaVariablesScript.put("consultarApiPrestadorSaludServicios", false);
+mapaVariablesScript.put("consultarApiPrestadorSaludServiciosCasoPositivo", false);
+// Querys
+mapaVariablesScript.put("ejecutarQueryDoctor", false);
+// APIs
+mapaVariablesScript.put("consultarApiPrestadorSaludDoctores", false);
+mapaVariablesScript.put("consultarApiPrestadorSaludDoctoresCasoPositivo", false);
+mapaVariablesScript.put("consultarApiAutorizacionPortalValidarCobertura", true);
+mapaVariablesScript.put("consultarApiAutorizacionPortalValidarCoberturaCasoPositivo", true);
+mapaVariablesScript.put("consultarApiAutorizacionPortalCamposRequeridos", false);
+mapaVariablesScript.put("consultarApiAutorizacionPortalCamposRequeridosCasoPositivo", false);
+// Querys
+mapaVariablesScript.put("ejecutarQueryDiagnostico", false);
+// APIs
+mapaVariablesScript.put("consultarApiConsultarDiagnosticos", true);
+mapaVariablesScript.put("consultarApiConsultarDiagnosticosCasoPositivo", true);
+mapaVariablesScript.put("consultarApiAutorizacionPortalIngresar", true);
+mapaVariablesScript.put("consultarApiAutorizacionPortalIngresarCasoPositivo", true);
+// Querys
+mapaVariablesScript.put("ejecutarQueryProcedimientoPorPrestador", false);
+mapaVariablesScript.put("ejecutarQueryPrestacionNoContratada", false);
+// APIs
+mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientos", false);
+mapaVariablesScript.put("consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo", false);
+mapaVariablesScript.put("consultarApiConsultarProcedimientos", false);
+mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", false);
+mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", true);
+mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", true);
+mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizar", true);
+mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
+mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarMensajeError", "Permitio ingresar la misma prestacion varias veces");
+mapaVariablesScript.put("consultarApiAutorizacionPortalAnular", false);
+mapaVariablesScript.put("consultarApiAutorizacionPortalAnularCasoPositivo", false);
+// Parametros Caso Modelo
+mapaVariablesScript.put("authorizationListHttpBodyContent", new ArrayList<>());
+
+WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), mapaVariablesScript, FailureHandling.STOP_ON_FAILURE);

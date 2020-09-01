@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>75 - RX - Afiliados con rayos x recientes del mismo tipo y no recientes</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>d2e10282-ea80-4d74-a3f1-501dca3603a8</testCaseGuid>
-</TestCaseEntity>

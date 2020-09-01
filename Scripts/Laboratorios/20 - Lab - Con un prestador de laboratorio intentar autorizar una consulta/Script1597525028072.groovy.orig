@@ -49,5 +49,5 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiAutorizacionPortalAutorizar': false,
 	//'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value+ Keyword.AFILIADO_EXCLUSIVO.value + Keyword.AFILIADO_CONTRATO_ACTIVO.value,
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value+ Keyword.AFILIADO_EXCLUSIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_CONSULTA.value + Keyword.PRESTADOR_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);
+	'servicioConsulta' : Keyword.SERVICIO_CONSULTA_AMBULATORIA.value + Keyword.PRESTADOR_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);
 >>>>>>> 542ab9156c0d29b617f081845c664c3d4217f06f:Scripts/Consultas Ambulatorias/20 - Con un prestador de laboratorio intentar autorizar una consulta/Script1596812200694.groovy

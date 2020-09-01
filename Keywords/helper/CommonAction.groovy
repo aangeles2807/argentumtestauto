@@ -34,6 +34,7 @@ import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.RequestObject
 import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.testobject.impl.HttpTextBodyContent
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.common.WebUiCommonHelper
 import com.kms.katalon.core.webui.driver.DriverFactory
@@ -58,6 +59,7 @@ public class CommonAction {
 	private String apiPath;
 	private String message;
 	private Map<String, Object> mapStringObject;
+	private String authorizationHttpBodyContent
 
 	public CommonAction(){
 	}
@@ -93,7 +95,7 @@ public class CommonAction {
 	 */
 	public Object getResponseContentIntoMapOrString(RequestObject requestObject){
 
-		return getResponseContentIntoMapOrString(requestObject, false, null);
+		return getResponseContentIntoMapOrString(requestObject, false, null, null, true);
 	}
 
 	/**
@@ -109,7 +111,7 @@ public class CommonAction {
 	 */
 	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean isInverseCase){
 
-		return getResponseContentIntoMapOrString(requestObject, isInverseCase, null);
+		return getResponseContentIntoMapOrString(requestObject, isInverseCase, null, null, true);
 	}
 
 	/**
@@ -124,6 +126,11 @@ public class CommonAction {
 	 * @return Object - can be an ArrayList<Map<String, String>> or String.
 	 */
 	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean isInverseCase, String addMoreInformationMessage){
+	
+		getResponseContentIntoMapOrString(requestObject, isInverseCase, addMoreInformationMessage, null, true);
+	}
+	
+	public Object getResponseContentIntoMapOrString(RequestObject requestObject, boolean isInverseCase, String addMoreInformationMessage, List<String> authorizationListHttpBodyContent, boolean addInformationToReport){
 
 		reportGenerator = ReportGenerator.getUniqueIntance();
 
@@ -157,10 +164,43 @@ public class CommonAction {
 				message += String.valueOf("${key} : ${requestObject.getVariables().get(key)}<br>");
 			}
 		}
+		
+		// *********************************************************************************
+		// When /api/Autorizacion/Portal/Autorizar will be execute, then construct Http Body
+		// *********************************************************************************
+		
+		if (apiPath.equals("/api/Autorizacion/Portal/Autorizar") && authorizationListHttpBodyContent != null) {
+			
+			message += String.valueOf("<br>En su cuerpo de solicitud contiene la siguiente información:<br>");
+			
+			for(int i = 0; i < authorizationListHttpBodyContent.size(); i++){
+				
+				if (i == 0) {
+					
+					message += String.valueOf("<br>[");
+					message += String.valueOf("<br>&nbsp;&nbsp;&nbsp;&nbsp;${authorizationListHttpBodyContent.get(i)}<br>");
+					
+					authorizationHttpBodyContent = String.valueOf("[${authorizationListHttpBodyContent.get(i)}");
+				}
+				else{
+					
+					message += String.valueOf("<br>&nbsp;&nbsp;&nbsp;&nbsp;,${authorizationListHttpBodyContent.get(i)}<br>");
+					
+					authorizationHttpBodyContent += String.valueOf(", ${authorizationListHttpBodyContent.get(i)}");
+				}
+			}
+			
+			message += String.valueOf("]<br>");
+			authorizationHttpBodyContent += "]";
+			
+			requestObject.setBodyContent(new HttpTextBodyContent(authorizationHttpBodyContent));
+		}
 
 		// ***************************************
 		// Consult API and get the response object
 		// ***************************************
+		
+		println String.valueOf("\n\nEjecucion de Web Service: ${apiPath}\n\n");
 
 		responseObject = WS.sendRequestAndVerify(requestObject, FailureHandling.STOP_ON_FAILURE);
 
@@ -203,8 +243,11 @@ public class CommonAction {
 					throw new RuntimeException(message);
 				}
 				else{
-
-					reportGenerator.setLogStatusINFO(message);
+					
+					if (addInformationToReport) {
+						
+						reportGenerator.setLogStatusINFO(message);
+					}
 
 					return String.valueOf(responseObject.getResponseText().trim());
 				}
@@ -348,32 +391,33 @@ public class CommonAction {
 			}
 			else{
 
-				message += String.valueOf("<br>Obtuvo respuesta:<br><br>");
-
-				for(Map<String, String> contentBodyMap : mapResponseBody){
-
-					for(String key : contentBodyMap.keySet()){
-
-						message += key + " : " + contentBodyMap.get(key) + "<br>";
+				message += String.valueOf("<br>Obtuvo como respuesta:<br><br>");
+				
+				for(int i=0; i < mapResponseBody.size(); i++){
+					
+					for(String key : mapResponseBody.get(i).keySet()){
+						
+						message += key + " : " + mapResponseBody.get(i).get(key) + "<br>";
 					}
+					
+					message += String.valueOf("<br>");
 				}
 			}
-			/*
-			if (addMoreInformationMessage != null) {
-
-				message += String.valueOf("<br>${addMoreInformationMessage}<br>");
-			}
-			*/
-			//message += String.valueOf("<b>Observación: Este tiempo es medido desde que se envía la solicitud hasta que se recibe el último byte de la respuesta.</b>");
-
+			
 			// If response body is empty
 			if(mapResponseBody.isEmpty() && !apiPath.equals("/api/Autorizacion/Portal/CamposRequeridos")){
-
-				reportGenerator.setLogStatusINFO("<font color=\"orange\">${message}</font>");
+				
+				if (addInformationToReport) {
+					
+					reportGenerator.setLogStatusINFO("<font color=\"orange\">${message}</font>");
+				}
 			}
 			else{
-
-				reportGenerator.setLogStatusINFO(message);
+				
+				if (addInformationToReport) {
+					
+					reportGenerator.setLogStatusINFO(message);
+				}
 			}
 		}
 		else{
@@ -385,8 +429,11 @@ public class CommonAction {
 			message += String.valueOf("<br>Mostrando el mensaje: <b>${responseObject.getResponseText()}</b>.");
 
 			if (isInverseCase) {
-
-				reportGenerator.setLogStatusPASS(message);
+				
+				if (addInformationToReport) {
+					
+					reportGenerator.setLogStatusPASS(message);
+				}
 			}
 			else{
 				
@@ -417,6 +464,7 @@ public class CommonAction {
 	private int height;
 	private Robot robot = null;
 	private BufferedImage bufferedImage;
+	private Random random;
 	private static final int TIMEOUT_1_SECOND = 1;
 	private static final int TIMEOUT_3_SECONDS = 3;
 	private static final int TIMEOUT_5_SECONDS = 5;
@@ -876,6 +924,22 @@ public class CommonAction {
 		}
 
 		simpleDateFormat.format(date);
+	}
+	
+	/**
+	 * Obtenemos un numero entero aleatorio con la cantidad de digitos que especifiquemos.
+	 *
+	 * @param digitsQuantity - cantidad de digitos del valor a obtener.
+	 * @return Integer
+	 */
+	public int getRandomNumber(int digitsQuantity){
+
+		if (random == null) {
+
+			random = new Random();
+		}
+
+		return random.nextInt(digitsQuantity);
 	}
 
 	public String getApiPath() {

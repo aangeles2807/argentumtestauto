@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description></description>
-   <name>113 - Autorizar emergencia a paciente solo con MPP bajo el servicio 129 triage 4</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>61b0dcec-c2ee-4012-9371-340eb3a89346</testCaseGuid>
-</TestCaseEntity>
