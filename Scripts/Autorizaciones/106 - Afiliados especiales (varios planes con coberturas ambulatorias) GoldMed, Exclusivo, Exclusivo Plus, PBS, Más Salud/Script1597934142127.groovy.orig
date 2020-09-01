@@ -14,11 +14,37 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
+<<<<<<< HEAD
+import helper.CommonAction
 import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
+// Condiciones de servicios
+List<String> servicios = Arrays.asList(
+	Keyword.SERVICIO_TERAPIAS_FISICAS.value,
+	Keyword.SERVICIO_SONOGRAFIA.value,
+	Keyword.SERVICIO_RAYOS_X.value,
+	Keyword.SERVICIO_PATOLOGIA.value,
+	Keyword.SERVICIO_ODONTOLOGIA.value,
+	Keyword.SERVICIO_LABORATORIO.value,
+	Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value,
+	Keyword.SERVICIO_PSIQUIATRIA.value
+);
+
+// Valor aleatorio
+int valorAleatorio = CommonAction.getUniqueIntance().getRandomNumber( servicios.size() );
+
+=======
+import helper.Keyword
+import internal.GlobalVariable as GlobalVariable
+
+>>>>>>> aef07b36576fdcd01f68315cd0ee1d29aac9e8f3
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
 	'ejecutarQueryCapturaAfiliadoPBS' : false,
-	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_CON_MAS_DE_2_COBERTURAS.value,
-	'servicioConsulta' : Keyword.SERVICIO_FARMACIA.value], FailureHandling.STOP_ON_FAILURE);
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value + Keyword.AFILIADO_MPP_CON_MAS_DE_2_COBERTURAS.value + Keyword.AFILIADO_EXCLUSIVO.value,
+<<<<<<< HEAD
+	'servicioConsulta' : servicios.get(valorAleatorio)], FailureHandling.STOP_ON_FAILURE);
+=======
+	'servicioConsulta' : Keyword.PRESTADOR_EXCLUSIVO.value], FailureHandling.STOP_ON_FAILURE);
+>>>>>>> aef07b36576fdcd01f68315cd0ee1d29aac9e8f3

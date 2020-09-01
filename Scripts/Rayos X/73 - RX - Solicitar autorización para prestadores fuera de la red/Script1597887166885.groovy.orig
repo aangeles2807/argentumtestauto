@@ -18,12 +18,13 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+<<<<<<< HEAD
 	// Querys
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
-	'ejecutarQueryCapturaAfiliadoPBS' : true,
-	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
-	'ejecutarQueryPrestadorServicio' : true,
-	'ejecutarQueryPrestadorFueradeRed' : false,
+	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : true,
+	'ejecutarQueryPrestadorServicio' : false,
+	'ejecutarQueryPrestadorFueradeRed' : true,
 	'ejecutarQueryServicioConPrestacion' : false,
 	// APIs
 	'consultarApiAfiliado' : true,
@@ -38,21 +39,21 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiPrestadorSaludDoctores' : false,
 	'consultarApiPrestadorSaludDoctoresCasoPositivo' : false,
 	'consultarApiAutorizacionPortalValidarCobertura' : true,
-	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : true,
-	'consultarApiAutorizacionPortalCamposRequeridos' : true,
-	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
+	'consultarApiAutorizacionPortalCamposRequeridos' : false,
+	'consultarApiAutorizacionPortalCamposRequeridosCasoPositivo' : false,
 	// Querys
-	'ejecutarQueryDiagnostico' : true,
+	'ejecutarQueryDiagnostico' : false,
 	// APIs
-	'consultarApiConsultarDiagnosticos' : true,
-	'consultarApiConsultarDiagnosticosCasoPositivo' : true,
-	'consultarApiAutorizacionPortalIngresar' : true,
-	'consultarApiAutorizacionPortalIngresarCasoPositivo' : true,
+	'consultarApiConsultarDiagnosticos' : false,
+	'consultarApiConsultarDiagnosticosCasoPositivo' : false,
+	'consultarApiAutorizacionPortalIngresar' : false,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : false,
 	// Querys
 	'ejecutarQueryProcedimientoPorPrestador' : false,
-	'ejecutarQueryPrestacionNoContratada' : true,
+	'ejecutarQueryPrestacionNoContratada' : false,
 	// APIs
-	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : true,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
 	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : false,
 	'consultarApiConsultarProcedimientos' : false,
 	'consultarApiConsultarProcedimientosCasoPositivo' : false,
@@ -63,8 +64,28 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiAutorizacionPortalAnular' : false,
 	'consultarApiAutorizacionPortalAnularCasoPositivo' : false,
 	// Condiciones de los Querys
-	'condicionAfiliadoPBS' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value,
-	'servicioConsulta' : Keyword.SERVICIO_TERAPIAS_FISICAS.value,
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
+	'servicioConsulta' : Keyword.SERVICIO_RAYOS_X.value,
 	// Parametros Caso Modelo
-	'prePreDescripcion': "",
+	'camposTablaPrestador': "",
 	'orderByRandom': ""], FailureHandling.STOP_ON_FAILURE);
+=======
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
+	'ejecutarQueryCapturaAfiliadoPBS' : false,
+	'ejecutarQueryPrestadorFueradeRed' : true,
+	'camposTablaPrestador': "",
+	'orderByRandom': "",
+	'ejecutarQueryProcedimientoPorPrestador': false,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo' : false,
+	'consultarApiAutorizacionPortalCamposRequeridos' : false,
+	'consultarApiConsultarDiagnosticos' : false,
+	'consultarApiAutorizacionPortalIngresarCasoPositivo' : false,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : false,
+	'consultarApiConsultarProcedimientos' : false,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
+	'consultarApiAutorizacionPortalAutorizar' : false,
+	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO.value,
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_PBS_ACTIVO.value,
+	'servicioConsulta' : Keyword.SERVICIO_RAYOS_X.value], FailureHandling.STOP_ON_FAILURE);
+>>>>>>> aef07b36576fdcd01f68315cd0ee1d29aac9e8f3

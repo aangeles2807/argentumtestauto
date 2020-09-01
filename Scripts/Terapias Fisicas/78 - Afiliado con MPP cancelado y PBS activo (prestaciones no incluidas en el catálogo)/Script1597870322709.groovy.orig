@@ -18,6 +18,7 @@ import helper.Keyword
 import internal.GlobalVariable as GlobalVariable
 
 WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
+<<<<<<< HEAD
 	// Querys
 	'ejecutarQueryCapturaAfiliadoMPP' : false,
 	'ejecutarQueryCapturaAfiliadoPBS' : true,
@@ -68,3 +69,18 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	// Parametros Caso Modelo
 	'prePreDescripcion': "",
 	'orderByRandom': ""], FailureHandling.STOP_ON_FAILURE);
+=======
+	'ejecutarQueryCapturaAfiliadoMPP' : false,
+	'ejecutarQueryCapturaAfiliadoMPPoPBS' : false,
+	'ejecutarQueryPrestacionNoContratada' : true,
+	'consultarApiAutorizacionPortalValidarCoberturaCasoPositivo': false,
+	'consultarApiAutorizacionPortalCamposRequeridos': false,
+	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos': false,
+	'consultarApiAutorizacionPortalTarifaProcedimiento': false,
+	'consultarApiAutorizacionPortalIngresar': false,
+	'consultarApiAutorizacionPortalAutorizar': false,
+	'prePreDescripcio': "",
+	'orderByRandom': "",
+	'condicionAfiliadoPBS' : Keyword.AFILIADO_MPP_SUSPENDIDO_PBS_ACTIVO.value,
+	'servicioConsulta' : Keyword.SERVICIO_LABORATORIO.value], FailureHandling.STOP_ON_FAILURE);
+>>>>>>> aef07b36576fdcd01f68315cd0ee1d29aac9e8f3
