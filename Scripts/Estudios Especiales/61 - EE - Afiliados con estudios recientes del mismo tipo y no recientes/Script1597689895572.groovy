@@ -99,7 +99,7 @@ mapaVariablesScript.put("consultarApiConsultarProcedimientosCasoPositivo", true)
 mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimiento", true);
 mapaVariablesScript.put("consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo", true);
 mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizar", true);
-mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", false);
+mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarCasoPositivo", true);
 mapaVariablesScript.put("consultarApiAutorizacionPortalAutorizarMensajeError", "<b>Permitio autorizar una prestación reciente.</b>");
 mapaVariablesScript.put("consultarApiAutorizacionPortalAnular", false);
 mapaVariablesScript.put("consultarApiAutorizacionPortalAnularCasoPositivo", false);

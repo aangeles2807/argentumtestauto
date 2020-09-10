@@ -31,7 +31,7 @@ List<String> servicios = Arrays.asList(
 	Keyword.SERVICIO_ODONTOLOGIA.value,
 	Keyword.SERVICIO_LABORATORIO.value,
 	Keyword.SERVICIO_ESTUDIOS_ESPECIALES.value,
-	Keyword.SERVICIO_EMERGENCIA_49.value,
+	Keyword.SERVICIO_EMERGENCIA_TRIAGE_2.value,
 	Keyword.SERVICIO_EMERGENCIA_TRIAGE_1.value,
 	Keyword.SERVICIO_EMERGENCIA_TRIAGE_2.value,
 	Keyword.SERVICIO_EMERGENCIA_TRIAGE_3.value,

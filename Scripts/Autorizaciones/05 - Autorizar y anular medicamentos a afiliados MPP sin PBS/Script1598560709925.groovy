@@ -69,8 +69,8 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	'consultarApiAutorizacionPortalPrestadorSaludProcedimientos' : true,
 	'consultarApiAutorizacionPortalPrestadorSaludProcedimientosCasoPositivo' : true,
 	'consultarApiConsultarProcedimientos' : true,
-	'consultarApiConsultarProcedimientosCasoPositivo' : true,
-	'consultarApiAutorizacionPortalTarifaProcedimiento' : true,
+	'consultarApiConsultarProcedimientosCasoPositivo' : false,
+	'consultarApiAutorizacionPortalTarifaProcedimiento' : false,
 	'consultarApiAutorizacionPortalTarifaProcedimientoCasoPositivo' : true,
 	'consultarApiAutorizacionPortalAutorizar' : true,
 	'consultarApiAutorizacionPortalAutorizarCasoPositivo' : true,
@@ -79,4 +79,5 @@ WS.callTestCase(findTestCase('Comun/ProcesoAutorizacion'), [
 	// Condiciones de los Querys
 	'condicionAfiliadoMPP' : Keyword.AFILIADO_MPP_ACTIVO_SIN_PBS.value,
 	'servicioConsulta' : Keyword.SERVICIO_FARMACIA.value,
-	/*'condicionProcedimiento':  Keyword.PROCEDIMIENTO_MA.value*/], FailureHandling.STOP_ON_FAILURE);
+	// Parametros Caso Modelo
+	'tarifaProcedimiento' : '100.00'], FailureHandling.STOP_ON_FAILURE);

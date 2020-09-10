@@ -795,14 +795,13 @@ try {
 			
 			if (!obtenerTodasLasPrestaciones) {
 				
-				/*
+				
 				if (servicioConsulta.toString().equals(Keyword.SERVICIO_FARMACIA.value)) {
 					
 					queryResult = queryResultMultipleRows.get(i);
 					
 					break buclePrestaciones;
 				}
-				*/
 				
 				// ***************************************************************************************************************
 				// Consulta del Web Service: /api/Autorizacion/Portal/TarifaProcedimiento para obtener la tarifa del procedimiento
@@ -1107,19 +1106,6 @@ try {
 			  
 			  println "\n\n" + "Monto Procedimiento: " + tarifaProcedimiento + "\n\n";
 			  
-			  // Cuerpo HTTP de la autorizacion
-			  authorizationListHttpBodyContent.add(
-				  String.format(
-					  Keyword.AUTHORIZATION_HTTP_CONTENT_BODY.value,
-					  codigoPrestacion,
-					  habitacion,
-					  String.valueOf(cantidad),
-					  String.format("%.2f", cantidad * Double.parseDouble(tarifaProcedimiento)),
-					  String.valueOf(valorConcesion),
-					  String.valueOf(valorExcepcion)
-				 )
-			  );
-			  
 		  }else{
 		  
 			  // Consultamos el Web Service
@@ -1129,6 +1115,22 @@ try {
 				  'codigoProcedimiento' : codigoPrestacion]), true);
 		  }
 	  }
+	  
+	if (crearJsonAutorizacion) {
+		
+		// Cuerpo HTTP de la autorizacion
+		authorizationListHttpBodyContent.add(
+			String.format(
+				Keyword.AUTHORIZATION_HTTP_CONTENT_BODY.value,
+				codigoPrestacion,
+				habitacion,
+				String.valueOf(cantidad),
+				String.format("%.2f", cantidad * Double.parseDouble(tarifaProcedimiento)),
+				String.valueOf(valorConcesion),
+				String.valueOf(valorExcepcion)
+		   )
+		);
+	}
 	  
 	 //*************************************************************
 	 // Consulta del Web Service: /api/Autorizacion/Portal/Autorizar

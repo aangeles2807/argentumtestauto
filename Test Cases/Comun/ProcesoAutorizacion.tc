@@ -600,4 +600,11 @@
       <masked>false</masked>
       <name>mapaPrestadorServicio</name>
    </variable>
+   <variable>
+      <defaultValue>true</defaultValue>
+      <description></description>
+      <id>981dbc41-9317-4913-9924-47d7c377f88f</id>
+      <masked>false</masked>
+      <name>crearJsonAutorizacion</name>
+   </variable>
 </TestCaseEntity>
